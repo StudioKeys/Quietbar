@@ -12,6 +12,12 @@ public enum Command: Sendable, Hashable {
     case setEqPreset(EqPreset)
     case queryBalance
     case setBalance(Balance)
+    case setAdaptiveAnc(Bool)
+    case setLeakageCompensation(Bool)
+    case querySmartAudioVideo
+    case setSmartAudioVideo(SmartAudioVideoPreset)
+    case setAutoPlayPause(Bool)
+    case queryDeviceStatus
 
     public static let refreshAll: [Command] = [
         .queryNoiseMode, .queryAdvancedAnc, .queryBattery, .querySpatial, .queryLowVolumeEq, .queryEq, .queryBalance,
@@ -35,6 +41,12 @@ public enum Command: Sendable, Hashable {
         case .queryBalance: Frame(command: Opcode.balance, payload: [0x01])
         case .setBalance(let balance):
             Frame(command: Opcode.balance, payload: [0x00, 0x01, balance.isOn.byte, 0x02, balance.wire])
+        case .setAdaptiveAnc(let isOn): Frame(command: Opcode.noise, payload: [0x20, 0x01, isOn.byte])
+        case .setLeakageCompensation(let isOn): Frame(command: Opcode.noise, payload: [0x20, 0x05, isOn.byte])
+        case .querySmartAudioVideo: Frame(command: Opcode.smartAudioVideoGet, payload: [])
+        case .setSmartAudioVideo(let preset): Frame(command: Opcode.smartAudioVideoSet, payload: preset.payload)
+        case .setAutoPlayPause(let isOn): Frame(command: Opcode.autoPlayPause, payload: [isOn.byte])
+        case .queryDeviceStatus: Frame(command: Opcode.deviceStatusGet, payload: [0x30])
         }
     }
 
@@ -51,6 +63,12 @@ enum Opcode {
     static let lowVolumeEq: UInt8 = 0x9E
     static let eq: UInt8 = 0xA2
     static let balance: UInt8 = 0xA8
+    static let smartAudioVideoSet: UInt8 = 0x81
+    static let smartAudioVideoGet: UInt8 = 0x82
+    static let smartAudioVideoStatus: UInt8 = 0x83
+    static let autoPlayPause: UInt8 = 0x35
+    static let deviceStatusGet: UInt8 = 0x21
+    static let deviceStatusReply: UInt8 = 0x22
 }
 
 extension Bool {

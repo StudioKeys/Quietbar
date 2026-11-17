@@ -6,6 +6,8 @@ public enum ReplyKind: Sendable, Hashable, CaseIterable {
     case lowVolumeEq
     case eq
     case balance
+    case smartAudioVideo
+    case autoPlayPause
 
     public var query: Command {
         switch self {
@@ -16,6 +18,8 @@ public enum ReplyKind: Sendable, Hashable, CaseIterable {
         case .lowVolumeEq: .queryLowVolumeEq
         case .eq: .queryEq
         case .balance: .queryBalance
+        case .smartAudioVideo: .querySmartAudioVideo
+        case .autoPlayPause: .queryDeviceStatus
         }
     }
 }
@@ -52,7 +56,9 @@ extension Command {
     public var expectedReply: ReplyKind {
         switch self {
         case .queryNoiseMode, .setNoiseMode: .noiseMode
-        case .queryAdvancedAnc, .setAmbientLevel: .ambientLevel
+        case .queryAdvancedAnc, .setAmbientLevel, .setAdaptiveAnc, .setLeakageCompensation: .ambientLevel
+        case .querySmartAudioVideo, .setSmartAudioVideo: .smartAudioVideo
+        case .setAutoPlayPause, .queryDeviceStatus: .autoPlayPause
         case .queryBattery: .battery
         case .querySpatial, .setSpatial: .spatial
         case .queryLowVolumeEq, .setLowVolumeEq: .lowVolumeEq
