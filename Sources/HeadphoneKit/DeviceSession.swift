@@ -76,13 +76,31 @@ public actor DeviceSession {
             guard let requests = driver.requests(for: change, current: snapshot.state) else {
                 throw ApplyError.unsupported
             }
-            try await confirmWithFollowUp(requests, setting: change.id)
+            if appliesWithReconnect(change.id) {
+                try await sendAll(requests)
+            } else {
+                try await confirmWithFollowUp(requests, setting: change.id)
+            }
             publish(snapshot.with(lastError: nil))
         } catch {
             Self.logger.notice(
                 "\(change.id.rawValue, privacy: .public) not confirmed: \(error.message, privacy: .public)")
             publish(snapshot.with(lastError: error.message))
             throw error
+        }
+    }
+
+    private func appliesWithReconnect(_ id: SettingID) -> Bool {
+        driver.model.settings.first { $0.id == id }?.appliesWithReconnect ?? false
+    }
+
+    private func sendAll(_ requests: [Data]) async throws(ApplyError) {
+        do {
+            for request in requests {
+                try await transport.send(request)
+            }
+        } catch {
+            throw .writeFailed
         }
     }
 

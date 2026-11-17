@@ -2,7 +2,7 @@ import Foundation
 import HeadphoneKit
 
 struct FakeDriver: DeviceDriver {
-    static let settings: [SettingID] = ["power", "volume", "mode"]
+    static let settings: [SettingID] = ["power", "volume", "mode", "codec"]
 
     let model = DeviceModel(
         name: "Fake Buds",
@@ -10,6 +10,7 @@ struct FakeDriver: DeviceDriver {
         settings: [
             SettingDescriptor(id: "power", title: "Power", kind: .toggle, section: .sound),
             SettingDescriptor(id: "volume", title: "Volume", kind: .level(0...10, style: .slider), section: .sound),
+            SettingDescriptor(id: "codec", title: "Codec", kind: .toggle, section: .smart, appliesWithReconnect: true),
         ]
     )
 

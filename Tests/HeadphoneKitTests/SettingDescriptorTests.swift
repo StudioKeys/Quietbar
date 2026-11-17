@@ -44,4 +44,8 @@ struct SettingDescriptorTests {
 
         #expect(id.rawValue == "balance")
     }
+
+    @Test func appliesWithReconnectDefaultsToFalse() {
+        #expect(!adaptive.appliesWithReconnect)
+    }
 }

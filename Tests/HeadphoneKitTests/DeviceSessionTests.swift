@@ -186,4 +186,17 @@ struct DeviceSessionTests {
         try await waitUntil { await transport.sent.filter { $0 == FakeDriver.batteryQuery }.count == 3 }
         #expect(await session.current.status == .connected)
     }
+
+    @Test func reconnectingSettingIsSentWithoutWaitingForConfirmation() async throws {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport, timeout: .seconds(5))
+        await session.start()
+
+        let started = ContinuousClock.now
+        try await session.apply(SettingChange(id: "codec", value: .bool(true)))
+
+        #expect(ContinuousClock.now - started < .seconds(1))
+        #expect(await transport.sent.last == FakeDriver.set("codec", 1))
+        #expect(await session.current.lastError == nil)
+    }
 }

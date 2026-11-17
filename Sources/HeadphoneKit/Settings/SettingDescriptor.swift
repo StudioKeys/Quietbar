@@ -50,6 +50,7 @@ public struct SettingDescriptor: Hashable, Sendable {
     public let kind: SettingKind
     public let section: SettingSection
     public let visibleWhen: Condition?
+    public let appliesWithReconnect: Bool
 
     public init(
         id: SettingID,
@@ -57,7 +58,8 @@ public struct SettingDescriptor: Hashable, Sendable {
         symbol: String? = nil,
         kind: SettingKind,
         section: SettingSection,
-        visibleWhen: Condition? = nil
+        visibleWhen: Condition? = nil,
+        appliesWithReconnect: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -65,6 +67,7 @@ public struct SettingDescriptor: Hashable, Sendable {
         self.kind = kind
         self.section = section
         self.visibleWhen = visibleWhen
+        self.appliesWithReconnect = appliesWithReconnect
     }
 
     public func isVisible(in state: DeviceState) -> Bool {

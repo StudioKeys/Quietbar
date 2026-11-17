@@ -6,8 +6,15 @@ struct SettingRow: View {
     let viewModel: HeadphoneViewModel
 
     var body: some View {
-        content
-            .disabled(viewModel.pending.contains(descriptor.id) || viewModel.value(for: descriptor.id) == nil)
+        VStack(alignment: .leading, spacing: 4) {
+            content
+            if descriptor.appliesWithReconnect, case .toggle = descriptor.kind {
+                Text("Headphones reconnect briefly to apply.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .disabled(viewModel.pending.contains(descriptor.id) || viewModel.value(for: descriptor.id) == nil)
     }
 
     @ViewBuilder

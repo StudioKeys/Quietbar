@@ -57,12 +57,13 @@ enum JBLSetting {
             kind: .level(Balance.range, style: .balance), section: .sound
         ),
         SettingDescriptor(
-            id: smartAudioVideo, title: "Smart Audio & Video", symbol: "play.tv", kind: .toggle, section: .smart
+            id: smartAudioVideo, title: "Smart Audio & Video", symbol: "play.tv", kind: .toggle, section: .smart,
+            appliesWithReconnect: true
         ),
         SettingDescriptor(
             id: smartAudioVideoMode, title: "Smart Audio & Video mode",
             kind: .choice(SmartMode.allCases.map(\.option), style: .segmented), section: .smart,
-            visibleWhen: .equals(smartAudioVideo, .bool(true))
+            visibleWhen: .equals(smartAudioVideo, .bool(true)), appliesWithReconnect: true
         ),
         SettingDescriptor(
             id: autoPlayPause, title: "Auto play & pause", symbol: "playpause", kind: .toggle, section: .smart

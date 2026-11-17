@@ -167,6 +167,12 @@ struct JBLLive770NCDriverTests {
         #expect(driver.model.gatt.nameFragment == "770NC")
     }
 
+    @Test func onlySmartAudioVideoSettingsReconnect() {
+        let reconnecting = driver.model.settings.filter(\.appliesWithReconnect).map(\.id.rawValue)
+
+        #expect(reconnecting == ["smartAudioVideo", "smartAudioVideoMode"])
+    }
+
     @Test func noRequestUsesOtaCommand() {
         let all = driver.refreshRequests + driver.model.settings.compactMap { driver.confirmingRequest(for: $0.id) }
 
