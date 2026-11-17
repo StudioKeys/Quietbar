@@ -55,7 +55,7 @@ func waitUntil(
 
 enum Fixtures {
     static let noiseOptions = [
-        ChoiceOption(id: "anc", title: "Noise Cancel", symbol: "headphones"),
+        ChoiceOption(id: "anc", title: "Noise Cancellation", symbol: "headphones"),
         ChoiceOption(id: "ambientAware", title: "Ambient", symbol: "ear.badge.waveform"),
         ChoiceOption(id: "talkThru", title: "Talk-Thru", symbol: "person.wave.2"),
         ChoiceOption(id: "off", title: "Off", symbol: "headphones.slash"),

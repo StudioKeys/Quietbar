@@ -93,7 +93,7 @@ extension NoiseMode {
 
     var option: ChoiceOption {
         switch self {
-        case .anc: ChoiceOption(id: id, title: "Noise Cancel", symbol: "headphones")
+        case .anc: ChoiceOption(id: id, title: "Noise Cancellation", symbol: "headphones")
         case .ambientAware: ChoiceOption(id: id, title: "Ambient", symbol: "ear.badge.waveform")
         case .talkThru: ChoiceOption(id: id, title: "Talk-Thru", symbol: "person.wave.2")
         case .off: ChoiceOption(id: id, title: "Off", symbol: "headphones.slash")

@@ -79,7 +79,9 @@ struct ModeButtons: View {
                             )
                         Text(option.title)
                             .font(.caption2.weight(.medium))
-                            .lineLimit(1)
+                            .multilineTextAlignment(.center)
+                            .lineLimit(2)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                     .frame(maxWidth: .infinity)
                 }
