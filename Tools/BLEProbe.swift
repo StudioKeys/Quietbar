@@ -74,8 +74,10 @@ final class Probe: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
         }
     }
 
-    func centralManager(_ central: CBCentralManager, didDiscover p: CBPeripheral,
-                        advertisementData: [String: Any], rssi: NSNumber) {
+    func centralManager(
+        _ central: CBCentralManager, didDiscover p: CBPeripheral,
+        advertisementData: [String: Any], rssi: NSNumber
+    ) {
         let name = p.name ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? ""
         guard name.contains(deviceNameFragment), peripheral == nil else { return }
         print("Found \(name) rssi=\(rssi)")
@@ -110,7 +112,8 @@ final class Probe: NSObject, CBCentralManagerDelegate, CBPeripheralDelegate {
     func peripheral(_ p: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         let chars = service.characteristics ?? []
         guard let notify = chars.first(where: { $0.uuid == notifyUUID }),
-              let write = chars.first(where: { $0.uuid == writeUUID }) else {
+            let write = chars.first(where: { $0.uuid == writeUUID })
+        else {
             print("Characteristics missing: \(error?.localizedDescription ?? "absent")")
             exit(5)
         }

@@ -111,4 +111,16 @@ struct HeadphoneViewModelTests {
         #expect(await controller.connectCount == 1)
         #expect(await controller.disconnectCount == 1)
     }
+
+    @Test func runStartsSessionAndMirrorsSnapshots() async throws {
+        let controller = FakeController()
+        let viewModel = HeadphoneViewModel(controller: controller)
+        let running = Task { await viewModel.run() }
+        defer { running.cancel() }
+
+        await controller.publish(snapshot(noiseMode: .off))
+
+        try await waitUntil { await viewModel.snapshot.state.noiseMode == .off }
+        #expect(await controller.startCount == 1)
+    }
 }

@@ -10,6 +10,7 @@ actor FakeController: HeadphoneControlling {
     private var held: [CheckedContinuation<Void, Never>] = []
     private(set) var applied: [Command] = []
     private(set) var refreshCount = 0
+    private(set) var startCount = 0
     private(set) var connectCount = 0
     private(set) var disconnectCount = 0
 
@@ -24,6 +25,7 @@ actor FakeController: HeadphoneControlling {
         await withCheckedContinuation { held.append($0) }
     }
 
+    func start() async { startCount += 1 }
     func refresh() async { refreshCount += 1 }
     func userConnect() async { connectCount += 1 }
     func userDisconnect() async { disconnectCount += 1 }

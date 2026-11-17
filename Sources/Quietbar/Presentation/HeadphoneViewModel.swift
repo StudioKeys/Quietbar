@@ -21,6 +21,12 @@ final class HeadphoneViewModel {
     var isConnected: Bool { snapshot.status == .connected }
     var state: HeadphoneState { snapshot.state }
 
+    func run() async {
+        async let observing: Void = observe()
+        await controller.start()
+        await observing
+    }
+
     func observe() async {
         for await next in controller.snapshots {
             snapshot = next
