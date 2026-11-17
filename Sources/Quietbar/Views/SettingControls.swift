@@ -18,11 +18,14 @@ struct SettingSwitchRow: View {
     @Binding var isOn: Bool
 
     var body: some View {
-        Toggle(isOn: $isOn) {
+        HStack {
             SettingLabel(descriptor: descriptor)
+            Spacer()
+            Toggle(descriptor.title, isOn: $isOn)
+                .toggleStyle(.switch)
+                .controlSize(.small)
+                .labelsHidden()
         }
-        .toggleStyle(.switch)
-        .controlSize(.small)
     }
 }
 
