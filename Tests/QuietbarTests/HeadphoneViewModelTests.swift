@@ -103,4 +103,27 @@ struct HeadphoneViewModelTests {
         #expect(await controller.connectCount == 1)
         #expect(await controller.disconnectCount == 1)
     }
+
+    @Test func lastValuesStayVisibleButLockedWhileReconnecting() async throws {
+        let model = try await observed(
+            FakeController(),
+            Fixtures.snapshot(.searching, [.setting("noiseMode", .choice("anc"))])
+        )
+
+        #expect(model.showsControls)
+        #expect(!model.canEdit)
+    }
+
+    @Test func controlsHiddenWhenNothingIsKnown() async throws {
+        let model = try await observed(FakeController(), Fixtures.snapshot(.searching))
+
+        #expect(!model.showsControls)
+    }
+
+    @Test func connectedControlsAreEditable() async throws {
+        let model = try await observed(FakeController(), Fixtures.snapshot(.connected))
+
+        #expect(model.showsControls)
+        #expect(model.canEdit)
+    }
 }

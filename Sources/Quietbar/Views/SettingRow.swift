@@ -14,7 +14,9 @@ struct SettingRow: View {
                     .foregroundStyle(.secondary)
             }
         }
-        .disabled(viewModel.pending.contains(descriptor.id) || viewModel.value(for: descriptor.id) == nil)
+        .disabled(
+            !viewModel.canEdit || viewModel.pending.contains(descriptor.id)
+                || viewModel.value(for: descriptor.id) == nil)
     }
 
     @ViewBuilder

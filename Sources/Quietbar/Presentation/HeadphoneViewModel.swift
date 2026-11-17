@@ -37,6 +37,8 @@ final class HeadphoneViewModel {
     var statusText: String { StatusText.describe(snapshot.status) }
     var isConnected: Bool { snapshot.status == .connected }
     var battery: Battery? { snapshot.state.battery }
+    var showsControls: Bool { isConnected || snapshot.state != .empty }
+    var canEdit: Bool { isConnected }
 
     var sections: [SectionModel] {
         SettingSection.allCases.compactMap { section in

@@ -26,7 +26,7 @@ struct MenuContentView: View {
     private var controls: some View {
         VStack(alignment: .leading, spacing: 10) {
             HeaderView(viewModel: viewModel)
-            if viewModel.isConnected {
+            if viewModel.showsControls {
                 ForEach(viewModel.sections) { section in
                     SectionCard(title: section.title) {
                         ForEach(section.settings, id: \.id) { descriptor in
