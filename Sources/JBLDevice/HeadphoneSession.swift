@@ -13,6 +13,9 @@ public actor HeadphoneSession {
     private let sleep: Sleeper
     private var snapshot = SessionSnapshot.initial
     private var listener: Task<Void, Never>?
+    private var waiters = ReplyWaiters()
+
+    public var current: SessionSnapshot { snapshot }
 
     public init(
         transport: any HeadphoneTransport,
@@ -34,6 +37,53 @@ public actor HeadphoneSession {
         for command in Command.refreshAll {
             await send(command)
         }
+    }
+
+    public func apply(_ command: Command) async throws(ApplyError) {
+        guard snapshot.status == .connected else { throw .notConnected }
+        do {
+            try await confirmWithFollowUp(command)
+            publish(snapshot.with(lastError: nil))
+        } catch {
+            publish(snapshot.with(lastError: error.message))
+            throw error
+        }
+    }
+
+    private func confirmWithFollowUp(_ command: Command) async throws(ApplyError) {
+        do {
+            try await confirm(command)
+        } catch .timedOut {
+            try await confirm(command.expectedReply.query)
+        }
+    }
+
+    private func confirm(_ command: Command) async throws(ApplyError) {
+        let ticket = waiters.expect(command.expectedReply)
+        do {
+            try await transport.send(command.frame)
+        } catch {
+            _ = waiters.expire(ticket)
+            throw .writeFailed
+        }
+        guard await waitForReply(ticket) else { throw .timedOut }
+    }
+
+    private func waitForReply(_ ticket: ReplyWaiters.Ticket) async -> Bool {
+        if waiters.consumeFulfilled(ticket) { return true }
+        guard waiters.isPending(ticket) else { return false }
+        let timeout = replyTimeout
+        return await withCheckedContinuation { continuation in
+            waiters.park(ticket, continuation)
+            Task { [weak self] in
+                try? await Task.sleep(for: timeout)
+                await self?.expire(ticket)
+            }
+        }
+    }
+
+    private func expire(_ ticket: ReplyWaiters.Ticket) {
+        waiters.expire(ticket)?.resume(returning: false)
     }
 
     private func connect() async {
@@ -67,9 +117,15 @@ public actor HeadphoneSession {
     }
 
     private func receive(_ frame: Frame) {
-        let updated = snapshot.state.applying(Reply(frame: frame))
-        guard updated != snapshot.state else { return }
-        publish(snapshot.with(state: updated))
+        let reply = Reply(frame: frame)
+        let updated = snapshot.state.applying(reply)
+        if updated != snapshot.state {
+            publish(snapshot.with(state: updated))
+        }
+        guard let kind = reply.kind else { return }
+        for continuation in waiters.deliver(kind) {
+            continuation.resume(returning: true)
+        }
     }
 
     private func publish(_ next: SessionSnapshot) {
