@@ -5,7 +5,7 @@ import Testing
 
 struct ReplyWaitersTests {
     @Test func deliveryBeforeWaitMarksTicketFulfilled() {
-        var waiters = ReplyWaiters()
+        var waiters = ReplyWaiters<ReplyKind>()
         let ticket = waiters.expect(.eq)
 
         let resumed = waiters.deliver(.eq)
@@ -17,7 +17,7 @@ struct ReplyWaitersTests {
     }
 
     @Test func deliveryOfOtherKindLeavesTicketPending() {
-        var waiters = ReplyWaiters()
+        var waiters = ReplyWaiters<ReplyKind>()
         let ticket = waiters.expect(.eq)
 
         _ = waiters.deliver(.battery)
@@ -28,7 +28,7 @@ struct ReplyWaitersTests {
     }
 
     @Test func expiringRemovesTicket() {
-        var waiters = ReplyWaiters()
+        var waiters = ReplyWaiters<ReplyKind>()
         let ticket = waiters.expect(.spatial)
 
         _ = waiters.expire(ticket)

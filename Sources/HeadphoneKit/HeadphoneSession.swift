@@ -1,8 +1,6 @@
 import JBLProtocol
 import os
 
-public typealias Sleeper = @Sendable (Duration) async throws -> Void
-
 public actor HeadphoneSession {
     public static let wantsConnectionKey = "wantsConnection"
     private static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "HeadphoneSession")
@@ -20,7 +18,7 @@ public actor HeadphoneSession {
     private var linking: Task<Void, Never>?
     private var isLinking = false
     private var poller: Task<Void, Never>?
-    private var waiters = ReplyWaiters()
+    private var waiters = ReplyWaiters<ReplyKind>()
 
     public var current: SessionSnapshot { snapshot }
 
@@ -99,7 +97,7 @@ public actor HeadphoneSession {
         guard await waitForReply(ticket) else { throw .timedOut }
     }
 
-    private func waitForReply(_ ticket: ReplyWaiters.Ticket) async -> Bool {
+    private func waitForReply(_ ticket: ReplyWaiters<ReplyKind>.Ticket) async -> Bool {
         if waiters.consumeFulfilled(ticket) { return true }
         guard waiters.isPending(ticket) else { return false }
         let timeout = replyTimeout
@@ -112,7 +110,7 @@ public actor HeadphoneSession {
         }
     }
 
-    private func expire(_ ticket: ReplyWaiters.Ticket) {
+    private func expire(_ ticket: ReplyWaiters<ReplyKind>.Ticket) {
         waiters.expire(ticket)?.resume(returning: false)
     }
 

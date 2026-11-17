@@ -1,14 +1,13 @@
 import Foundation
-import JBLProtocol
 
-struct ReplyWaiters {
+struct ReplyWaiters<Key: Hashable> {
     typealias Ticket = UUID
 
-    private var pending: [Ticket: ReplyKind] = [:]
+    private var pending: [Ticket: Key] = [:]
     private var fulfilled: Set<Ticket> = []
     private var continuations: [Ticket: CheckedContinuation<Bool, Never>] = [:]
 
-    mutating func expect(_ kind: ReplyKind) -> Ticket {
+    mutating func expect(_ kind: Key) -> Ticket {
         let ticket = Ticket()
         pending[ticket] = kind
         return ticket
@@ -26,7 +25,7 @@ struct ReplyWaiters {
         continuations[ticket] = continuation
     }
 
-    mutating func deliver(_ kind: ReplyKind) -> [CheckedContinuation<Bool, Never>] {
+    mutating func deliver(_ kind: Key) -> [CheckedContinuation<Bool, Never>] {
         let matching = pending.filter { $0.value == kind }.map(\.key)
         return matching.compactMap { ticket in
             pending[ticket] = nil
