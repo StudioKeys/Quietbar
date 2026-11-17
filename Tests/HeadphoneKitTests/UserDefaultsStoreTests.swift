@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 
-@testable import JBLDevice
+@testable import HeadphoneKit
 
 struct UserDefaultsStoreTests {
     private let suiteName = "dev.studiokeys.quietbar.tests.\(UUID().uuidString)"

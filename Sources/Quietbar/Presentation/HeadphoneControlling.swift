@@ -1,4 +1,4 @@
-import JBLDevice
+import HeadphoneKit
 import JBLProtocol
 
 protocol HeadphoneControlling: Sendable {

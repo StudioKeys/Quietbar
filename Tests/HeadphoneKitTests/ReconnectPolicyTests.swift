@@ -1,6 +1,6 @@
 import Testing
 
-@testable import JBLDevice
+@testable import HeadphoneKit
 
 struct ReconnectPolicyTests {
     @Test func policyDelaysFollowSchedule() {

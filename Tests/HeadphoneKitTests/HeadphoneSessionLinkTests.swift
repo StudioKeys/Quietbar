@@ -1,7 +1,7 @@
 import JBLProtocol
 import Testing
 
-@testable import JBLDevice
+@testable import HeadphoneKit
 
 struct HeadphoneSessionLinkTests {
     private static let pollLimit = Duration.seconds(300)

@@ -1,5 +1,5 @@
 import CoreBluetooth
-import JBLDevice
+import HeadphoneKit
 import JBLProtocol
 import os
 

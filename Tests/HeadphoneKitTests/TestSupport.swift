@@ -1,5 +1,5 @@
 import Foundation
-import JBLDevice
+import HeadphoneKit
 import JBLProtocol
 
 struct WaitTimedOut: Error {}

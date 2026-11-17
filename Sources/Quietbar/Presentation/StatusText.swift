@@ -1,4 +1,4 @@
-import JBLDevice
+import HeadphoneKit
 
 enum StatusText {
     static func describe(_ status: ConnectionStatus) -> String {

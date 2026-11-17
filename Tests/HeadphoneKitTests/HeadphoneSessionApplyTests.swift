@@ -1,7 +1,7 @@
 import JBLProtocol
 import Testing
 
-@testable import JBLDevice
+@testable import HeadphoneKit
 
 struct HeadphoneSessionApplyTests {
     private static let fastTimeout = Duration.milliseconds(50)

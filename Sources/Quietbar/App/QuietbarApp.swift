@@ -1,5 +1,5 @@
+import HeadphoneKit
 import JBLBluetooth
-import JBLDevice
 import SwiftUI
 
 @main
