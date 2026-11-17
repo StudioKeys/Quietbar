@@ -6,7 +6,7 @@ public enum FrameError: Error, Equatable, Sendable {
     case lengthMismatch(declared: Int, actual: Int)
 }
 
-public struct Frame: Sendable, Equatable {
+public struct Frame: Sendable, Hashable {
     static let header: UInt8 = 0xAA
     static let wideLengthReplies: Set<UInt8> = [0xA2]
 
