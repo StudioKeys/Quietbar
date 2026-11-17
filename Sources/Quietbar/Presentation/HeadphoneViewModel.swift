@@ -1,25 +1,65 @@
 import HeadphoneKit
-import JBLProtocol
 import Observation
 import os
+
+struct SectionModel: Identifiable, Equatable {
+    let section: SettingSection
+    let settings: [SettingDescriptor]
+
+    var id: SettingSection { section }
+
+    var title: String {
+        switch section {
+        case .noise: "Noise control"
+        case .sound: "Sound"
+        case .smart: "Smart features"
+        }
+    }
+}
 
 @MainActor
 @Observable
 final class HeadphoneViewModel {
     private static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "HeadphoneViewModel")
 
-    private(set) var snapshot = SessionSnapshot.initial
-    private(set) var pending: Set<ReplyKind> = []
+    private(set) var snapshot = DeviceSnapshot.initial
+    private(set) var pending: Set<SettingID> = []
+    let model: DeviceModel
     private let controller: any HeadphoneControlling
 
-    init(controller: any HeadphoneControlling) {
+    init(controller: any HeadphoneControlling, model: DeviceModel) {
         self.controller = controller
+        self.model = model
     }
 
-    var icon: MenuBarIcon { MenuBarIcon.make(for: snapshot) }
+    var deviceName: String { model.name }
+    var icon: MenuBarIcon { MenuBarIcon.make(for: snapshot, model: model) }
     var statusText: String { StatusText.describe(snapshot.status) }
     var isConnected: Bool { snapshot.status == .connected }
-    var state: HeadphoneState { snapshot.state }
+    var battery: Battery? { snapshot.state.battery }
+
+    var sections: [SectionModel] {
+        SettingSection.allCases.compactMap { section in
+            let visible = model.settings.filter { $0.section == section && $0.isVisible(in: snapshot.state) }
+            return visible.isEmpty ? nil : SectionModel(section: section, settings: visible)
+        }
+    }
+
+    static func balanceText(_ offset: Int) -> String {
+        switch offset {
+        case 0: "0"
+        case ..<0: "L \(-offset)"
+        default: "R \(offset)"
+        }
+    }
+
+    func value(for id: SettingID) -> SettingValue? {
+        snapshot.state[id]
+    }
+
+    func isOn(_ id: SettingID) -> Bool {
+        value(for: id) == .bool(true)
+    }
 
     func run() async {
         async let observing: Void = observe()
@@ -34,33 +74,18 @@ final class HeadphoneViewModel {
     }
 
     @discardableResult
-    func select(_ mode: NoiseMode) -> Task<Void, Never>? {
-        submit(.setNoiseMode(mode))
-    }
-
-    @discardableResult
-    func setAmbientLevel(_ value: Int) -> Task<Void, Never>? {
-        AmbientLevel(value).flatMap { submit(.setAmbientLevel($0)) }
-    }
-
-    @discardableResult
-    func select(_ preset: EqPreset) -> Task<Void, Never>? {
-        submit(.setEqPreset(preset))
-    }
-
-    @discardableResult
-    func setSpatial(_ setting: SpatialSetting) -> Task<Void, Never>? {
-        submit(.setSpatial(setting))
-    }
-
-    @discardableResult
-    func setLowVolumeEq(_ isOn: Bool) -> Task<Void, Never>? {
-        submit(.setLowVolumeEq(isOn))
-    }
-
-    @discardableResult
-    func setBalance(offset: Int) -> Task<Void, Never>? {
-        Balance(offset: offset).flatMap { submit(.setBalance($0)) }
+    func set(_ id: SettingID, _ value: SettingValue) -> Task<Void, Never>? {
+        guard !pending.contains(id) else { return nil }
+        pending.insert(id)
+        let controller = controller
+        return Task {
+            do throws(ApplyError) {
+                try await controller.apply(SettingChange(id: id, value: value))
+            } catch {
+                Self.logger.notice("\(id.rawValue, privacy: .public) not applied: \(error.message, privacy: .public)")
+            }
+            pending.remove(id)
+        }
     }
 
     @discardableResult
@@ -80,20 +105,5 @@ final class HeadphoneViewModel {
     func disconnect() -> Task<Void, Never> {
         let controller = controller
         return Task { await controller.userDisconnect() }
-    }
-
-    private func submit(_ command: Command) -> Task<Void, Never>? {
-        let kind = command.expectedReply
-        guard !pending.contains(kind) else { return nil }
-        pending.insert(kind)
-        let controller = controller
-        return Task {
-            do {
-                try await controller.apply(command)
-            } catch {
-                Self.logger.notice("Change not confirmed: \(String(describing: error), privacy: .public)")
-            }
-            pending.remove(kind)
-        }
     }
 }

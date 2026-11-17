@@ -11,7 +11,7 @@ rm -rf "$app"
 mkdir -p "$app/Contents/MacOS"
 cp "$binary" "$app/Contents/MacOS/Quietbar"
 cp "$root/Resources/Info.plist" "$app/Contents/Info.plist"
-codesign --force --sign - --options runtime "$app"
+codesign --force --sign "${QUIETBAR_SIGN_IDENTITY:--}" --options runtime "$app"
 codesign --verify --strict "$app"
 
 echo "Built $app"

@@ -4,7 +4,7 @@ public enum ApplyError: Error, Sendable, Hashable {
     case timedOut
     case unsupported
 
-    var message: String {
+    public var message: String {
         switch self {
         case .notConnected: "Headphones aren't connected"
         case .writeFailed: "Couldn't send the change to the headphones"

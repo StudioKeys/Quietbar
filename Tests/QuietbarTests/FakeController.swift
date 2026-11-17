@@ -1,16 +1,15 @@
 import HeadphoneKit
-import JBLProtocol
 
 @testable import Quietbar
 
 actor FakeController: HeadphoneControlling {
-    nonisolated let snapshots: AsyncStream<SessionSnapshot>
-    private let snapshotContinuation: AsyncStream<SessionSnapshot>.Continuation
+    nonisolated let snapshots: AsyncStream<DeviceSnapshot>
+    private let snapshotContinuation: AsyncStream<DeviceSnapshot>.Continuation
     private let holdsApplies: Bool
     private var held: [CheckedContinuation<Void, Never>] = []
-    private(set) var applied: [Command] = []
-    private(set) var refreshCount = 0
+    private(set) var applied: [SettingChange] = []
     private(set) var startCount = 0
+    private(set) var refreshCount = 0
     private(set) var connectCount = 0
     private(set) var disconnectCount = 0
 
@@ -19,16 +18,16 @@ actor FakeController: HeadphoneControlling {
         self.holdsApplies = holdsApplies
     }
 
-    func apply(_ command: Command) async throws(ApplyError) {
-        applied.append(command)
-        guard holdsApplies else { return }
-        await withCheckedContinuation { held.append($0) }
-    }
-
     func start() async { startCount += 1 }
     func refresh() async { refreshCount += 1 }
     func userConnect() async { connectCount += 1 }
     func userDisconnect() async { disconnectCount += 1 }
+
+    func apply(_ change: SettingChange) async throws(ApplyError) {
+        applied.append(change)
+        guard holdsApplies else { return }
+        await withCheckedContinuation { held.append($0) }
+    }
 
     func releaseAll() {
         let waiting = held
@@ -36,7 +35,7 @@ actor FakeController: HeadphoneControlling {
         for continuation in waiting { continuation.resume() }
     }
 
-    func publish(_ snapshot: SessionSnapshot) {
+    func publish(_ snapshot: DeviceSnapshot) {
         snapshotContinuation.yield(snapshot)
     }
 }
@@ -54,13 +53,38 @@ func waitUntil(
     }
 }
 
-func snapshot(
-    _ status: ConnectionStatus = .connected,
-    noiseMode: NoiseMode? = nil,
-    battery: Int? = nil
-) -> SessionSnapshot {
-    var state = HeadphoneState.empty
-    if let noiseMode { state = state.applying(.noiseMode(noiseMode)) }
-    if let battery { state = state.applying(.battery(Battery(percent: battery, isCharging: false))) }
-    return SessionSnapshot(status: status, state: state, lastError: nil)
+enum Fixtures {
+    static let noiseOptions = [
+        ChoiceOption(id: "anc", title: "Noise Cancel", symbol: "headphones"),
+        ChoiceOption(id: "ambientAware", title: "Ambient", symbol: "ear.badge.waveform"),
+        ChoiceOption(id: "talkThru", title: "Talk-Thru", symbol: "person.wave.2"),
+        ChoiceOption(id: "off", title: "Off", symbol: "headphones.slash"),
+    ]
+
+    static let model = DeviceModel(
+        name: "Test Phones",
+        gatt: GattProfile(service: "0", notify: "1", write: "2", nameFragment: "Test"),
+        settings: [
+            SettingDescriptor(
+                id: "noiseMode", title: "Noise", kind: .choice(noiseOptions, style: .modeButtons), section: .noise),
+            SettingDescriptor(
+                id: "adaptiveAnc", title: "Adaptive ANC", kind: .toggle, section: .noise,
+                visibleWhen: .equals("noiseMode", .choice("anc"))
+            ),
+            SettingDescriptor(
+                id: "ambientLevel", title: "Ambient level", kind: .level(1...7, style: .slider), section: .noise,
+                visibleWhen: .equals("noiseMode", .choice("ambientAware"))
+            ),
+            SettingDescriptor(id: "lowVolumeEq", title: "Low Volume EQ", kind: .toggle, section: .sound),
+            SettingDescriptor(
+                id: "balance", title: "Balance", kind: .level(-16...16, style: .balance), section: .sound),
+        ]
+    )
+
+    static func snapshot(
+        _ status: ConnectionStatus = .connected,
+        _ updates: [DeviceUpdate] = []
+    ) -> DeviceSnapshot {
+        DeviceSnapshot(status: status, state: DeviceState.empty.applying(updates), lastError: nil)
+    }
 }

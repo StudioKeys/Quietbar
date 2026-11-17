@@ -1,5 +1,4 @@
 import CoreBluetooth
-import JBLProtocol
 
 extension CoreBluetoothTransport: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
@@ -19,7 +18,7 @@ extension CoreBluetoothTransport: CBCentralManagerDelegate {
         rssi: NSNumber
     ) {
         let name = discovered.name ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? ""
-        guard pendingConnect != nil, peripheral == nil, name.contains(GattIdentifiers.deviceNameFragment) else {
+        guard pendingConnect != nil, peripheral == nil, name.contains(profile.nameFragment) else {
             return
         }
         Self.logger.info("Found \(name, privacy: .public)")
@@ -27,7 +26,7 @@ extension CoreBluetoothTransport: CBCentralManagerDelegate {
     }
 
     public func centralManager(_ central: CBCentralManager, didConnect connected: CBPeripheral) {
-        connected.discoverServices([GattIdentifiers.service])
+        connected.discoverServices([serviceUUID])
     }
 
     public func centralManager(_ central: CBCentralManager, didFailToConnect failed: CBPeripheral, error: Error?) {
@@ -52,18 +51,18 @@ extension CoreBluetoothTransport: CBCentralManagerDelegate {
 
 extension CoreBluetoothTransport: CBPeripheralDelegate {
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        guard let service = peripheral.services?.first(where: { $0.uuid == GattIdentifiers.service }) else {
+        guard let service = peripheral.services?.first(where: { $0.uuid == serviceUUID }) else {
             abandon(peripheral, reason: "control service missing")
             return
         }
-        peripheral.discoverCharacteristics([GattIdentifiers.notify, GattIdentifiers.write], for: service)
+        peripheral.discoverCharacteristics([notifyUUID, writeUUID], for: service)
     }
 
     public func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?)
     {
         let characteristics = service.characteristics ?? []
-        guard let notify = characteristics.first(where: { $0.uuid == GattIdentifiers.notify }),
-            let write = characteristics.first(where: { $0.uuid == GattIdentifiers.write })
+        guard let notify = characteristics.first(where: { $0.uuid == notifyUUID }),
+            let write = characteristics.first(where: { $0.uuid == writeUUID })
         else {
             abandon(peripheral, reason: "control characteristics missing")
             return
@@ -93,12 +92,8 @@ extension CoreBluetoothTransport: CBPeripheralDelegate {
     public func peripheral(
         _ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?
     ) {
-        guard characteristic.uuid == GattIdentifiers.notify, let value = characteristic.value else { return }
-        do {
-            incomingContinuation.yield(try Frame.decode(value))
-        } catch {
-            Self.logger.debug("Ignored malformed frame: \(String(describing: error), privacy: .public)")
-        }
+        guard characteristic.uuid == notifyUUID, let value = characteristic.value else { return }
+        incomingContinuation.yield(value)
     }
 
     private func abandon(_ peripheral: CBPeripheral, reason: String) {

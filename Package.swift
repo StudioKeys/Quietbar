@@ -6,14 +6,14 @@ let package = Package(
     platforms: [.macOS(.v26)],
     targets: [
         .target(name: "JBLProtocol"),
-        .target(name: "HeadphoneKit", dependencies: ["JBLProtocol"]),
+        .target(name: "HeadphoneKit"),
         .target(name: "JBLDriver", dependencies: ["JBLProtocol", "HeadphoneKit"]),
-        .target(name: "JBLBluetooth", dependencies: ["HeadphoneKit", "JBLProtocol"]),
-        .executableTarget(name: "Quietbar", dependencies: ["JBLBluetooth", "HeadphoneKit", "JBLProtocol"]),
+        .target(name: "BluetoothLE", dependencies: ["HeadphoneKit"]),
+        .executableTarget(name: "Quietbar", dependencies: ["BluetoothLE", "HeadphoneKit", "JBLDriver"]),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
-        .testTarget(name: "HeadphoneKitTests", dependencies: ["HeadphoneKit", "JBLProtocol"]),
+        .testTarget(name: "HeadphoneKitTests", dependencies: ["HeadphoneKit"]),
         .testTarget(name: "JBLDriverTests", dependencies: ["JBLDriver", "JBLProtocol", "HeadphoneKit"]),
-        .testTarget(name: "QuietbarTests", dependencies: ["Quietbar", "HeadphoneKit", "JBLProtocol"]),
+        .testTarget(name: "QuietbarTests", dependencies: ["Quietbar", "HeadphoneKit"]),
     ],
     swiftLanguageModes: [.v6]
 )

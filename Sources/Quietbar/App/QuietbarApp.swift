@@ -1,12 +1,21 @@
+import BluetoothLE
 import HeadphoneKit
-import JBLBluetooth
+import JBLDriver
 import SwiftUI
 
 @main
 struct QuietbarApp: App {
-    @State private var viewModel = HeadphoneViewModel(
-        controller: HeadphoneSession(transport: CoreBluetoothTransport(), preferences: UserDefaultsStore())
-    )
+    @State private var viewModel: HeadphoneViewModel
+
+    init() {
+        let driver = JBLLive770NCDriver()
+        let session = DeviceSession(
+            driver: driver,
+            transport: CoreBluetoothTransport(profile: driver.model.gatt),
+            preferences: UserDefaultsStore()
+        )
+        _viewModel = State(initialValue: HeadphoneViewModel(controller: session, model: driver.model))
+    }
 
     var body: some Scene {
         MenuBarExtra {
@@ -16,5 +25,9 @@ struct QuietbarApp: App {
                 .task { await viewModel.run() }
         }
         .menuBarExtraStyle(.window)
+
+        Settings {
+            SettingsView()
+        }
     }
 }

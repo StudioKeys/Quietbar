@@ -68,35 +68,4 @@ struct ReplyTests {
 
         #expect(Reply(frame: frame) == .unknown(frame))
     }
-
-    @Test func replyKindMatchesCase() {
-        #expect(Reply.noiseMode(.anc).kind == .noiseMode)
-        #expect(Reply.lowVolumeEq(true).kind == .lowVolumeEq)
-        #expect(Reply.unknown(Frame(command: 0x12, payload: [])).kind == nil)
-    }
-
-    static let expectations: [(Command, ReplyKind)] = [
-        (.queryNoiseMode, .noiseMode),
-        (.setNoiseMode(.off), .noiseMode),
-        (.queryAdvancedAnc, .ambientLevel),
-        (.setAmbientLevel(AmbientLevel(3)!), .ambientLevel),
-        (.queryBattery, .battery),
-        (.querySpatial, .spatial),
-        (.setSpatial(SpatialSetting(isOn: true, mode: .music)), .spatial),
-        (.queryLowVolumeEq, .lowVolumeEq),
-        (.setLowVolumeEq(true), .lowVolumeEq),
-        (.queryEq, .eq),
-        (.setEqPreset(.jazz), .eq),
-        (.queryBalance, .balance),
-        (.setBalance(Balance(offset: 2)!), .balance),
-    ]
-
-    @Test(arguments: expectations)
-    func commandExpectsMatchingReplyKind(command: Command, kind: ReplyKind) {
-        #expect(command.expectedReply == kind)
-    }
-
-    @Test func queryForKindRoundTrips() {
-        #expect(ReplyKind.allCases.allSatisfy { $0.query.expectedReply == $0 })
-    }
 }

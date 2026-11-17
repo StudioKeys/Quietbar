@@ -1,17 +1,19 @@
 import CoreBluetooth
 import HeadphoneKit
-import JBLProtocol
 import os
 
 // All mutable state is confined to `queue`, the queue CoreBluetooth delivers every delegate callback on.
-public final class CoreBluetoothTransport: NSObject, HeadphoneTransport, @unchecked Sendable {
+public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked Sendable {
     typealias Completion = CheckedContinuation<Result<Void, TransportError>, Never>
 
     static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "CoreBluetoothTransport")
 
-    public let incoming: AsyncStream<Frame>
+    static let connectTimeout: TimeInterval = 20
+
+    public let incoming: AsyncStream<Data>
     public let events: AsyncStream<LinkEvent>
-    let incomingContinuation: AsyncStream<Frame>.Continuation
+    let incomingContinuation: AsyncStream<Data>.Continuation
+    let profile: GattProfile
     let eventsContinuation: AsyncStream<LinkEvent>.Continuation
     let queue = DispatchQueue(label: "dev.studiokeys.quietbar.bluetooth")
     var central: CBCentralManager?
@@ -21,7 +23,8 @@ public final class CoreBluetoothTransport: NSObject, HeadphoneTransport, @unchec
     var connectDeadline: DispatchWorkItem?
     var writes: [(data: Data, completion: Completion)] = []
 
-    override public init() {
+    public init(profile: GattProfile) {
+        self.profile = profile
         (incoming, incomingContinuation) = AsyncStream.makeStream()
         (events, eventsContinuation) = AsyncStream.makeStream()
         super.init()
@@ -46,9 +49,9 @@ public final class CoreBluetoothTransport: NSObject, HeadphoneTransport, @unchec
         }
     }
 
-    public func send(_ frame: Frame) async throws(TransportError) {
+    public func send(_ data: Data) async throws(TransportError) {
         try await withCheckedContinuation { (completion: Completion) in
-            queue.async { self.enqueueWrite(frame.encoded(), completion) }
+            queue.async { self.enqueueWrite(data, completion) }
         }.get()
     }
 
@@ -69,7 +72,7 @@ public final class CoreBluetoothTransport: NSObject, HeadphoneTransport, @unchec
             return
         }
         guard central.state == .poweredOn else { return }
-        if let known = central.retrieveConnectedPeripherals(withServices: [GattIdentifiers.service]).first {
+        if let known = central.retrieveConnectedPeripherals(withServices: [serviceUUID]).first {
             attach(known)
         } else {
             central.scanForPeripherals(withServices: nil)
@@ -93,7 +96,7 @@ public final class CoreBluetoothTransport: NSObject, HeadphoneTransport, @unchec
             }
         }
         connectDeadline = deadline
-        queue.asyncAfter(deadline: .now() + GattIdentifiers.connectTimeout, execute: deadline)
+        queue.asyncAfter(deadline: .now() + Self.connectTimeout, execute: deadline)
     }
 
     func finishConnect(_ result: Result<Void, TransportError>) {
@@ -142,4 +145,10 @@ extension CBManagerState {
         default: nil
         }
     }
+}
+
+extension CoreBluetoothTransport {
+    var serviceUUID: CBUUID { CBUUID(string: profile.service) }
+    var notifyUUID: CBUUID { CBUUID(string: profile.notify) }
+    var writeUUID: CBUUID { CBUUID(string: profile.write) }
 }

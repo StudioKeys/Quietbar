@@ -1,14 +1,13 @@
-import JBLProtocol
 import Testing
 
 @testable import HeadphoneKit
 
 struct ReplyWaitersTests {
     @Test func deliveryBeforeWaitMarksTicketFulfilled() {
-        var waiters = ReplyWaiters<ReplyKind>()
-        let ticket = waiters.expect(.eq)
+        var waiters = ReplyWaiters<SettingID>()
+        let ticket = waiters.expect("eq")
 
-        let resumed = waiters.deliver(.eq)
+        let resumed = waiters.deliver("eq")
 
         let wasFulfilled = waiters.consumeFulfilled(ticket)
 
@@ -17,10 +16,10 @@ struct ReplyWaitersTests {
     }
 
     @Test func deliveryOfOtherKindLeavesTicketPending() {
-        var waiters = ReplyWaiters<ReplyKind>()
-        let ticket = waiters.expect(.eq)
+        var waiters = ReplyWaiters<SettingID>()
+        let ticket = waiters.expect("eq")
 
-        _ = waiters.deliver(.battery)
+        _ = waiters.deliver("battery")
         let wasFulfilled = waiters.consumeFulfilled(ticket)
 
         #expect(!wasFulfilled)
@@ -28,8 +27,8 @@ struct ReplyWaitersTests {
     }
 
     @Test func expiringRemovesTicket() {
-        var waiters = ReplyWaiters<ReplyKind>()
-        let ticket = waiters.expect(.spatial)
+        var waiters = ReplyWaiters<SettingID>()
+        let ticket = waiters.expect("spatial")
 
         _ = waiters.expire(ticket)
 
