@@ -3,20 +3,22 @@ import SwiftUI
 
 struct ConnectionFooter: View {
     let viewModel: HeadphoneViewModel
+    @Binding var isShowingSettings: Bool
     @AppStorage(GlassPreference.key) private var isGlassEnabled = true
 
     var body: some View {
         HStack(spacing: 8) {
             connectionButton
             Spacer()
-            SettingsLink {
-                Image(systemName: "gearshape")
+            Button {
+                isShowingSettings.toggle()
+            } label: {
+                Image(systemName: isShowingSettings ? "gearshape.fill" : "gearshape")
                     .frame(width: 18, height: 18)
             }
             .buttonBorderShape(.circle)
-            .simultaneousGesture(TapGesture().onEnded { NSApplication.shared.activate() })
             .help("Settings")
-            .accessibilityLabel("Settings")
+            .accessibilityLabel(isShowingSettings ? "Close settings" : "Settings")
             Button {
                 NSApplication.shared.terminate(nil)
             } label: {

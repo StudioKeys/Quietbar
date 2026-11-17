@@ -25,9 +25,5 @@ struct QuietbarApp: App {
                 .task { await viewModel.run() }
         }
         .menuBarExtraStyle(.window)
-
-        Settings {
-            SettingsView()
-        }
     }
 }
