@@ -7,6 +7,7 @@ let package = Package(
     targets: [
         .target(name: "JBLProtocol"),
         .target(name: "JBLDevice", dependencies: ["JBLProtocol"]),
+        .target(name: "JBLBluetooth", dependencies: ["JBLDevice", "JBLProtocol"]),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
         .testTarget(name: "JBLDeviceTests", dependencies: ["JBLDevice", "JBLProtocol"]),
     ],
