@@ -3,7 +3,7 @@ import CoreBluetooth
 extension CoreBluetoothTransport: CBCentralManagerDelegate {
     public func centralManagerDidUpdateState(_ central: CBCentralManager) {
         if let issue = central.state.bluetoothIssue {
-            failAllWrites()
+            forgetPeripheral()
             eventsContinuation.yield(.bluetoothUnavailable(issue))
         } else if central.state == .poweredOn {
             eventsContinuation.yield(.bluetoothReady)
@@ -40,12 +40,21 @@ extension CoreBluetoothTransport: CBCentralManagerDelegate {
         didDisconnectPeripheral disconnected: CBPeripheral,
         error: Error?
     ) {
+        guard disconnected === peripheral else { return }
         Self.logger.notice("Disconnected: \(error?.localizedDescription ?? "requested", privacy: .public)")
+        let wasAnnounced = isLinkAnnounced
+        forgetPeripheral()
+        finishConnect(.failure(.connectFailed))
+        if wasAnnounced {
+            eventsContinuation.yield(.disconnected)
+        }
+    }
+
+    func forgetPeripheral() {
         writeCharacteristic = nil
         peripheral = nil
+        isLinkAnnounced = false
         failAllWrites()
-        finishConnect(.failure(.connectFailed))
-        eventsContinuation.yield(.disconnected)
     }
 }
 
@@ -81,6 +90,7 @@ extension CoreBluetoothTransport: CBPeripheralDelegate {
             return
         }
         finishConnect(.success(()))
+        isLinkAnnounced = true
         eventsContinuation.yield(.connected)
     }
 

@@ -22,6 +22,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
     var pendingConnect: Completion?
     var connectDeadline: DispatchWorkItem?
     var writes: [(data: Data, completion: Completion)] = []
+    var isLinkAnnounced = false
 
     public init(profile: GattProfile) {
         self.profile = profile
