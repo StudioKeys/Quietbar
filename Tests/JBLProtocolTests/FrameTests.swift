@@ -11,7 +11,7 @@ struct FrameTests {
     }
 
     @Test func encodesEqFrameWithSixteenBitLength() {
-        let frame = Frame(command: 0xA2, payload: [UInt8](repeating: 0, count: 116))
+        let frame = Frame(command: 0xA2, payload: [UInt8](repeating: 0, count: 116), usesWideLength: true)
 
         let encoded = frame.encoded()
 
