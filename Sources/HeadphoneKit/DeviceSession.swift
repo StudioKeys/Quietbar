@@ -48,12 +48,12 @@ public actor DeviceSession {
             publish(snapshot.with(status: .disconnectedByUser))
             return
         }
-        await linkUp()
+        await runLink()
     }
 
     public func userConnect() async {
         preferences.set(true, forKey: Self.wantsConnectionKey)
-        await linkUp()
+        await runLink()
     }
 
     public func userDisconnect() async {
@@ -147,28 +147,46 @@ public actor DeviceSession {
         preferences.bool(forKey: Self.wantsConnectionKey) ?? true
     }
 
-    private func linkUp() async {
-        guard !isLinking, snapshot.status != .connected else { return }
+    private func runLink() async {
+        let previous = linking
+        previous?.cancel()
+        await previous?.value
+        let link = Task { [weak self] in
+            guard let self else { return }
+            await establishLink()
+        }
+        linking = link
+        await link.value
+    }
+
+    private func establishLink() async {
         isLinking = true
         defer { isLinking = false }
+        guard await linkUp() else { return }
+        await didConnect()
+    }
+
+    private func linkUp() async -> Bool {
+        guard snapshot.status != .connected else { return false }
         publish(snapshot.with(status: .searching))
         var failures = 0
         while wantsConnection, !Task.isCancelled {
             do {
                 try await transport.connect()
-                await didConnect()
-                return
+                return true
             } catch .bluetoothUnavailable(let issue) {
                 publish(snapshot.with(status: .unavailable(issue)))
-                return
+                return false
             } catch {
                 failures += 1
-                guard await backOff(after: error, failures: failures) else { return }
+                guard await backOff(after: error, failures: failures) else { return false }
             }
         }
+        return false
     }
 
     private func backOff(after error: TransportError, failures: Int) async -> Bool {
+        guard wantsConnection, !Task.isCancelled else { return false }
         let delay = policy.delay(afterFailures: failures)
         Self.logger.notice(
             "Connect failed (\(String(describing: error), privacy: .public)); retry in \(delay, privacy: .public)")
@@ -188,6 +206,7 @@ public actor DeviceSession {
         }
         publish(snapshot.with(status: .connected))
         await refresh()
+        guard snapshot.status == .connected else { return }
         startPolling()
     }
 
@@ -221,18 +240,14 @@ public actor DeviceSession {
             stopPolling()
             guard wantsConnection, snapshot.status != .disconnectedByUser else { return }
             publish(snapshot.with(status: .searching))
-            relink()
+            Task { [weak self] in await self?.runLink() }
         case .bluetoothUnavailable(let issue):
             stopPolling()
             publish(snapshot.with(status: .unavailable(issue)))
         case .bluetoothReady:
-            guard wantsConnection, snapshot.status != .connected else { return }
-            relink()
+            guard wantsConnection, snapshot.status != .connected, !isLinking else { return }
+            Task { [weak self] in await self?.runLink() }
         }
-    }
-
-    private func relink() {
-        linking = Task { [weak self] in await self?.linkUp() }
     }
 
     private func send(_ request: Data) async {

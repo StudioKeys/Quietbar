@@ -199,4 +199,41 @@ struct DeviceSessionTests {
         #expect(await transport.sent.last == FakeDriver.set("codec", 1))
         #expect(await session.current.lastError == nil)
     }
+
+    @Test func linkDroppedDuringFirstRefreshReconnects() async throws {
+        let transport = FakeByteTransport(dropLinkOnSend: FakeDriver.query(1))
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 5))
+
+        await session.start()
+
+        try await waitUntil { await transport.connectCount == 2 }
+        try await waitUntil { await session.current.status == .connected }
+    }
+
+    @Test func connectAfterDisconnectDuringBackOffConnectsAtOnce() async throws {
+        let transport = FakeByteTransport(connectFailures: 1)
+        let session = makeSession(transport)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await session.current.status == .retrying(after: .seconds(1), phoneHint: true) }
+
+        await session.userDisconnect()
+        await session.userConnect()
+
+        #expect(await session.current.status == .connected)
+        #expect(await transport.connectCount == 2)
+    }
+
+    @Test func disconnectDuringPendingConnectShowsDisconnected() async throws {
+        let transport = FakeByteTransport(holdsConnect: true)
+        let session = makeSession(transport)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.connectCount == 1 }
+
+        await session.userDisconnect()
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await session.current.status == .disconnectedByUser)
+    }
 }

@@ -75,8 +75,19 @@ actor FakeByteTransport: DeviceTransport {
     private(set) var connectCount = 0
     private(set) var disconnectCount = 0
     private(set) var isConnected = false
+    private var dropLinkOnSend: Data?
+    private let holdsConnect: Bool
+    private var heldConnect: CheckedContinuation<Bool, Never>?
 
-    init(responses: [Data: [Data]] = [:], connectFailures: Int = 0, connectFailure: TransportError = .connectFailed) {
+    init(
+        responses: [Data: [Data]] = [:],
+        connectFailures: Int = 0,
+        connectFailure: TransportError = .connectFailed,
+        dropLinkOnSend: Data? = nil,
+        holdsConnect: Bool = false
+    ) {
+        self.dropLinkOnSend = dropLinkOnSend
+        self.holdsConnect = holdsConnect
         (incoming, incomingContinuation) = AsyncStream.makeStream()
         (events, eventsContinuation) = AsyncStream.makeStream()
         self.responses = responses
@@ -86,6 +97,10 @@ actor FakeByteTransport: DeviceTransport {
 
     func connect() async throws(TransportError) {
         connectCount += 1
+        if holdsConnect, connectCount == 1 {
+            let succeeded = await withCheckedContinuation { heldConnect = $0 }
+            guard succeeded else { throw connectFailure }
+        }
         guard remainingConnectFailures == 0 else {
             remainingConnectFailures -= 1
             throw connectFailure
@@ -94,12 +109,21 @@ actor FakeByteTransport: DeviceTransport {
     }
 
     func disconnect() async {
+        heldConnect?.resume(returning: false)
+        heldConnect = nil
         disconnectCount += 1
         isConnected = false
     }
 
     func send(_ data: Data) async throws(TransportError) {
         guard isConnected else { throw .notConnected }
+        if data == dropLinkOnSend {
+            dropLinkOnSend = nil
+            isConnected = false
+            eventsContinuation.yield(.disconnected)
+            try? await Task.sleep(for: .milliseconds(30))
+            throw .notConnected
+        }
         sent.append(data)
         for response in responses[data, default: []] {
             incomingContinuation.yield(response)
