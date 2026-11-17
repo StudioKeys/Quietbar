@@ -34,7 +34,7 @@ private struct BatteryLabel: View {
                 .monospacedDigit()
             Image(systemName: symbol)
                 .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(battery.percent <= 20 ? .red : .green)
+                .foregroundStyle(battery.percent <= 20 ? AnyShapeStyle(.red) : AnyShapeStyle(.primary))
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Battery \(battery.percent) percent\(battery.isCharging ? ", charging" : "")")
