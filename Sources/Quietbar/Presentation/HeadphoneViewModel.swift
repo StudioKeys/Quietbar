@@ -77,7 +77,7 @@ final class HeadphoneViewModel {
 
     @discardableResult
     func set(_ id: SettingID, _ value: SettingValue) -> Task<Void, Never>? {
-        guard !pending.contains(id) else { return nil }
+        guard !pending.contains(id), self.value(for: id) != value else { return nil }
         pending.insert(id)
         let controller = controller
         return Task {

@@ -126,4 +126,15 @@ struct HeadphoneViewModelTests {
         #expect(model.showsControls)
         #expect(model.canEdit)
     }
+
+    @Test func reselectingCurrentValueSendsNothing() async throws {
+        let controller = FakeController()
+        let model = try await observed(
+            controller, Fixtures.snapshot(.connected, [.setting("noiseMode", .choice("anc"))]))
+
+        let task = model.set("noiseMode", .choice("anc"))
+
+        #expect(task == nil)
+        #expect(await controller.applied.isEmpty)
+    }
 }
