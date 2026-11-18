@@ -6,6 +6,7 @@ let package = Package(
     platforms: [.macOS(.v26)],
     targets: [
         .target(name: "JBLProtocol"),
+        .target(name: "MotoProtocol", dependencies: ["HeadphoneKit"]),
         .target(name: "HeadphoneKit"),
         .target(name: "JBLDriver", dependencies: ["JBLProtocol", "HeadphoneKit"]),
         .target(name: "BluetoothLE", dependencies: ["HeadphoneKit"]),
@@ -19,6 +20,7 @@ let package = Package(
             dependencies: ["BluetoothLE", "ClassicBluetooth", "HeadphoneKit", "JBLDriver"]
         ),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
+        .testTarget(name: "MotoProtocolTests", dependencies: ["MotoProtocol"]),
         .testTarget(name: "HeadphoneKitTests", dependencies: ["HeadphoneKit"]),
         .testTarget(name: "JBLDriverTests", dependencies: ["JBLDriver", "JBLProtocol", "HeadphoneKit"]),
         .testTarget(name: "QuietbarTests", dependencies: ["Quietbar", "HeadphoneKit"]),
