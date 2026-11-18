@@ -9,6 +9,7 @@ let package = Package(
         .target(name: "MotoProtocol", dependencies: ["HeadphoneKit"]),
         .target(name: "HeadphoneKit"),
         .target(name: "JBLDriver", dependencies: ["JBLProtocol", "HeadphoneKit"]),
+        .target(name: "MotoDriver", dependencies: ["MotoProtocol", "HeadphoneKit"]),
         .target(name: "BluetoothLE", dependencies: ["HeadphoneKit"]),
         .target(
             name: "ClassicBluetooth",
@@ -21,6 +22,7 @@ let package = Package(
         ),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
         .testTarget(name: "MotoProtocolTests", dependencies: ["MotoProtocol"]),
+        .testTarget(name: "MotoDriverTests", dependencies: ["MotoDriver", "MotoProtocol", "HeadphoneKit"]),
         .testTarget(name: "HeadphoneKitTests", dependencies: ["HeadphoneKit"]),
         .testTarget(name: "JBLDriverTests", dependencies: ["JBLDriver", "JBLProtocol", "HeadphoneKit"]),
         .testTarget(name: "QuietbarTests", dependencies: ["Quietbar", "HeadphoneKit"]),
