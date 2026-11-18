@@ -42,14 +42,11 @@ func drawMonogram() {
     ring.stroke()
 
     let tail = NSBezierPath()
-    tail.move(to: NSPoint(x: 588, y: 437))
-    tail.line(to: NSPoint(x: 711, y: 292))
+    tail.move(to: NSPoint(x: 560, y: 470))
+    tail.line(to: NSPoint(x: 740, y: 300))
     tail.lineWidth = 69
     tail.lineCapStyle = .round
     tail.stroke()
-
-    NSColor.white.withAlphaComponent(0.9).setFill()
-    NSBezierPath(ovalIn: NSRect(x: 443, y: 485, width: 110, height: 110)).fill()
 }
 
 func writePNG(_ image: NSImage, pixels: Int, to url: URL) throws {
