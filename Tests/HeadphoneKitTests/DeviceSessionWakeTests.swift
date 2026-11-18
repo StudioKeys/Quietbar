@@ -70,6 +70,19 @@ struct DeviceSessionWakeTests: DeviceSessionHarness {
         #expect(await transport.connectCount == 6)
     }
 
+    @Test func classicConnectionAfterStopIsIgnored() async throws {
+        let transport = FakeByteTransport()
+        let watcher = FakeConnectionWatcher()
+        let session = await waitingSession(transport, watcher: watcher)
+        await session.stop()
+
+        watcher.emit("Fake Phones")
+        await settle()
+
+        #expect(await transport.connectCount == 5)
+        #expect(await session.current.status == .idle)
+    }
+
     @Test func nonMatchingClassicConnectionIsIgnored() async throws {
         let transport = FakeByteTransport()
         let watcher = FakeConnectionWatcher()
