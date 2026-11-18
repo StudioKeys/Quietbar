@@ -64,6 +64,7 @@ extension RFCOMMTransport: IOBluetoothRFCOMMChannelDelegate {
     private func armConnectDeadline() {
         let deadline = DispatchWorkItem { [weak self] in
             guard let self, self.pendingConnect != nil else { return }
+            self.channel?.setDelegate(nil)
             self.channel?.close()
             self.channel = nil
             self.finishConnect(.failure(.connectFailed))
@@ -81,6 +82,7 @@ extension RFCOMMTransport: IOBluetoothRFCOMMChannelDelegate {
     }
 
     public func rfcommChannelOpenComplete(_ rfcommChannel: IOBluetoothRFCOMMChannel!, status error: IOReturn) {
+        guard rfcommChannel == channel else { return }
         guard error == kIOReturnSuccess else {
             Self.logger.notice("RFCOMM open failed: \(error, privacy: .public)")
             channel = nil
@@ -96,6 +98,7 @@ extension RFCOMMTransport: IOBluetoothRFCOMMChannelDelegate {
     public func rfcommChannelData(
         _ rfcommChannel: IOBluetoothRFCOMMChannel!, data dataPointer: UnsafeMutableRawPointer!, length dataLength: Int
     ) {
+        guard rfcommChannel == channel else { return }
         incomingContinuation.yield(Data(bytes: dataPointer, count: dataLength))
     }
 
