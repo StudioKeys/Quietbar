@@ -80,6 +80,10 @@ actor FakeByteTransport: DeviceTransport {
     private let heldConnectNumber: Int
     private let identity: DeviceIdentity?
     private(set) var remembered: DeviceIdentity?
+    private(set) var rememberedAtFirstConnect: DeviceIdentity?
+    private(set) var identityRequested = false
+    private let holdsIdentity: Bool
+    private var heldIdentity: CheckedContinuation<Void, Never>?
     private var heldConnect: CheckedContinuation<Bool, Never>?
 
     init(
@@ -89,8 +93,10 @@ actor FakeByteTransport: DeviceTransport {
         dropLinkOnSend: Data? = nil,
         holdsConnect: Bool = false,
         heldConnectNumber: Int = 1,
-        identity: DeviceIdentity? = nil
+        identity: DeviceIdentity? = nil,
+        holdsIdentity: Bool = false
     ) {
+        self.holdsIdentity = holdsIdentity
         self.heldConnectNumber = heldConnectNumber
         self.identity = identity
         self.dropLinkOnSend = dropLinkOnSend
@@ -104,6 +110,7 @@ actor FakeByteTransport: DeviceTransport {
 
     func connect() async throws(TransportError) {
         connectCount += 1
+        if connectCount == 1 { rememberedAtFirstConnect = remembered }
         if holdsConnect, connectCount == heldConnectNumber {
             let succeeded = await withCheckedContinuation { heldConnect = $0 }
             guard succeeded else { throw connectFailure }
@@ -137,8 +144,15 @@ actor FakeByteTransport: DeviceTransport {
         }
     }
 
-    func connectedIdentity() -> DeviceIdentity? {
-        isConnected ? identity : nil
+    func connectedIdentity() async -> DeviceIdentity? {
+        identityRequested = true
+        if holdsIdentity { await withCheckedContinuation { heldIdentity = $0 } }
+        return isConnected ? identity : nil
+    }
+
+    func releaseIdentity() {
+        heldIdentity?.resume()
+        heldIdentity = nil
     }
 
     func remember(_ identity: DeviceIdentity?) {

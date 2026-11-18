@@ -29,7 +29,7 @@ final class ActiveDevice {
     func displayName(for entry: DeviceEntry) -> String {
         if entry.id == selected.id { return viewModel.deviceName }
         let stored = preferences.string(forKey: DeviceSession.identityKey(for: entry.id))
-        return stored.flatMap(DeviceIdentity.decode)?.name ?? entry.name
+        return stored.flatMap(DeviceIdentity.decode)?.displayName ?? entry.name
     }
 
     func start() async {
@@ -39,13 +39,13 @@ final class ActiveDevice {
 
     func select(_ id: String) async {
         guard id != selected.id, let entry = entries.first(where: { $0.id == id }) else { return }
-        observing?.cancel()
-        await viewModel.stop()
-        preferences.set(id, forKey: Self.selectedKey)
+        let previous = viewModel
         let next = Self.makeViewModel(for: entry)
+        preferences.set(id, forKey: Self.selectedKey)
         selected = entry
         viewModel = next
         observe(next)
+        await previous.stop()
         await next.connectNow()
     }
 

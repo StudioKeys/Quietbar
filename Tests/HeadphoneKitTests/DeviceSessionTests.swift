@@ -34,6 +34,47 @@ struct DeviceSessionTests {
         #expect(await session.current.status == .idle)
     }
 
+    @Test func stoppedSessionIgnoresLinkEvents() async throws {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport)
+        await session.start()
+
+        await session.stop()
+        await transport.emit(.disconnected)
+        await transport.emit(.bluetoothReady)
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await transport.connectCount == 1)
+        #expect(await session.current.status == .idle)
+    }
+
+    @Test func stopWhileRecordingIdentityNeverPublishesConnected() async throws {
+        let transport = FakeByteTransport(identity: Self.identity, holdsIdentity: true)
+        let session = makeSession(transport, deviceID: "dev")
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.identityRequested }
+
+        await session.stop()
+        await transport.releaseIdentity()
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await session.current.status == .idle)
+    }
+
+    @Test func userConnectRestoresRememberedIdentity() async {
+        let store = InMemoryPreferenceStore()
+        store.set(Self.identity.encoded, forKey: DeviceSession.identityKey(for: "dev"))
+        store.set(false, forKey: DeviceSession.connectionKey(for: "dev"))
+        let transport = FakeByteTransport()
+        let session = makeSession(transport, store: store, deviceID: "dev")
+
+        await session.userConnect()
+
+        #expect(await transport.rememberedAtFirstConnect == Self.identity)
+        #expect(await session.current.deviceName == "Jis Cans")
+    }
+
     @Test func stopKeepsConnectionChoice() async {
         let store = InMemoryPreferenceStore()
         let session = makeSession(FakeByteTransport(), store: store)

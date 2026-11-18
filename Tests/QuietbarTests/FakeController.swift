@@ -13,14 +13,27 @@ actor FakeController: HeadphoneControlling {
     private(set) var connectCount = 0
     private(set) var disconnectCount = 0
     private(set) var stopCount = 0
+    private let holdsStop: Bool
+    private var heldStops: [CheckedContinuation<Void, Never>] = []
 
-    init(holdsApplies: Bool = false) {
+    init(holdsApplies: Bool = false, holdsStop: Bool = false) {
+        self.holdsStop = holdsStop
         (snapshots, snapshotContinuation) = AsyncStream.makeStream()
         self.holdsApplies = holdsApplies
     }
 
     func start() async { startCount += 1 }
-    func stop() async { stopCount += 1 }
+    func stop() async {
+        stopCount += 1
+        guard holdsStop else { return }
+        await withCheckedContinuation { heldStops.append($0) }
+    }
+
+    func releaseStop() {
+        let waiting = heldStops
+        heldStops = []
+        for continuation in waiting { continuation.resume() }
+    }
     func refresh() async { refreshCount += 1 }
     func userConnect() async { connectCount += 1 }
     func userDisconnect() async { disconnectCount += 1 }

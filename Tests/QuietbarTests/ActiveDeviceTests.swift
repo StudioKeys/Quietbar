@@ -8,6 +8,8 @@ struct ActiveDeviceTests {
     private final class Controllers: @unchecked Sendable {
         var made: [String: FakeController] = [:]
         var deviceIDs: [String: String] = [:]
+        var makeCount: [String: Int] = [:]
+        var holdsStop = false
     }
 
     private let controllers = Controllers()
@@ -15,8 +17,9 @@ struct ActiveDeviceTests {
     private func entry(_ id: String) -> DeviceEntry {
         let controllers = controllers
         return DeviceEntry(id: id, model: Fixtures.model) { deviceID in
-            let controller = FakeController()
+            let controller = FakeController(holdsStop: controllers.holdsStop)
             controllers.made[id] = controller
+            controllers.makeCount[id, default: 0] += 1
             controllers.deviceIDs[id] = deviceID
             return controller
         }
@@ -83,12 +86,29 @@ struct ActiveDeviceTests {
 
     @Test func switcherNamesUseRememberedBluetoothName() {
         let store = InMemoryPreferenceStore()
-        let identity = DeviceIdentity(name: "Jis Cans", linkID: "LINK-1", classicAddress: nil)
+        let identity = DeviceIdentity(
+            name: "JBL Live 770NC-LE", linkID: "LINK-1", classicAddress: "AA", classicName: "Jis Cans")
         store.set(identity.encoded, forKey: DeviceSession.identityKey(for: "moto.budsplus"))
         let active = device(store: store)
 
         #expect(active.displayName(for: active.entries[1]) == "Jis Cans")
         #expect(active.displayName(for: active.entries[0]) == Fixtures.model.name)
+    }
+
+    @Test func concurrentSelectsBuildOneSession() async throws {
+        controllers.holdsStop = true
+        let active = device(store: InMemoryPreferenceStore())
+        let old = controllers.made["jbl.live770nc"]
+
+        let first = Task { await active.select("moto.budsplus") }
+        let second = Task { await active.select("moto.budsplus") }
+        try await Task.sleep(for: .milliseconds(20))
+        await old?.releaseStop()
+        await first.value
+        await second.value
+
+        #expect(controllers.makeCount["moto.budsplus"] == 1)
+        #expect(await old?.stopCount == 1)
     }
 
     @Test func showsSwitcherOnlyWithSeveralEntries() {

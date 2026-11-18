@@ -23,6 +23,8 @@ public actor DeviceSession {
     var linking: Task<Void, Never>?
     var isLinking = false
     var linkGeneration = 0
+    var isStopped = false
+    var hasRestoredIdentity = false
     var poller: Task<Void, Never>?
     var waiters = ReplyWaiters<SettingID>()
 
@@ -62,6 +64,13 @@ public actor DeviceSession {
         deviceID.map { "identity.\($0)" } ?? "identity"
     }
 
+    func restoreIdentity() async {
+        guard !hasRestoredIdentity, let identity = memory.identity else { return }
+        hasRestoredIdentity = true
+        await transport.remember(identity)
+        publish(snapshot.with(deviceName: identity.displayName))
+    }
+
     func saveMemory() {
         guard let identity = memory.identity else { return }
         preferences.set(identity.encoded, forKey: identityPreferenceKey)
@@ -69,11 +78,9 @@ public actor DeviceSession {
     }
 
     public func start() async {
+        isStopped = false
         startListening()
-        if let identity = memory.identity {
-            await transport.remember(identity)
-            publish(snapshot.with(deviceName: identity.displayName))
-        }
+        await restoreIdentity()
         guard wantsConnection else {
             publish(snapshot.with(status: .disconnectedByUser))
             return
@@ -82,7 +89,9 @@ public actor DeviceSession {
     }
 
     public func userConnect() async {
+        isStopped = false
         startListening()
+        await restoreIdentity()
         preferences.set(true, forKey: connectionPreferenceKey)
         await runLink()
     }
@@ -97,6 +106,7 @@ public actor DeviceSession {
     }
 
     public func stop() async {
+        isStopped = true
         linkGeneration += 1
         linking?.cancel()
         stopPolling()
@@ -120,7 +130,7 @@ public actor DeviceSession {
         let previous = linking
         previous?.cancel()
         await previous?.value
-        guard generation == linkGeneration, wantsConnection else { return }
+        guard generation == linkGeneration, wantsConnection, !isStopped else { return }
         let link = Task { [weak self] in
             guard let self else { return }
             await establishLink()
@@ -132,12 +142,17 @@ public actor DeviceSession {
     func establishLink() async {
         isLinking = true
         defer { isLinking = false }
+        let generation = linkGeneration
         guard await linkUp() else { return }
-        guard !Task.isCancelled else {
+        guard isCurrent(generation) else {
             await transport.disconnect()
             return
         }
-        await didConnect()
+        await didConnect(generation)
+    }
+
+    func isCurrent(_ generation: Int) -> Bool {
+        generation == linkGeneration && !Task.isCancelled && !isStopped
     }
 
     func linkUp() async -> Bool {
@@ -178,12 +193,16 @@ public actor DeviceSession {
         }
     }
 
-    func didConnect() async {
+    func didConnect(_ generation: Int) async {
         guard wantsConnection else {
             await transport.disconnect()
             return
         }
         await recordIdentity()
+        guard isCurrent(generation), wantsConnection else {
+            await transport.disconnect()
+            return
+        }
         publish(snapshot.with(status: .connected))
         await refresh()
         guard snapshot.status == .connected else { return }
@@ -213,6 +232,7 @@ public actor DeviceSession {
     }
 
     func handle(_ event: LinkEvent) {
+        guard !isStopped else { return }
         switch event {
         case .connected:
             return
@@ -272,7 +292,7 @@ public actor DeviceSession {
     }
 
     func classicDeviceConnected(_ connection: ClassicConnection) {
-        guard memory.isOurs(connection) else { return }
+        guard !isStopped, memory.isOurs(connection) else { return }
         memory.noteClassic(connection)
         saveMemory()
         guard wantsConnection else { return }
