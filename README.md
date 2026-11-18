@@ -5,6 +5,11 @@ A macOS menu bar app for controlling your headphones without reaching for your p
 Quietbar talks to the headphones directly over Bluetooth LE, the same way the manufacturer's phone app does, and
 puts the everyday controls one click away in the menu bar.
 
+<p align="center">
+  <img src="docs/images/menu-light.png" width="340" alt="Quietbar menu in light mode">
+  <img src="docs/images/menu-dark.png" width="340" alt="Quietbar menu in dark mode">
+</p>
+
 ## Supported headphones
 
 | Headphones | Status |
@@ -30,6 +35,10 @@ to describe compatibility.
 - Auto play & pause
 - Battery level, a menu bar icon that follows the noise mode, and automatic reconnection
 - Liquid Glass styling that can be turned off in Settings
+
+<p align="center">
+  <img src="docs/images/settings.png" width="340" alt="Quietbar settings panel">
+</p>
 
 ## Requirements
 
