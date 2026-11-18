@@ -1,4 +1,5 @@
 import BluetoothLE
+import ClassicBluetooth
 import HeadphoneKit
 import JBLDriver
 import SwiftUI
@@ -12,7 +13,8 @@ struct QuietbarApp: App {
         let session = DeviceSession(
             driver: driver,
             transport: CoreBluetoothTransport(profile: driver.model.gatt),
-            preferences: UserDefaultsStore()
+            preferences: UserDefaultsStore(),
+            watcher: IOBluetoothConnectionWatcher()
         )
         _viewModel = State(initialValue: HeadphoneViewModel(controller: session, model: driver.model))
     }

@@ -9,7 +9,15 @@ let package = Package(
         .target(name: "HeadphoneKit"),
         .target(name: "JBLDriver", dependencies: ["JBLProtocol", "HeadphoneKit"]),
         .target(name: "BluetoothLE", dependencies: ["HeadphoneKit"]),
-        .executableTarget(name: "Quietbar", dependencies: ["BluetoothLE", "HeadphoneKit", "JBLDriver"]),
+        .target(
+            name: "ClassicBluetooth",
+            dependencies: ["HeadphoneKit"],
+            linkerSettings: [.linkedFramework("IOBluetooth")]
+        ),
+        .executableTarget(
+            name: "Quietbar",
+            dependencies: ["BluetoothLE", "ClassicBluetooth", "HeadphoneKit", "JBLDriver"]
+        ),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
         .testTarget(name: "HeadphoneKitTests", dependencies: ["HeadphoneKit"]),
         .testTarget(name: "JBLDriverTests", dependencies: ["JBLDriver", "JBLProtocol", "HeadphoneKit"]),

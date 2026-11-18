@@ -15,7 +15,7 @@ for target in "$root"/Tests/*/; do
 done
 
 report="$(xcrun llvm-cov report "${objects[@]}" -instr-profile "$profdata" \
-    -ignore-filename-regex '(Tests/|\.build/|Sources/BluetoothLE/|Sources/Quietbar/(Views|App)/)')"
+    -ignore-filename-regex '(Tests/|\.build/|Sources/BluetoothLE/|Sources/ClassicBluetooth/|Sources/Quietbar/(Views|App)/)')"
 echo "$report"
 
 total="$(echo "$report" | awk '/^TOTAL/ {print $10}' | tr -d '%')"
