@@ -9,6 +9,13 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
 
     static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "RFCOMMTransport")
     static let connectTimeout: TimeInterval = 10
+    static let writeTimeout: TimeInterval = 3
+
+    struct PendingWrite {
+        let id: UInt
+        let completion: Completion
+        let deadline: DispatchWorkItem
+    }
 
     public let incoming: AsyncStream<Data>
     public let events: AsyncStream<LinkEvent>
@@ -22,7 +29,8 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
     var connectDeadline: DispatchWorkItem?
     var rememberedAddress: String?
     var isLinkAnnounced = false
-    var pendingWrites: [Completion] = []
+    var pendingWrites: [PendingWrite] = []
+    var nextWriteID: UInt = 1
 
     public init(serviceUUID: String, nameFragment: String) {
         var uuid = (UUID(uuidString: serviceUUID) ?? UUID()).uuid
@@ -88,22 +96,44 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
             completion.resume(returning: .failure(.notConnected))
             return
         }
+        let id = nextWriteID
+        nextWriteID += 1
         var bytes = [UInt8](data)
-        guard channel.writeAsync(&bytes, length: UInt16(bytes.count), refcon: nil) == kIOReturnSuccess else {
+        let refcon = UnsafeMutableRawPointer(bitPattern: id)
+        guard channel.writeAsync(&bytes, length: UInt16(bytes.count), refcon: refcon) == kIOReturnSuccess else {
             completion.resume(returning: .failure(.writeFailed))
             return
         }
-        pendingWrites.append(completion)
+        let deadline = DispatchWorkItem { [weak self] in self?.writeTimedOut(id) }
+        pendingWrites.append(PendingWrite(id: id, completion: completion, deadline: deadline))
+        DispatchQueue.main.asyncAfter(deadline: .now() + Self.writeTimeout, execute: deadline)
     }
 
-    func completeWrite(_ result: Result<Void, TransportError>) {
-        guard !pendingWrites.isEmpty else { return }
-        pendingWrites.removeFirst().resume(returning: result)
+    func completeWrite(id: UInt, _ result: Result<Void, TransportError>) {
+        guard let index = pendingWrites.firstIndex(where: { $0.id == id }) else { return }
+        let write = pendingWrites.remove(at: index)
+        write.deadline.cancel()
+        write.completion.resume(returning: result)
     }
 
-    func failPendingWrites() {
+    func failPendingWrites(_ error: TransportError = .notConnected) {
         let waiting = pendingWrites
         pendingWrites = []
-        for completion in waiting { completion.resume(returning: .failure(.notConnected)) }
+        for write in waiting {
+            write.deadline.cancel()
+            write.completion.resume(returning: .failure(error))
+        }
+    }
+
+    private func writeTimedOut(_ id: UInt) {
+        guard pendingWrites.contains(where: { $0.id == id }) else { return }
+        Self.logger.notice("RFCOMM write stalled; closing the channel")
+        failPendingWrites(.writeFailed)
+        channel?.setDelegate(nil)
+        channel?.close()
+        channel = nil
+        guard isLinkAnnounced else { return }
+        isLinkAnnounced = false
+        eventsContinuation.yield(.disconnected)
     }
 }

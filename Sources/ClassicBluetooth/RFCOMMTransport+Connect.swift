@@ -106,7 +106,7 @@ extension RFCOMMTransport: IOBluetoothRFCOMMChannelDelegate {
         _ rfcommChannel: IOBluetoothRFCOMMChannel!, refcon: UnsafeMutableRawPointer!, status error: IOReturn
     ) {
         guard rfcommChannel == channel else { return }
-        completeWrite(error == kIOReturnSuccess ? .success(()) : .failure(.writeFailed))
+        completeWrite(id: UInt(bitPattern: refcon), error == kIOReturnSuccess ? .success(()) : .failure(.writeFailed))
     }
 
     public func rfcommChannelClosed(_ rfcommChannel: IOBluetoothRFCOMMChannel!) {
