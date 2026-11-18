@@ -6,7 +6,7 @@ enum StatusText {
         case .idle: "Starting…"
         case .searching, .retrying(_, phoneHint: false): "Searching…"
         case .connected: "Connected"
-        case .disconnectedByUser: "Disconnected"
+        case .disconnectedByUser, .waiting: "Disconnected"
         case .retrying(_, phoneHint: true): "Disconnected — phone app may hold the link"
         case .unavailable(let issue): describe(issue)
         }

@@ -130,6 +130,10 @@ actor FakeByteTransport: DeviceTransport {
         }
     }
 
+    func failNextConnects(_ count: Int) {
+        remainingConnectFailures = count
+    }
+
     func respond(to request: Data, with packets: [Data]) {
         responses[request] = packets
     }

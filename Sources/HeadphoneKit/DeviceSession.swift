@@ -179,6 +179,11 @@ public actor DeviceSession {
                 return false
             } catch {
                 failures += 1
+                guard failures < policy.maxAttempts else {
+                    Self.logger.notice("Connect failed \(failures, privacy: .public) times; waiting")
+                    publish(snapshot.with(status: .waiting))
+                    return false
+                }
                 guard await backOff(after: error, failures: failures) else { return false }
             }
         }

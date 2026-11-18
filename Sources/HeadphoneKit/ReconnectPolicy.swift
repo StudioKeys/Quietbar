@@ -1,13 +1,17 @@
 public struct ReconnectPolicy: Sendable {
     public static let standard = ReconnectPolicy(
-        delays: [.seconds(1), .seconds(2), .seconds(5), .seconds(10), .seconds(30)]
+        delays: [.seconds(1), .seconds(2), .seconds(5), .seconds(10), .seconds(30)],
+        maxAttempts: 5
     )
 
+    public let maxAttempts: Int
     private let delays: [Duration]
 
-    public init(delays: [Duration]) {
+    public init(delays: [Duration], maxAttempts: Int) {
         precondition(!delays.isEmpty, "A reconnect policy needs at least one delay")
+        precondition(maxAttempts > 0, "A reconnect policy needs at least one attempt")
         self.delays = delays
+        self.maxAttempts = maxAttempts
     }
 
     public func delay(afterFailures count: Int) -> Duration {

@@ -9,6 +9,10 @@ struct ReconnectPolicyTests {
         #expect(delays == [.seconds(1), .seconds(2), .seconds(5), .seconds(10), .seconds(30), .seconds(30)])
     }
 
+    @Test func standardPolicyAllowsFiveAttempts() {
+        #expect(ReconnectPolicy.standard.maxAttempts == 5)
+    }
+
     @Test func zeroFailuresUsesFirstDelay() {
         #expect(ReconnectPolicy.standard.delay(afterFailures: 0) == .seconds(1))
     }
