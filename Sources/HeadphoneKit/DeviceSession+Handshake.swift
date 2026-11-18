@@ -27,21 +27,19 @@ extension DeviceSession {
         if driver.isReady(handshakeState) { return true }
         readyToken += 1
         let token = readyToken
-        let timeout = replyTimeout
+        var timer: Task<Void, Never>?
+        defer { timer?.cancel() }
         return await withTaskCancellationHandler {
             await withCheckedContinuation { continuation in
                 readyWaiter = continuation
-                Task { [weak self] in
-                    try? await Task.sleep(for: timeout)
-                    await self?.expireReadyWaiter(token)
-                }
+                timer = afterReplyTimeout { $0.expireReadyWaiter(token) }
             }
         } onCancel: {
             Task { [weak self] in await self?.expireReadyWaiter(token) }
         }
     }
 
-    private func expireReadyWaiter(_ token: Int) {
+    func expireReadyWaiter(_ token: Int) {
         guard token == readyToken, let waiter = readyWaiter else { return }
         readyWaiter = nil
         waiter.resume(returning: false)

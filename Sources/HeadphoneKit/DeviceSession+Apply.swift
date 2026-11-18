@@ -60,14 +60,29 @@ extension DeviceSession {
     func waitForReply(_ ticket: ReplyWaiters<SettingID>.Ticket) async -> Bool {
         if waiters.consumeFulfilled(ticket) { return true }
         guard waiters.isPending(ticket) else { return false }
-        let timeout = replyTimeout
-        return await withCheckedContinuation { continuation in
+        var timer: Task<Void, Never>?
+        let replied = await withCheckedContinuation { continuation in
             waiters.park(ticket, continuation)
-            Task { [weak self] in
-                try? await Task.sleep(for: timeout)
-                await self?.expire(ticket)
-            }
+            timer = afterReplyTimeout { $0.expire(ticket) }
         }
+        timer?.cancel()
+        return replied
+    }
+
+    func afterReplyTimeout(_ action: @escaping @Sendable (isolated DeviceSession) -> Void) -> Task<Void, Never> {
+        let timeout = replyTimeout
+        return Task { [weak self] in
+            do {
+                try await Task.sleep(for: timeout)
+            } catch {
+                return
+            }
+            await self?.run(action)
+        }
+    }
+
+    private func run(_ action: @Sendable (isolated DeviceSession) -> Void) {
+        action(self)
     }
 
     func expire(_ ticket: ReplyWaiters<SettingID>.Ticket) {
