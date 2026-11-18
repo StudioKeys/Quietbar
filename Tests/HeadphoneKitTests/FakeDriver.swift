@@ -78,9 +78,8 @@ struct FakeDriver: DeviceDriver {
 
 actor FakeByteTransport: DeviceTransport {
     nonisolated let incoming: AsyncStream<Data>
-    nonisolated let events: AsyncStream<LinkEvent>
     private let incomingContinuation: AsyncStream<Data>.Continuation
-    private let eventsContinuation: AsyncStream<LinkEvent>.Continuation
+    private let eventFeed = EventFeed<LinkEvent>()
     private var responses: [Data: [Data]]
     private var remainingConnectFailures: Int
     private let connectFailure: TransportError
@@ -115,11 +114,14 @@ actor FakeByteTransport: DeviceTransport {
         self.dropLinkOnSend = dropLinkOnSend
         self.holdsConnect = holdsConnect
         (incoming, incomingContinuation) = AsyncStream.makeStream()
-        (events, eventsContinuation) = AsyncStream.makeStream()
         self.responses = responses
         self.remainingConnectFailures = connectFailures
         self.connectFailure = connectFailure
     }
+
+    nonisolated var events: AsyncStream<LinkEvent> { eventFeed.stream }
+
+    nonisolated var hasHandledAllEvents: Bool { eventFeed.isDrained }
 
     func connect() async throws(TransportError) {
         connectCount += 1
@@ -147,8 +149,8 @@ actor FakeByteTransport: DeviceTransport {
         if data == dropLinkOnSend {
             dropLinkOnSend = nil
             isConnected = false
-            eventsContinuation.yield(.disconnected)
-            try? await Task.sleep(for: .milliseconds(30))
+            eventFeed.emit(.disconnected)
+            await eventFeed.drained()
             throw .notConnected
         }
         sent.append(data)
@@ -191,7 +193,7 @@ actor FakeByteTransport: DeviceTransport {
 
     func emit(_ event: LinkEvent) {
         if event == .disconnected { isConnected = false }
-        eventsContinuation.yield(event)
+        eventFeed.emit(event)
     }
 }
 

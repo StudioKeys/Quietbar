@@ -1,14 +1,13 @@
 import HeadphoneKit
 
 struct FakeConnectionWatcher: ConnectionWatcher {
-    let connections: AsyncStream<ClassicConnection>
-    private let continuation: AsyncStream<ClassicConnection>.Continuation
+    private let feed = EventFeed<ClassicConnection>()
 
-    init() {
-        (connections, continuation) = AsyncStream.makeStream()
-    }
+    var connections: AsyncStream<ClassicConnection> { feed.stream }
+
+    var hasHandledAll: Bool { feed.isDrained }
 
     func emit(_ name: String, address: String = "00-00-00-00-00-00") {
-        continuation.yield(ClassicConnection(name: name, address: address))
+        feed.emit(ClassicConnection(name: name, address: address))
     }
 }
