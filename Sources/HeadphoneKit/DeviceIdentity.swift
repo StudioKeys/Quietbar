@@ -1,4 +1,5 @@
 import Foundation
+import os
 
 public struct DeviceIdentity: Codable, Hashable, Sendable {
     public let name: String
@@ -20,7 +21,12 @@ public struct DeviceIdentity: Codable, Hashable, Sendable {
     }
 
     public static func decode(_ text: String) -> DeviceIdentity? {
-        try? JSONDecoder().decode(DeviceIdentity.self, from: Data(text.utf8))
+        do {
+            return try JSONDecoder().decode(DeviceIdentity.self, from: Data(text.utf8))
+        } catch {
+            Logger.quietbar("DeviceIdentity").error("Ignoring unreadable saved headphones: \(error, privacy: .public)")
+            return nil
+        }
     }
 
     func with(classic connection: ClassicConnection?) -> DeviceIdentity {

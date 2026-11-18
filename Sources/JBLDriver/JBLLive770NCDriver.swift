@@ -1,8 +1,11 @@
 import Foundation
 import HeadphoneKit
 import JBLProtocol
+import os
 
 public struct JBLLive770NCDriver: DeviceDriver {
+    private static let logger = Logger.quietbar("JBLLive770NCDriver")
+
     public let model = DeviceModel(
         name: "JBL Live 770NC",
         nameFragment: "770NC",
@@ -33,8 +36,12 @@ public struct JBLLive770NCDriver: DeviceDriver {
     }
 
     public func updates(from packet: Data) -> [DeviceUpdate] {
-        guard let frame = try? Frame.decode(packet) else { return [] }
-        return JBLUpdateDecoder.updates(from: frame)
+        do {
+            return JBLUpdateDecoder.updates(from: try Frame.decode(packet))
+        } catch {
+            Self.logger.debug("Dropped \(packet.count) byte packet: \(error, privacy: .public)")
+            return []
+        }
     }
 
     private static func query(for setting: SettingID) -> Command? {
