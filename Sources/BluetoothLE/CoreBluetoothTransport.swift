@@ -8,7 +8,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
 
     static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "CoreBluetoothTransport")
 
-    static let connectTimeout: TimeInterval = 20
+    static let connectTimeout: TimeInterval = 10
 
     public let incoming: AsyncStream<Data>
     public let events: AsyncStream<LinkEvent>
