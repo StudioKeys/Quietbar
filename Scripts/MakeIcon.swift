@@ -20,8 +20,8 @@ func drawIcon() -> NSImage {
 
         NSGradient(
             colors: [
-                NSColor(calibratedRed: 0.20, green: 0.42, blue: 0.98, alpha: 1),
-                NSColor(calibratedRed: 0.36, green: 0.20, blue: 0.78, alpha: 1),
+                NSColor(calibratedRed: 0.29, green: 0.23, blue: 1.00, alpha: 1),
+                NSColor(calibratedRed: 0.88, green: 0.27, blue: 0.56, alpha: 1),
             ]
         )?.draw(in: tile, angle: -60)
 
@@ -30,24 +30,26 @@ func drawIcon() -> NSImage {
             colors: [NSColor.white.withAlphaComponent(0.28), NSColor.white.withAlphaComponent(0)]
         )?.draw(in: sheen, angle: -90)
 
-        drawHeadphones()
+        drawMonogram()
         return true
     }
 }
 
-func drawHeadphones() {
+func drawMonogram() {
     NSColor.white.setStroke()
-    NSColor.white.setFill()
-    let band = NSBezierPath()
-    band.appendArc(withCenter: NSPoint(x: 512, y: 470), radius: 230, startAngle: 192, endAngle: -12, clockwise: true)
-    band.lineWidth = 56
-    band.lineCapStyle = .round
-    band.stroke()
-    for centerX in [CGFloat(318), 706] {
-        let cup = NSBezierPath(
-            roundedRect: NSRect(x: centerX - 62, y: 286, width: 124, height: 210), xRadius: 58, yRadius: 58)
-        cup.fill()
-    }
+    let ring = NSBezierPath(ovalIn: NSRect(x: 299, y: 341, width: 398, height: 398))
+    ring.lineWidth = 62
+    ring.stroke()
+
+    let tail = NSBezierPath()
+    tail.move(to: NSPoint(x: 588, y: 437))
+    tail.line(to: NSPoint(x: 711, y: 292))
+    tail.lineWidth = 69
+    tail.lineCapStyle = .round
+    tail.stroke()
+
+    NSColor.white.withAlphaComponent(0.9).setFill()
+    NSBezierPath(ovalIn: NSRect(x: 443, y: 485, width: 110, height: 110)).fill()
 }
 
 func writePNG(_ image: NSImage, pixels: Int, to url: URL) throws {
