@@ -99,6 +99,22 @@ struct DeviceSessionTests {
         #expect(await transport.connectCount == 3)
     }
 
+    @Test func disconnectWhileWakeWaitsOnPendingConnectStaysDisconnected() async throws {
+        let transport = FakeByteTransport(connectFailures: 1, holdsConnect: true, heldConnectNumber: 2)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10), watcher: watcher)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.connectCount == 2 }
+
+        watcher.emit("Fake Phones")
+        try await Task.sleep(for: .milliseconds(20))
+        await session.userDisconnect()
+        try await Task.sleep(for: .milliseconds(100))
+
+        #expect(await session.current.status == .disconnectedByUser)
+    }
+
     @Test func connectionReportedBeforeStartDoesNotRestartFirstAttempt() async throws {
         let transport = FakeByteTransport(holdsConnect: true)
         let watcher = FakeConnectionWatcher()

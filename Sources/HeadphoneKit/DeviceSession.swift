@@ -62,6 +62,7 @@ public actor DeviceSession {
 
     public func userDisconnect() async {
         preferences.set(false, forKey: Self.wantsConnectionKey)
+        linkGeneration += 1
         linking?.cancel()
         stopPolling()
         await transport.disconnect()
@@ -157,7 +158,7 @@ public actor DeviceSession {
         let previous = linking
         previous?.cancel()
         await previous?.value
-        guard generation == linkGeneration else { return }
+        guard generation == linkGeneration, wantsConnection else { return }
         let link = Task { [weak self] in
             guard let self else { return }
             await establishLink()
@@ -174,7 +175,7 @@ public actor DeviceSession {
     }
 
     private func linkUp() async -> Bool {
-        guard snapshot.status != .connected else { return false }
+        guard snapshot.status != .connected, wantsConnection else { return false }
         publish(snapshot.with(status: .searching))
         var failures = 0
         while wantsConnection, !Task.isCancelled {
