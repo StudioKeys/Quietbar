@@ -41,6 +41,8 @@ body:
       description: |
         Adding headphones needs someone who owns them to try builds and, ideally, capture Bluetooth traffic
         from the phone app. Never attach firmware files or the app's own files.
+        Don't attach raw Bluetooth captures here: they contain device addresses and pairing keys.
+        A maintainer will ask how to share one privately.
       options:
         - "Yes, I own them and can test builds"
         - "No, I am just requesting it"
@@ -50,4 +52,6 @@ body:
     id: additional
     attributes:
       label: Additional Context
-      description: Links, screenshots of the phone app's settings screens, or anything else that helps.
+      description: |
+        Links, screenshots of the phone app's settings screens, or anything else that helps.
+        No raw Bluetooth captures, firmware or app files.

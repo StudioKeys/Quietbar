@@ -87,7 +87,8 @@ body:
       label: Logs
       description: |
         Optional. In Terminal run `log show --last 10m --predicate 'subsystem == "dev.studiokeys.quietbar"' --info`
-        and paste the output. Remove anything you consider private.
+        and paste the output. It includes Bluetooth device names, which may contain your name;
+        edit those out if you prefer.
       render: text
   - type: textarea
     id: screenshots

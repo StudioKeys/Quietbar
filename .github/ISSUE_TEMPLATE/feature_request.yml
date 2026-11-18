@@ -7,6 +7,7 @@ body:
       value: |
         Before requesting a feature, check existing issues to avoid duplicates.
         To ask for support for a new pair of headphones, use the New Headphones Request form instead.
+        Quietbar never updates or modifies headphone firmware; firmware and OTA requests will be closed.
   - type: textarea
     id: problem
     attributes:

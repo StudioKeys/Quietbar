@@ -96,7 +96,8 @@ included in this repository.
 ## Acknowledgements
 
 The pull request template and issue forms are adapted from
-[robinebers/openusage](https://github.com/robinebers/openusage) (MIT).
+[robinebers/openusage](https://github.com/robinebers/openusage), Copyright (c) 2026 Robin Ebers, used under the
+[MIT License](https://github.com/robinebers/openusage/blob/main/LICENSE).
 
 ## License
 
