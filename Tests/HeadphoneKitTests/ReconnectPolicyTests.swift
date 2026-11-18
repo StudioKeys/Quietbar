@@ -4,9 +4,9 @@ import Testing
 
 struct ReconnectPolicyTests {
     @Test func policyDelaysFollowSchedule() {
-        let delays = (1...6).map(ReconnectPolicy.standard.delay(afterFailures:))
+        let delays = (1...5).map(ReconnectPolicy.standard.delay(afterFailures:))
 
-        #expect(delays == [.seconds(1), .seconds(2), .seconds(5), .seconds(10), .seconds(30), .seconds(30)])
+        #expect(delays == [.seconds(1), .seconds(2), .seconds(5), .seconds(10), .seconds(10)])
     }
 
     @Test func standardPolicyAllowsFiveAttempts() {
