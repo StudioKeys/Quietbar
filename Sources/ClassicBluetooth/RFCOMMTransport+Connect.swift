@@ -102,9 +102,17 @@ extension RFCOMMTransport: IOBluetoothRFCOMMChannelDelegate {
         incomingContinuation.yield(Data(bytes: dataPointer, count: dataLength))
     }
 
+    public func rfcommChannelWriteComplete(
+        _ rfcommChannel: IOBluetoothRFCOMMChannel!, refcon: UnsafeMutableRawPointer!, status error: IOReturn
+    ) {
+        guard rfcommChannel == channel else { return }
+        completeWrite(error == kIOReturnSuccess ? .success(()) : .failure(.writeFailed))
+    }
+
     public func rfcommChannelClosed(_ rfcommChannel: IOBluetoothRFCOMMChannel!) {
         guard rfcommChannel == channel else { return }
         channel = nil
+        failPendingWrites()
         finishConnect(.failure(.connectFailed))
         guard isLinkAnnounced else { return }
         isLinkAnnounced = false

@@ -22,6 +22,7 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
     var connectDeadline: DispatchWorkItem?
     var rememberedAddress: String?
     var isLinkAnnounced = false
+    var pendingWrites: [Completion] = []
 
     public init(serviceUUID: String, nameFragment: String) {
         var uuid = (UUID(uuidString: serviceUUID) ?? UUID()).uuid
@@ -43,6 +44,7 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
             DispatchQueue.main.async {
                 self.finishConnect(.failure(.connectFailed))
                 self.isLinkAnnounced = false
+                self.failPendingWrites()
                 self.channel?.setDelegate(nil)
                 self.channel?.close()
                 self.channel = nil
@@ -53,7 +55,7 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
 
     public func send(_ data: Data) async throws(TransportError) {
         try await withCheckedContinuation { (completion: Completion) in
-            DispatchQueue.main.async { completion.resume(returning: self.write(data)) }
+            DispatchQueue.main.async { self.write(data, completion) }
         }.get()
     }
 
@@ -81,10 +83,27 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
         }
     }
 
-    private func write(_ data: Data) -> Result<Void, TransportError> {
-        guard let channel, channel.isOpen() else { return .failure(.notConnected) }
+    private func write(_ data: Data, _ completion: Completion) {
+        guard let channel, channel.isOpen() else {
+            completion.resume(returning: .failure(.notConnected))
+            return
+        }
         var bytes = [UInt8](data)
-        let status = channel.writeSync(&bytes, length: UInt16(bytes.count))
-        return status == kIOReturnSuccess ? .success(()) : .failure(.writeFailed)
+        guard channel.writeAsync(&bytes, length: UInt16(bytes.count), refcon: nil) == kIOReturnSuccess else {
+            completion.resume(returning: .failure(.writeFailed))
+            return
+        }
+        pendingWrites.append(completion)
+    }
+
+    func completeWrite(_ result: Result<Void, TransportError>) {
+        guard !pendingWrites.isEmpty else { return }
+        pendingWrites.removeFirst().resume(returning: result)
+    }
+
+    func failPendingWrites() {
+        let waiting = pendingWrites
+        pendingWrites = []
+        for completion in waiting { completion.resume(returning: .failure(.notConnected)) }
     }
 }
