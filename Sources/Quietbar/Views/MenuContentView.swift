@@ -2,7 +2,9 @@ import HeadphoneKit
 import SwiftUI
 
 struct MenuContentView: View {
-    let viewModel: HeadphoneViewModel
+    let activeDevice: ActiveDevice
+
+    private var viewModel: HeadphoneViewModel { activeDevice.viewModel }
     @State private var isShowingSettings = false
 
     var body: some View {
@@ -25,7 +27,7 @@ struct MenuContentView: View {
 
     private var controls: some View {
         VStack(alignment: .leading, spacing: 10) {
-            HeaderView(viewModel: viewModel)
+            HeaderView(activeDevice: activeDevice)
             if viewModel.showsControls {
                 ForEach(viewModel.sections) { section in
                     SectionCard(title: section.title) {

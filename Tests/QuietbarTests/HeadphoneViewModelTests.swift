@@ -93,11 +93,12 @@ struct HeadphoneViewModelTests {
         #expect(HeadphoneViewModel.balanceText(offset) == text)
     }
 
-    @Test func runStartsSessionAndMirrorsSnapshots() async throws {
+    @Test func startStartsSessionAndObserveMirrorsSnapshots() async throws {
         let controller = FakeController()
         let model = viewModel(controller)
-        let running = Task { await model.run() }
-        defer { running.cancel() }
+        let observing = Task { await model.observe() }
+        defer { observing.cancel() }
+        await model.start()
 
         await controller.publish(Fixtures.snapshot(.connected, [.setting("noiseMode", .choice("off"))]))
 

@@ -2,7 +2,9 @@ import HeadphoneKit
 import SwiftUI
 
 struct HeaderView: View {
-    let viewModel: HeadphoneViewModel
+    let activeDevice: ActiveDevice
+
+    private var viewModel: HeadphoneViewModel { activeDevice.viewModel }
 
     var body: some View {
         HStack(spacing: 10) {
@@ -11,7 +13,7 @@ struct HeaderView: View {
                 .frame(width: 34, height: 34)
                 .background(.quaternary, in: .circle)
             VStack(alignment: .leading, spacing: 1) {
-                Text(viewModel.deviceName).font(.headline)
+                DeviceTitle(activeDevice: activeDevice)
                 Text(viewModel.statusText)
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -48,6 +50,42 @@ private struct BatteryLabel: View {
         case ..<63: return "battery.50percent"
         case ..<88: return "battery.75percent"
         default: return "battery.100percent"
+        }
+    }
+}
+
+struct DeviceTitle: View {
+    let activeDevice: ActiveDevice
+
+    var body: some View {
+        if activeDevice.showsSwitcher {
+            Menu {
+                ForEach(activeDevice.entries) { entry in
+                    Button {
+                        Task { await activeDevice.select(entry.id) }
+                    } label: {
+                        if entry.id == activeDevice.selected.id {
+                            Label(activeDevice.displayName(for: entry), systemImage: "checkmark")
+                        } else {
+                            Text(activeDevice.displayName(for: entry))
+                        }
+                        Text(entry.name)
+                    }
+                }
+            } label: {
+                HStack(spacing: 4) {
+                    Text(activeDevice.viewModel.deviceName).font(.headline)
+                    Image(systemName: "chevron.down")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .menuStyle(.button)
+            .buttonStyle(.plain)
+            .fixedSize()
+            .help("Choose headphones")
+        } else {
+            Text(activeDevice.viewModel.deviceName).font(.headline)
         }
     }
 }

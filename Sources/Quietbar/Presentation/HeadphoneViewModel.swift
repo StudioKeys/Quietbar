@@ -64,12 +64,6 @@ final class HeadphoneViewModel {
         value(for: id) == .bool(true)
     }
 
-    func run() async {
-        async let observing: Void = observe()
-        await controller.start()
-        await observing
-    }
-
     func start() async {
         await controller.start()
     }
