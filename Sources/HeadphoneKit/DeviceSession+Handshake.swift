@@ -6,6 +6,7 @@ extension DeviceSession {
         guard !requests.isEmpty else { return true }
         handshakeState = .empty
         for _ in 0..<2 {
+            guard !Task.isCancelled else { return false }
             for request in requests {
                 await send(request)
             }
@@ -27,12 +28,16 @@ extension DeviceSession {
         readyToken += 1
         let token = readyToken
         let timeout = replyTimeout
-        return await withCheckedContinuation { continuation in
-            readyWaiter = continuation
-            Task { [weak self] in
-                try? await Task.sleep(for: timeout)
-                await self?.expireReadyWaiter(token)
+        return await withTaskCancellationHandler {
+            await withCheckedContinuation { continuation in
+                readyWaiter = continuation
+                Task { [weak self] in
+                    try? await Task.sleep(for: timeout)
+                    await self?.expireReadyWaiter(token)
+                }
             }
+        } onCancel: {
+            Task { [weak self] in await self?.expireReadyWaiter(token) }
         }
     }
 

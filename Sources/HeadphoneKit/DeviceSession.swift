@@ -170,6 +170,7 @@ public actor DeviceSession {
                 framer = driver.makeFramer()
                 if await shakeHands() { return true }
                 await transport.disconnect()
+                guard !Task.isCancelled else { return false }
                 failure = .connectFailed
             } catch .bluetoothUnavailable(let issue) {
                 publish(snapshot.with(status: .unavailable(issue)))

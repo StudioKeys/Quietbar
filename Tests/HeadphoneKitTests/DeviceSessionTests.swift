@@ -89,6 +89,22 @@ struct DeviceSessionTests {
         try await waitUntil(within: .seconds(3)) { await session.current.status == .waiting }
     }
 
+    @Test func disconnectDuringHandshakeStopsWaitingAtOnce() async throws {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport, timeout: .seconds(2), driver: handshakeDriver)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.sent.contains(Self.hello) }
+
+        await session.userDisconnect()
+        let connecting = Task { await session.userConnect() }
+        defer { connecting.cancel() }
+
+        try await waitUntil(within: .milliseconds(500)) { await transport.connectCount == 2 }
+        await session.userDisconnect()
+        #expect(await session.current.status == .disconnectedByUser)
+    }
+
     @Test func stopDisconnectsAndEndsIdle() async {
         let transport = FakeByteTransport()
         let session = makeSession(transport)
