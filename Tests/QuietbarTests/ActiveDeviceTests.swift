@@ -102,7 +102,7 @@ struct ActiveDeviceTests {
 
         let first = Task { await active.select("moto.budsplus") }
         let second = Task { await active.select("moto.budsplus") }
-        try await Task.sleep(for: .milliseconds(20))
+        try await waitUntil { await old?.stopCount == 1 }
         await old?.releaseStop()
         await first.value
         await second.value
