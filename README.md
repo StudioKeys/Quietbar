@@ -12,8 +12,10 @@ puts the everyday controls one click away in the menu bar.
 | JBL Live 770NC | Supported |
 | Moto Buds | Planned |
 
-Quietbar is an independent project. It is not affiliated with, endorsed by, or sponsored by JBL, Harman or any
-other headphone manufacturer. Product names are used only to describe compatibility.
+Quietbar is an independent project. It is not affiliated with, endorsed by, or sponsored by JBL, Harman
+International, Samsung Electronics, Motorola, Motorola Mobility, Lenovo, Apple or any other headphone or device
+maker. All product names, trademarks and registered trademarks belong to their respective owners and are used only
+to describe compatibility.
 
 ## Features (JBL Live 770NC)
 
@@ -73,6 +75,12 @@ Adding headphones means writing a driver: describe the settings the device has a
 and from bytes. The menu renders whatever the driver describes.
 
 Quietbar only uses each device's control service. It never sends firmware-update commands.
+
+## How it was made
+
+Quietbar was built with the help of an AI coding assistant. The Bluetooth protocols were worked out by observing how
+the official companion apps talk to the headphones, for interoperability. No vendor code, firmware or assets are
+included in this repository.
 
 ## License
 
