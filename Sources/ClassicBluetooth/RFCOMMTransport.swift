@@ -32,8 +32,8 @@ public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendab
     var pendingWrites: [PendingWrite] = []
     var nextWriteID: UInt = 1
 
-    public init(serviceUUID: String, nameFragment: String) {
-        var uuid = (UUID(uuidString: serviceUUID) ?? UUID()).uuid
+    public init(serviceUUID: UUID, nameFragment: String) {
+        var uuid = serviceUUID.uuid
         self.serviceUUID = withUnsafeBytes(of: &uuid) { IOBluetoothSDPUUID(bytes: $0.baseAddress, length: $0.count) }
         self.nameFragment = nameFragment
         (incoming, incomingContinuation) = AsyncStream.makeStream()

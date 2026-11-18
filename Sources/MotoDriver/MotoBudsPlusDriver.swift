@@ -3,7 +3,8 @@ import HeadphoneKit
 import MotoProtocol
 
 public struct MotoBudsPlusDriver: DeviceDriver {
-    public static let serviceUUID = "fc9d9fe0-4899-11ee-be56-0242ac120002"
+    public static let serviceUUID = UUID(
+        uuid: (0xFC, 0x9D, 0x9F, 0xE0, 0x48, 0x99, 0x11, 0xEE, 0xBE, 0x56, 0x02, 0x42, 0xAC, 0x12, 0x00, 0x02))
     private static let supportInfoRequest: [UInt8] = [0xFC, 0xFF, 0x05, 0x00]
 
     public let model = DeviceModel(

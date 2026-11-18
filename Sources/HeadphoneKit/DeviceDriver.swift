@@ -14,7 +14,7 @@ public struct GattProfile: Hashable, Sendable {
 
 public enum LinkProfile: Hashable, Sendable {
     case gatt(GattProfile)
-    case rfcomm(serviceUUID: String)
+    case rfcomm(serviceUUID: UUID)
 }
 
 public struct DeviceModel: Hashable, Sendable {
