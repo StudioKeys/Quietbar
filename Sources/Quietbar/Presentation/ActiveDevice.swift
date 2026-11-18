@@ -26,6 +26,12 @@ final class ActiveDevice {
 
     var showsSwitcher: Bool { entries.count > 1 }
 
+    func displayName(for entry: DeviceEntry) -> String {
+        if entry.id == selected.id { return viewModel.deviceName }
+        let stored = preferences.string(forKey: DeviceSession.identityKey(for: entry.id))
+        return stored.flatMap(DeviceIdentity.decode)?.name ?? entry.name
+    }
+
     func start() async {
         observe(viewModel)
         await viewModel.start()
@@ -49,11 +55,11 @@ final class ActiveDevice {
     }
 
     private static func makeViewModel(for entry: DeviceEntry) -> HeadphoneViewModel {
-        HeadphoneViewModel(controller: entry.makeController(entry.connectionPreferenceKey), model: entry.model)
+        HeadphoneViewModel(controller: entry.makeController(entry.id), model: entry.model)
     }
 
     private static func migrateLegacyChoice(in preferences: any PreferenceStore) {
-        let key = "\(DeviceSession.wantsConnectionKey).\(legacyDeviceID)"
+        let key = DeviceSession.connectionKey(for: legacyDeviceID)
         guard preferences.bool(forKey: key) == nil,
             let legacy = preferences.bool(forKey: DeviceSession.wantsConnectionKey)
         else { return }

@@ -7,17 +7,17 @@ import Testing
 struct ActiveDeviceTests {
     private final class Controllers: @unchecked Sendable {
         var made: [String: FakeController] = [:]
-        var keys: [String: String] = [:]
+        var deviceIDs: [String: String] = [:]
     }
 
     private let controllers = Controllers()
 
     private func entry(_ id: String) -> DeviceEntry {
         let controllers = controllers
-        return DeviceEntry(id: id, model: Fixtures.model) { key in
+        return DeviceEntry(id: id, model: Fixtures.model) { deviceID in
             let controller = FakeController()
             controllers.made[id] = controller
-            controllers.keys[id] = key
+            controllers.deviceIDs[id] = deviceID
             return controller
         }
     }
@@ -32,7 +32,7 @@ struct ActiveDeviceTests {
         let active = device(store: InMemoryPreferenceStore())
 
         #expect(active.selected.id == "jbl.live770nc")
-        #expect(controllers.keys["jbl.live770nc"] == "wantsConnection.jbl.live770nc")
+        #expect(controllers.deviceIDs["jbl.live770nc"] == "jbl.live770nc")
     }
 
     @Test func selectionPersistsAcrossLaunch() async {
@@ -79,6 +79,16 @@ struct ActiveDeviceTests {
         _ = device(store: store)
 
         #expect(store.bool(forKey: "wantsConnection.jbl.live770nc") == false)
+    }
+
+    @Test func switcherNamesUseRememberedBluetoothName() {
+        let store = InMemoryPreferenceStore()
+        let identity = DeviceIdentity(name: "Jis Cans", linkID: "LINK-1", classicAddress: nil)
+        store.set(identity.encoded, forKey: DeviceSession.identityKey(for: "moto.budsplus"))
+        let active = device(store: store)
+
+        #expect(active.displayName(for: active.entries[1]) == "Jis Cans")
+        #expect(active.displayName(for: active.entries[0]) == Fixtures.model.name)
     }
 
     @Test func showsSwitcherOnlyWithSeveralEntries() {

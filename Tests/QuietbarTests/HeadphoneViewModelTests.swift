@@ -29,6 +29,19 @@ struct HeadphoneViewModelTests {
         #expect(model.showsConnectButton == showsConnect)
     }
 
+    @Test func headerShowsBluetoothNameWhenKnown() async throws {
+        let snapshot = DeviceSnapshot(status: .connected, state: .empty, lastError: nil, deviceName: "Jis Cans")
+        let model = try await observed(FakeController(), snapshot)
+
+        #expect(model.deviceName == "Jis Cans")
+    }
+
+    @Test func headerFallsBackToModelName() async throws {
+        let model = try await observed(FakeController(), Fixtures.snapshot(.connected, []))
+
+        #expect(model.deviceName == Fixtures.model.name)
+    }
+
     @Test func ancShowsAdaptiveToggleOnly() async throws {
         let model = try await observed(
             FakeController(), Fixtures.snapshot(.connected, [.setting("noiseMode", .choice("anc"))]))

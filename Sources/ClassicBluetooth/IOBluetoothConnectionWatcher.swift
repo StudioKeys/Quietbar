@@ -6,8 +6,8 @@ import os
 public final class IOBluetoothConnectionWatcher: NSObject, ConnectionWatcher, @unchecked Sendable {
     private static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "ConnectionWatcher")
 
-    public let connections: AsyncStream<String>
-    private let continuation: AsyncStream<String>.Continuation
+    public let connections: AsyncStream<ClassicConnection>
+    private let continuation: AsyncStream<ClassicConnection>.Continuation
     private var registration: IOBluetoothUserNotification?
 
     @MainActor
@@ -33,9 +33,10 @@ public final class IOBluetoothConnectionWatcher: NSObject, ConnectionWatcher, @u
     }
 
     private func report(_ device: IOBluetoothDevice) {
-        guard let name = device.name else { return }
+        guard let address = device.addressString else { return }
+        let name = device.name ?? address
         Self.logger.debug("Classic device connected: \(name, privacy: .public)")
-        continuation.yield(name)
+        continuation.yield(ClassicConnection(name: name, address: address))
     }
 
     private static func connectedDevices() -> [IOBluetoothDevice] {

@@ -44,4 +44,6 @@ public protocol DeviceTransport: Sendable {
     func connect() async throws(TransportError)
     func disconnect() async
     func send(_ data: Data) async throws(TransportError)
+    func connectedIdentity() async -> DeviceIdentity?
+    func remember(_ identity: DeviceIdentity?) async
 }

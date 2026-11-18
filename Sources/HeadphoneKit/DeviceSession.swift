@@ -16,6 +16,8 @@ public actor DeviceSession {
     private let batteryInterval: Duration
     private let watcher: (any ConnectionWatcher)?
     private let connectionPreferenceKey: String
+    private let identityPreferenceKey: String
+    private var pendingClassicAddress: String?
     private var snapshot = DeviceSnapshot.initial
     private var listeners: [Task<Void, Never>] = []
     private var linking: Task<Void, Never>?
@@ -35,7 +37,7 @@ public actor DeviceSession {
         policy: ReconnectPolicy = .standard,
         batteryInterval: Duration = .seconds(300),
         watcher: (any ConnectionWatcher)? = nil,
-        connectionPreferenceKey: String = DeviceSession.wantsConnectionKey
+        deviceID: String? = nil
     ) {
         (snapshots, continuation) = AsyncStream.makeStream(bufferingPolicy: .bufferingNewest(16))
         self.driver = driver
@@ -46,11 +48,28 @@ public actor DeviceSession {
         self.policy = policy
         self.batteryInterval = batteryInterval
         self.watcher = watcher
-        self.connectionPreferenceKey = connectionPreferenceKey
+        self.connectionPreferenceKey = Self.connectionKey(for: deviceID)
+        self.identityPreferenceKey = Self.identityKey(for: deviceID)
+    }
+
+    public static func connectionKey(for deviceID: String?) -> String {
+        deviceID.map { "\(wantsConnectionKey).\($0)" } ?? wantsConnectionKey
+    }
+
+    public static func identityKey(for deviceID: String?) -> String {
+        deviceID.map { "identity.\($0)" } ?? "identity"
+    }
+
+    private var rememberedIdentity: DeviceIdentity? {
+        preferences.string(forKey: identityPreferenceKey).flatMap(DeviceIdentity.decode)
     }
 
     public func start() async {
         startListening()
+        if let identity = rememberedIdentity {
+            await transport.remember(identity)
+            publish(snapshot.with(deviceName: identity.name))
+        }
         guard wantsConnection else {
             publish(snapshot.with(status: .disconnectedByUser))
             return
@@ -233,6 +252,7 @@ public actor DeviceSession {
             await transport.disconnect()
             return
         }
+        await recordIdentity()
         publish(snapshot.with(status: .connected))
         await refresh()
         guard snapshot.status == .connected else { return }
@@ -306,20 +326,39 @@ public actor DeviceSession {
         if let connections = watcher?.connections {
             listeners.append(
                 Task { [weak self] in
-                    for await name in connections {
-                        await self?.classicDeviceConnected(name)
+                    for await connection in connections {
+                        await self?.classicDeviceConnected(connection)
                     }
                 })
         }
     }
 
-    private func classicDeviceConnected(_ name: String) {
-        guard name.localizedCaseInsensitiveContains(driver.model.gatt.nameFragment), wantsConnection else { return }
+    private func recordIdentity() async {
+        guard let connected = await transport.connectedIdentity() else { return }
+        let address = rememberedIdentity?.classicAddress ?? pendingClassicAddress
+        let identity = connected.with(classicAddress: address)
+        pendingClassicAddress = nil
+        preferences.set(identity.encoded, forKey: identityPreferenceKey)
+        await transport.remember(identity)
+        publish(snapshot.with(deviceName: identity.name))
+    }
+
+    private func isOurs(_ connection: ClassicConnection) -> Bool {
+        if let address = rememberedIdentity?.classicAddress {
+            return address == connection.address
+        }
+        return connection.name.localizedCaseInsensitiveContains(driver.model.gatt.nameFragment)
+    }
+
+    private func classicDeviceConnected(_ connection: ClassicConnection) {
+        guard isOurs(connection), wantsConnection else { return }
+        let name = connection.name
         switch snapshot.status {
         case .idle, .connected, .searching, .disconnectedByUser, .unavailable:
             return
         case .retrying, .waiting:
             Self.logger.notice("\(name, privacy: .public) connected to the Mac; reconnecting")
+            if rememberedIdentity?.classicAddress == nil { pendingClassicAddress = connection.address }
             Task { [weak self] in await self?.runLink() }
         }
     }

@@ -10,7 +10,7 @@ struct DeviceSessionTests {
         store: InMemoryPreferenceStore = InMemoryPreferenceStore(),
         sleeper: ScriptedSleeper = ScriptedSleeper(immediateCount: 0),
         watcher: FakeConnectionWatcher? = nil,
-        preferenceKey: String = DeviceSession.wantsConnectionKey
+        deviceID: String? = nil
     ) -> DeviceSession {
         DeviceSession(
             driver: FakeDriver(),
@@ -19,7 +19,7 @@ struct DeviceSessionTests {
             sleep: sleeper.closure,
             preferences: store,
             watcher: watcher,
-            connectionPreferenceKey: preferenceKey
+            deviceID: deviceID
         )
     }
 
@@ -88,12 +88,88 @@ struct DeviceSessionTests {
         try await waitUntil { await transport.connectCount == 2 }
     }
 
+    private static let identity = DeviceIdentity(name: "Jis Cans", linkID: "LINK-1", classicAddress: nil)
+
+    private func storedIdentity(_ store: InMemoryPreferenceStore, _ id: String = "dev") -> DeviceIdentity? {
+        store.string(forKey: DeviceSession.identityKey(for: id)).flatMap(DeviceIdentity.decode)
+    }
+
+    @Test func identityRememberedAfterConnect() async {
+        let store = InMemoryPreferenceStore()
+        let transport = FakeByteTransport(identity: Self.identity)
+
+        let session = makeSession(transport, store: store, deviceID: "dev")
+        await session.start()
+
+        #expect(storedIdentity(store) == Self.identity)
+        #expect(await session.current.deviceName == "Jis Cans")
+    }
+
+    @Test func rememberedIdentityPassedToTransportOnStart() async throws {
+        let store = InMemoryPreferenceStore()
+        store.set(Self.identity.encoded, forKey: DeviceSession.identityKey(for: "dev"))
+        let transport = FakeByteTransport(holdsConnect: true)
+        let session = makeSession(transport, store: store, deviceID: "dev")
+
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+
+        try await waitUntil { await transport.connectCount == 1 }
+        #expect(await transport.remembered == Self.identity)
+        #expect(await session.current.deviceName == "Jis Cans")
+    }
+
+    @Test func wakeMatchesRememberedAddressAfterRename() async throws {
+        let store = InMemoryPreferenceStore()
+        let known = DeviceIdentity(name: "Jis Cans", linkID: "LINK-1", classicAddress: "AA")
+        store.set(known.encoded, forKey: DeviceSession.identityKey(for: "dev"))
+        let transport = FakeByteTransport(connectFailures: 5)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(
+            transport, store: store, sleeper: ScriptedSleeper(immediateCount: 10), watcher: watcher, deviceID: "dev")
+        await session.start()
+
+        watcher.emit("Living room", address: "AA")
+
+        try await waitUntil { await session.current.status == .connected }
+    }
+
+    @Test func otherDeviceWithSameNameIgnoredOnceAddressKnown() async throws {
+        let store = InMemoryPreferenceStore()
+        let known = DeviceIdentity(name: "Fake Phones", linkID: "LINK-1", classicAddress: "AA")
+        store.set(known.encoded, forKey: DeviceSession.identityKey(for: "dev"))
+        let transport = FakeByteTransport(connectFailures: 5)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(
+            transport, store: store, sleeper: ScriptedSleeper(immediateCount: 10), watcher: watcher, deviceID: "dev")
+        await session.start()
+
+        watcher.emit("Fake Phones", address: "BB")
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await session.current.status == .waiting)
+    }
+
+    @Test func firstNameMatchedWakeRecordsClassicAddress() async throws {
+        let store = InMemoryPreferenceStore()
+        let transport = FakeByteTransport(connectFailures: 5, identity: Self.identity)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(
+            transport, store: store, sleeper: ScriptedSleeper(immediateCount: 10), watcher: watcher, deviceID: "dev")
+        await session.start()
+
+        watcher.emit("Fake Phones", address: "CC")
+
+        try await waitUntil { await session.current.status == .connected }
+        #expect(storedIdentity(store)?.classicAddress == "CC")
+    }
+
     @Test func sessionsUsePerDeviceKey() async {
         let store = InMemoryPreferenceStore()
-        store.set(false, forKey: "wantsConnection.a")
+        store.set(false, forKey: DeviceSession.connectionKey(for: "a"))
         let other = FakeByteTransport()
 
-        await makeSession(other, store: store, preferenceKey: "wantsConnection.b").start()
+        await makeSession(other, store: store, deviceID: "b").start()
 
         #expect(await other.connectCount == 1)
     }

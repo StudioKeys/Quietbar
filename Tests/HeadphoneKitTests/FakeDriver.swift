@@ -78,6 +78,8 @@ actor FakeByteTransport: DeviceTransport {
     private var dropLinkOnSend: Data?
     private let holdsConnect: Bool
     private let heldConnectNumber: Int
+    private let identity: DeviceIdentity?
+    private(set) var remembered: DeviceIdentity?
     private var heldConnect: CheckedContinuation<Bool, Never>?
 
     init(
@@ -86,9 +88,11 @@ actor FakeByteTransport: DeviceTransport {
         connectFailure: TransportError = .connectFailed,
         dropLinkOnSend: Data? = nil,
         holdsConnect: Bool = false,
-        heldConnectNumber: Int = 1
+        heldConnectNumber: Int = 1,
+        identity: DeviceIdentity? = nil
     ) {
         self.heldConnectNumber = heldConnectNumber
+        self.identity = identity
         self.dropLinkOnSend = dropLinkOnSend
         self.holdsConnect = holdsConnect
         (incoming, incomingContinuation) = AsyncStream.makeStream()
@@ -131,6 +135,14 @@ actor FakeByteTransport: DeviceTransport {
         for response in responses[data, default: []] {
             incomingContinuation.yield(response)
         }
+    }
+
+    func connectedIdentity() -> DeviceIdentity? {
+        isConnected ? identity : nil
+    }
+
+    func remember(_ identity: DeviceIdentity?) {
+        remembered = identity
     }
 
     func releaseHeldConnect(succeeding: Bool) {

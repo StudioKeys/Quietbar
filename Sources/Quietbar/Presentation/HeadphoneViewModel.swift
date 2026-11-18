@@ -32,7 +32,7 @@ final class HeadphoneViewModel {
         self.model = model
     }
 
-    var deviceName: String { model.name }
+    var deviceName: String { snapshot.deviceName ?? model.name }
     var icon: MenuBarIcon { MenuBarIcon.make(for: snapshot, model: model) }
     var statusText: String { StatusText.describe(snapshot.status, deviceName: model.name) }
     var showsConnectButton: Bool { [.disconnectedByUser, .waiting].contains(snapshot.status) }

@@ -23,6 +23,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
     var connectDeadline: DispatchWorkItem?
     var writes: [(data: Data, completion: Completion)] = []
     var isLinkAnnounced = false
+    var rememberedID: UUID?
 
     public init(profile: GattProfile) {
         self.profile = profile
@@ -56,6 +57,30 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
         }.get()
     }
 
+    public func connectedIdentity() async -> DeviceIdentity? {
+        await withCheckedContinuation { (done: CheckedContinuation<DeviceIdentity?, Never>) in
+            queue.async {
+                guard let peripheral = self.peripheral, peripheral.state == .connected else {
+                    done.resume(returning: nil)
+                    return
+                }
+                let name = peripheral.name ?? self.profile.nameFragment
+                done.resume(
+                    returning: DeviceIdentity(name: name, linkID: peripheral.identifier.uuidString, classicAddress: nil)
+                )
+            }
+        }
+    }
+
+    public func remember(_ identity: DeviceIdentity?) async {
+        await withCheckedContinuation { (done: CheckedContinuation<Void, Never>) in
+            queue.async {
+                self.rememberedID = identity.flatMap { UUID(uuidString: $0.linkID) }
+                done.resume()
+            }
+        }
+    }
+
     private func beginConnect(_ completion: Completion) {
         guard pendingConnect == nil else {
             completion.resume(returning: .failure(.connectFailed))
@@ -73,7 +98,13 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
             return
         }
         guard central.state == .poweredOn else { return }
-        if let known = central.retrieveConnectedPeripherals(withServices: [serviceUUID]).first {
+        let connected = central.retrieveConnectedPeripherals(withServices: [serviceUUID])
+        if let id = rememberedID,
+            let known = connected.first(where: { $0.identifier == id })
+                ?? central.retrievePeripherals(withIdentifiers: [id]).first
+        {
+            attach(known)
+        } else if rememberedID == nil, let known = connected.first {
             attach(known)
         } else {
             central.scanForPeripherals(withServices: nil)
