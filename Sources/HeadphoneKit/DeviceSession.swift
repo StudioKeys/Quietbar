@@ -14,6 +14,7 @@ public actor DeviceSession {
     private let preferences: any PreferenceStore
     private let policy: ReconnectPolicy
     private let batteryInterval: Duration
+    private let watcher: (any ConnectionWatcher)?
     private var snapshot = DeviceSnapshot.initial
     private var listeners: [Task<Void, Never>] = []
     private var linking: Task<Void, Never>?
@@ -30,7 +31,8 @@ public actor DeviceSession {
         sleep: @escaping Sleeper = { try await Task.sleep(for: $0) },
         preferences: any PreferenceStore = InMemoryPreferenceStore(),
         policy: ReconnectPolicy = .standard,
-        batteryInterval: Duration = .seconds(300)
+        batteryInterval: Duration = .seconds(300),
+        watcher: (any ConnectionWatcher)? = nil
     ) {
         (snapshots, continuation) = AsyncStream.makeStream(bufferingPolicy: .bufferingNewest(16))
         self.driver = driver
@@ -40,6 +42,7 @@ public actor DeviceSession {
         self.preferences = preferences
         self.policy = policy
         self.batteryInterval = batteryInterval
+        self.watcher = watcher
     }
 
     public func start() async {
@@ -279,6 +282,25 @@ public actor DeviceSession {
                 }
             },
         ]
+        if let connections = watcher?.connections {
+            listeners.append(
+                Task { [weak self] in
+                    for await name in connections {
+                        await self?.classicDeviceConnected(name)
+                    }
+                })
+        }
+    }
+
+    private func classicDeviceConnected(_ name: String) {
+        guard name.localizedCaseInsensitiveContains(driver.model.gatt.nameFragment), wantsConnection else { return }
+        switch snapshot.status {
+        case .connected, .disconnectedByUser, .unavailable:
+            return
+        case .idle, .searching, .retrying, .waiting:
+            Self.logger.notice("\(name, privacy: .public) connected to the Mac; reconnecting")
+            Task { [weak self] in await self?.runLink() }
+        }
     }
 
     private func receive(_ packet: Data) {

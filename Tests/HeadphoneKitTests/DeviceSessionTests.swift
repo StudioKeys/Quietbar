@@ -8,15 +8,92 @@ struct DeviceSessionTests {
         _ transport: FakeByteTransport,
         timeout: Duration = .milliseconds(50),
         store: InMemoryPreferenceStore = InMemoryPreferenceStore(),
-        sleeper: ScriptedSleeper = ScriptedSleeper(immediateCount: 0)
+        sleeper: ScriptedSleeper = ScriptedSleeper(immediateCount: 0),
+        watcher: FakeConnectionWatcher? = nil
     ) -> DeviceSession {
         DeviceSession(
             driver: FakeDriver(),
             transport: transport,
             replyTimeout: timeout,
             sleep: sleeper.closure,
-            preferences: store
+            preferences: store,
+            watcher: watcher
         )
+    }
+
+    private func waitingSession(
+        _ transport: FakeByteTransport,
+        watcher: FakeConnectionWatcher
+    ) async -> DeviceSession {
+        await transport.failNextConnects(5)
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10), watcher: watcher)
+        await session.start()
+        return session
+    }
+
+    @Test func matchingClassicConnectionWakesWaitingSession() async throws {
+        let transport = FakeByteTransport()
+        let watcher = FakeConnectionWatcher()
+        let session = await waitingSession(transport, watcher: watcher)
+
+        watcher.emit("My Fake Phones")
+
+        try await waitUntil { await session.current.status == .connected }
+        #expect(await transport.connectCount == 6)
+    }
+
+    @Test func nonMatchingClassicConnectionIsIgnored() async throws {
+        let transport = FakeByteTransport()
+        let watcher = FakeConnectionWatcher()
+        let session = await waitingSession(transport, watcher: watcher)
+
+        watcher.emit("Keyboard")
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await transport.connectCount == 5)
+        #expect(await session.current.status == .waiting)
+    }
+
+    @Test func classicConnectionAfterUserDisconnectIsIgnored() async throws {
+        let transport = FakeByteTransport()
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(transport, watcher: watcher)
+        await session.start()
+        await session.userDisconnect()
+
+        watcher.emit("Fake Phones")
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await transport.connectCount == 1)
+        #expect(await session.current.status == .disconnectedByUser)
+    }
+
+    @Test func classicConnectionWhileConnectedIsIgnored() async throws {
+        let transport = FakeByteTransport()
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(transport, watcher: watcher)
+        await session.start()
+
+        watcher.emit("Fake Phones")
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await transport.connectCount == 1)
+        #expect(await session.current.status == .connected)
+    }
+
+    @Test func wakeDuringBackOffRestartsSingleRound() async throws {
+        let transport = FakeByteTransport(connectFailures: 1)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 0), watcher: watcher)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await session.current.status == .retrying(after: .seconds(1), phoneHint: true) }
+
+        watcher.emit("Fake Phones")
+
+        try await waitUntil { await session.current.status == .connected }
+        try await Task.sleep(for: .milliseconds(50))
+        #expect(await transport.connectCount == 2)
     }
 
     @Test func startConnectsAndSendsDriverRefreshRequests() async {
