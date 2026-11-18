@@ -10,12 +10,19 @@ struct MenuBarLabel: View {
             if let battery = icon.batteryText {
                 Text(battery)
             }
-            ForEach(icon.budLevels, id: \.side) { bud in
-                Text("\(Text(bud.side).foregroundStyle(.secondary)) \(bud.percent)")
+            if !icon.budLevels.isEmpty {
+                budsText
             }
         }
         .accessibilityElement(children: .combine)
         .accessibilityLabel("Quietbar headphones \(accessibilityBattery)")
+    }
+
+    private var budsText: Text {
+        icon.budLevels.enumerated().reduce(Text(verbatim: "")) { text, entry in
+            let gap = entry.offset == 0 ? "" : " "
+            return Text("\(text)\(gap)\(Text(entry.element.side).foregroundStyle(.secondary)) \(entry.element.percent)")
+        }
     }
 
     private var accessibilityBattery: String {

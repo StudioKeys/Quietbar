@@ -18,7 +18,7 @@ let package = Package(
         ),
         .executableTarget(
             name: "Quietbar",
-            dependencies: ["BluetoothLE", "ClassicBluetooth", "HeadphoneKit", "JBLDriver"]
+            dependencies: ["BluetoothLE", "ClassicBluetooth", "HeadphoneKit", "JBLDriver", "MotoDriver"]
         ),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
         .testTarget(name: "MotoProtocolTests", dependencies: ["MotoProtocol"]),
