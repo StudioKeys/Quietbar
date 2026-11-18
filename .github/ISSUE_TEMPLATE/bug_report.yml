@@ -45,6 +45,7 @@ body:
       label: Headphones
       options:
         - JBL Live 770NC
+        - moto buds+
         - Other (say which in Additional Context)
     validations:
       required: true
