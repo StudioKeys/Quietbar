@@ -12,6 +12,7 @@ actor FakeController: HeadphoneControlling {
     private(set) var refreshCount = 0
     private(set) var connectCount = 0
     private(set) var disconnectCount = 0
+    private(set) var stopCount = 0
 
     init(holdsApplies: Bool = false) {
         (snapshots, snapshotContinuation) = AsyncStream.makeStream()
@@ -19,6 +20,7 @@ actor FakeController: HeadphoneControlling {
     }
 
     func start() async { startCount += 1 }
+    func stop() async { stopCount += 1 }
     func refresh() async { refreshCount += 1 }
     func userConnect() async { connectCount += 1 }
     func userDisconnect() async { disconnectCount += 1 }

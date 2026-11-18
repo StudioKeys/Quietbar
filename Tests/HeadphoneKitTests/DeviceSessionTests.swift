@@ -9,7 +9,8 @@ struct DeviceSessionTests {
         timeout: Duration = .milliseconds(50),
         store: InMemoryPreferenceStore = InMemoryPreferenceStore(),
         sleeper: ScriptedSleeper = ScriptedSleeper(immediateCount: 0),
-        watcher: FakeConnectionWatcher? = nil
+        watcher: FakeConnectionWatcher? = nil,
+        preferenceKey: String = DeviceSession.wantsConnectionKey
     ) -> DeviceSession {
         DeviceSession(
             driver: FakeDriver(),
@@ -17,8 +18,74 @@ struct DeviceSessionTests {
             replyTimeout: timeout,
             sleep: sleeper.closure,
             preferences: store,
-            watcher: watcher
+            watcher: watcher,
+            connectionPreferenceKey: preferenceKey
         )
+    }
+
+    @Test func stopDisconnectsAndEndsIdle() async {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport)
+        await session.start()
+
+        await session.stop()
+
+        #expect(await transport.disconnectCount == 1)
+        #expect(await session.current.status == .idle)
+    }
+
+    @Test func stopKeepsConnectionChoice() async {
+        let store = InMemoryPreferenceStore()
+        let session = makeSession(FakeByteTransport(), store: store)
+        await session.start()
+
+        await session.stop()
+        let next = FakeByteTransport()
+        await makeSession(next, store: store).start()
+
+        #expect(await next.connectCount == 1)
+        #expect(store.bool(forKey: DeviceSession.wantsConnectionKey) != false)
+    }
+
+    @Test func stopDuringPendingConnectEndsIdle() async throws {
+        let transport = FakeByteTransport(holdsConnect: true)
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10))
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.connectCount == 1 }
+
+        await session.stop()
+        try await Task.sleep(for: .milliseconds(50))
+
+        #expect(await session.current.status == .idle)
+        #expect(await transport.connectCount == 1)
+    }
+
+    @Test func supersededLinkDropsItsConnection() async throws {
+        let transport = FakeByteTransport(holdsConnect: true)
+        let session = makeSession(transport)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.connectCount == 1 }
+
+        let connecting = Task { await session.userConnect() }
+        try await Task.sleep(for: .milliseconds(20))
+        await transport.releaseHeldConnect(succeeding: true)
+        await connecting.value
+
+        #expect(await transport.disconnectCount == 1)
+        #expect(await transport.connectCount == 2)
+        #expect(await session.current.status == .connected)
+    }
+
+    @Test func sessionsUsePerDeviceKey() async {
+        let store = InMemoryPreferenceStore()
+        store.set(false, forKey: "wantsConnection.a")
+        let other = FakeByteTransport()
+
+        await makeSession(other, store: store, preferenceKey: "wantsConnection.b").start()
+
+        #expect(await other.connectCount == 1)
     }
 
     private func waitingSession(

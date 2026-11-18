@@ -15,6 +15,7 @@ public actor DeviceSession {
     private let policy: ReconnectPolicy
     private let batteryInterval: Duration
     private let watcher: (any ConnectionWatcher)?
+    private let connectionPreferenceKey: String
     private var snapshot = DeviceSnapshot.initial
     private var listeners: [Task<Void, Never>] = []
     private var linking: Task<Void, Never>?
@@ -33,7 +34,8 @@ public actor DeviceSession {
         preferences: any PreferenceStore = InMemoryPreferenceStore(),
         policy: ReconnectPolicy = .standard,
         batteryInterval: Duration = .seconds(300),
-        watcher: (any ConnectionWatcher)? = nil
+        watcher: (any ConnectionWatcher)? = nil,
+        connectionPreferenceKey: String = DeviceSession.wantsConnectionKey
     ) {
         (snapshots, continuation) = AsyncStream.makeStream(bufferingPolicy: .bufferingNewest(16))
         self.driver = driver
@@ -44,6 +46,7 @@ public actor DeviceSession {
         self.policy = policy
         self.batteryInterval = batteryInterval
         self.watcher = watcher
+        self.connectionPreferenceKey = connectionPreferenceKey
     }
 
     public func start() async {
@@ -56,17 +59,25 @@ public actor DeviceSession {
     }
 
     public func userConnect() async {
-        preferences.set(true, forKey: Self.wantsConnectionKey)
+        preferences.set(true, forKey: connectionPreferenceKey)
         await runLink()
     }
 
     public func userDisconnect() async {
-        preferences.set(false, forKey: Self.wantsConnectionKey)
+        preferences.set(false, forKey: connectionPreferenceKey)
         linkGeneration += 1
         linking?.cancel()
         stopPolling()
         await transport.disconnect()
         publish(snapshot.with(status: .disconnectedByUser))
+    }
+
+    public func stop() async {
+        linkGeneration += 1
+        linking?.cancel()
+        stopPolling()
+        await transport.disconnect()
+        publish(snapshot.with(status: .idle))
     }
 
     public func refresh() async {
@@ -149,7 +160,7 @@ public actor DeviceSession {
     }
 
     private var wantsConnection: Bool {
-        preferences.bool(forKey: Self.wantsConnectionKey) ?? true
+        preferences.bool(forKey: connectionPreferenceKey) ?? true
     }
 
     private func runLink() async {
@@ -171,6 +182,10 @@ public actor DeviceSession {
         isLinking = true
         defer { isLinking = false }
         guard await linkUp() else { return }
+        guard !Task.isCancelled else {
+            await transport.disconnect()
+            return
+        }
         await didConnect()
     }
 
