@@ -11,3 +11,4 @@ iconutil --convert icns "$work/AppIcon.iconset" --output "$root/Resources/AppIco
 cp "$work/AppIcon.iconset/icon_256x256@2x.png" "$root/docs/images/icon.png"
 
 echo "Wrote $root/Resources/AppIcon.icns"
+echo "Wrote $root/docs/images/icon.png"

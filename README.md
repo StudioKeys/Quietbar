@@ -102,7 +102,7 @@ Set `QUIETBAR_SIGN_IDENTITY` to a code-signing identity to keep the Bluetooth pe
 ```sh
 swift test                   # unit tests (Swift Testing)
 Scripts/coverage.sh          # line coverage gate, 80% minimum
-Scripts/make-icon.sh         # regenerates Resources/AppIcon.icns
+Scripts/make-icon.sh         # regenerates Resources/AppIcon.icns and docs/images/icon.png
 ```
 
 ## How it is built
