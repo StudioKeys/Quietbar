@@ -99,12 +99,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
         }
         guard central.state == .poweredOn else { return }
         let connected = central.retrieveConnectedPeripherals(withServices: [serviceUUID])
-        if let id = rememberedID,
-            let known = connected.first(where: { $0.identifier == id })
-                ?? central.retrievePeripherals(withIdentifiers: [id]).first
-        {
-            attach(known)
-        } else if rememberedID == nil, let known = connected.first {
+        if let known = connected.first(where: { $0.identifier == rememberedID }) ?? connected.first {
             attach(known)
         } else {
             central.scanForPeripherals(withServices: nil)

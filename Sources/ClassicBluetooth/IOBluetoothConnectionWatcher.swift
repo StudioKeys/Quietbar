@@ -33,7 +33,7 @@ public final class IOBluetoothConnectionWatcher: NSObject, ConnectionWatcher, @u
     }
 
     private func report(_ device: IOBluetoothDevice) {
-        guard let address = device.addressString else { return }
+        guard device.isPaired(), let address = device.addressString else { return }
         let name = device.name ?? address
         Self.logger.debug("Classic device connected: \(name, privacy: .public)")
         continuation.yield(ClassicConnection(name: name, address: address))
