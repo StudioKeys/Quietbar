@@ -24,6 +24,10 @@ public actor DeviceSession {
     var isLinking = false
     var linkGeneration = 0
     var isStopped = false
+    var framer: any PacketFramer = PassthroughFramer()
+    var handshakeState = DeviceState.empty
+    var readyWaiter: CheckedContinuation<Bool, Never>?
+    var readyToken = 0
     var hasRestoredIdentity = false
     var poller: Task<Void, Never>?
     var waiters = ReplyWaiters<SettingID>()
@@ -160,21 +164,26 @@ public actor DeviceSession {
         publish(snapshot.with(status: .searching))
         var failures = 0
         while wantsConnection, !Task.isCancelled {
+            let failure: TransportError
             do {
                 try await transport.connect()
-                return true
+                framer = driver.makeFramer()
+                if await shakeHands() { return true }
+                await transport.disconnect()
+                failure = .connectFailed
             } catch .bluetoothUnavailable(let issue) {
                 publish(snapshot.with(status: .unavailable(issue)))
                 return false
             } catch {
-                failures += 1
-                guard failures < policy.maxAttempts else {
-                    Self.logger.notice("Connect failed \(failures, privacy: .public) times; waiting")
-                    publish(snapshot.with(status: .waiting))
-                    return false
-                }
-                guard await backOff(after: error, failures: failures) else { return false }
+                failure = error
             }
+            failures += 1
+            guard failures < policy.maxAttempts else {
+                Self.logger.notice("Connect failed \(failures, privacy: .public) times; waiting")
+                publish(snapshot.with(status: .waiting))
+                return false
+            }
+            guard await backOff(after: failure, failures: failures) else { return false }
         }
         return false
     }
@@ -306,8 +315,15 @@ public actor DeviceSession {
         }
     }
 
-    func receive(_ packet: Data) {
+    func receive(_ chunk: Data) {
+        for packet in framer.push(chunk) {
+            apply(packet)
+        }
+    }
+
+    func apply(_ packet: Data) {
         let updates = driver.updates(from: packet)
+        noteHandshakeProgress(updates)
         let updated = snapshot.state.applying(updates)
         if updated != snapshot.state {
             publish(snapshot.with(state: updated))

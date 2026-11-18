@@ -15,6 +15,18 @@ struct FakeDriver: DeviceDriver {
         ]
     )
 
+    var handshakeRequests: [Data] = []
+    var readySetting: SettingID?
+    var framesOnNewline = false
+
+    func makeFramer() -> any PacketFramer {
+        framesOnNewline ? NewlineFramer() : PassthroughFramer()
+    }
+
+    func isReady(_ state: DeviceState) -> Bool {
+        readySetting.map { state[$0] != nil } ?? true
+    }
+
     var refreshRequests: [Data] {
         Self.settings.indices.map { Self.query($0) } + [Self.batteryQuery]
     }
@@ -180,5 +192,19 @@ actor FakeByteTransport: DeviceTransport {
     func emit(_ event: LinkEvent) {
         if event == .disconnected { isConnected = false }
         eventsContinuation.yield(event)
+    }
+}
+
+struct NewlineFramer: PacketFramer {
+    private var buffer = Data()
+
+    mutating func push(_ chunk: Data) -> [Data] {
+        buffer.append(chunk)
+        var packets: [Data] = []
+        while let end = buffer.firstIndex(of: 0x0A) {
+            packets.append(Data(buffer[buffer.startIndex..<end]))
+            buffer = Data(buffer[buffer.index(after: end)...])
+        }
+        return packets
     }
 }

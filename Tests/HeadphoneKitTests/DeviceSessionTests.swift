@@ -10,10 +10,11 @@ struct DeviceSessionTests {
         store: InMemoryPreferenceStore = InMemoryPreferenceStore(),
         sleeper: ScriptedSleeper = ScriptedSleeper(immediateCount: 0),
         watcher: FakeConnectionWatcher? = nil,
-        deviceID: String? = nil
+        deviceID: String? = nil,
+        driver: FakeDriver = FakeDriver()
     ) -> DeviceSession {
         DeviceSession(
-            driver: FakeDriver(),
+            driver: driver,
             transport: transport,
             replyTimeout: timeout,
             sleep: sleeper.closure,
@@ -21,6 +22,71 @@ struct DeviceSessionTests {
             watcher: watcher,
             deviceID: deviceID
         )
+    }
+
+    private static let hello = Data([0x09])
+
+    private var handshakeDriver: FakeDriver {
+        var driver = FakeDriver()
+        driver.handshakeRequests = [Self.hello]
+        driver.readySetting = "mode"
+        return driver
+    }
+
+    @Test func chunksPassThroughDriverFramer() async throws {
+        var driver = FakeDriver()
+        driver.framesOnNewline = true
+        let transport = FakeByteTransport()
+        let session = makeSession(transport, driver: driver)
+        await session.start()
+
+        await transport.emit(Data([0x02, 0x01]))
+        await transport.emit(Data([0x05, 0x0A]))
+
+        try await waitUntil { await session.current.state["volume"] == .level(5) }
+    }
+
+    @Test func connectedOnlyAfterDriverReady() async {
+        let transport = FakeByteTransport(responses: [Self.hello: [FakeDriver.reply("mode", 1)]])
+
+        let session = makeSession(transport, driver: handshakeDriver)
+        await session.start()
+
+        #expect(await session.current.status == .connected)
+        #expect(await transport.sent.first == Self.hello)
+    }
+
+    @Test func handshakeResentOnceBeforeGivingUp() async throws {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 0), driver: handshakeDriver)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+
+        try await waitUntil { await session.current.status == .retrying(after: .seconds(1), phoneHint: true) }
+        #expect(await transport.sent.filter { $0 == Self.hello }.count == 2)
+        #expect(await transport.disconnectCount == 1)
+    }
+
+    @Test func handshakeTimeoutCountsAsFailedAttempt() async throws {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10), driver: handshakeDriver)
+
+        await session.start()
+
+        #expect(await session.current.status == .waiting)
+        #expect(await transport.connectCount == 5)
+    }
+
+    @Test func lastKnownStateDoesNotSatisfyHandshake() async throws {
+        let transport = FakeByteTransport(responses: [Self.hello: [FakeDriver.reply("mode", 1)]])
+        let sleeper = ScriptedSleeper(immediateCount: 10, blocksFrom: .seconds(300))
+        let session = makeSession(transport, sleeper: sleeper, driver: handshakeDriver)
+        await session.start()
+
+        await transport.respond(to: Self.hello, with: [])
+        await transport.emit(.disconnected)
+
+        try await waitUntil(within: .seconds(3)) { await session.current.status == .waiting }
     }
 
     @Test func stopDisconnectsAndEndsIdle() async {

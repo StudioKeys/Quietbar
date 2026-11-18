@@ -41,6 +41,15 @@ public protocol DeviceDriver: Sendable {
     func requests(for change: SettingChange, current: DeviceState) -> [Data]?
     func confirmingRequest(for setting: SettingID) -> Data?
     func updates(from packet: Data) -> [DeviceUpdate]
+    var handshakeRequests: [Data] { get }
+    func isReady(_ state: DeviceState) -> Bool
+    func makeFramer() -> any PacketFramer
+}
+
+extension DeviceDriver {
+    public var handshakeRequests: [Data] { [] }
+    public func isReady(_ state: DeviceState) -> Bool { true }
+    public func makeFramer() -> any PacketFramer { PassthroughFramer() }
 }
 
 public protocol DeviceTransport: Sendable {
