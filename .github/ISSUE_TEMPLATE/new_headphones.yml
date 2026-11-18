@@ -1,0 +1,53 @@
+name: New Headphones Request
+description: Request or propose support for another pair of headphones
+labels: ["headphones"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Want Quietbar to control another pair of headphones? Fill in the details below.
+        You can submit just a request, or help by capturing how the phone app talks to them.
+  - type: input
+    id: model
+    attributes:
+      label: Headphones
+      description: Brand and exact model.
+      placeholder: "e.g. Sony WH-1000XM5"
+    validations:
+      required: true
+  - type: input
+    id: phone_app
+    attributes:
+      label: Manufacturer's Phone App
+      description: Name and store link of the app that controls them.
+      placeholder: "e.g. Sony | Sound Connect — https://..."
+    validations:
+      required: true
+  - type: textarea
+    id: settings
+    attributes:
+      label: Settings You Want in Quietbar
+      description: Which controls from the phone app matter most to you?
+      placeholder: |
+        - Noise cancelling / ambient modes
+        - EQ presets
+        - Battery level
+    validations:
+      required: true
+  - type: dropdown
+    id: help
+    attributes:
+      label: Can you help with testing?
+      description: |
+        Adding headphones needs someone who owns them to try builds and, ideally, capture Bluetooth traffic
+        from the phone app. Never attach firmware files or the app's own files.
+      options:
+        - "Yes, I own them and can test builds"
+        - "No, I am just requesting it"
+    validations:
+      required: true
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Links, screenshots of the phone app's settings screens, or anything else that helps.
