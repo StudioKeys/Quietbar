@@ -34,7 +34,8 @@ final class HeadphoneViewModel {
 
     var deviceName: String { model.name }
     var icon: MenuBarIcon { MenuBarIcon.make(for: snapshot, model: model) }
-    var statusText: String { StatusText.describe(snapshot.status) }
+    var statusText: String { StatusText.describe(snapshot.status, deviceName: model.name) }
+    var showsConnectButton: Bool { [.disconnectedByUser, .waiting].contains(snapshot.status) }
     var isConnected: Bool { snapshot.status == .connected }
     var battery: Battery? { snapshot.state.battery }
     var showsControls: Bool { isConnected || snapshot.state != .empty }

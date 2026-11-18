@@ -17,6 +17,18 @@ struct HeadphoneViewModelTests {
         return model
     }
 
+    @Test(arguments: [
+        (ConnectionStatus.waiting, true),
+        (.disconnectedByUser, true),
+        (.searching, false),
+        (.connected, false),
+    ])
+    func connectButtonFollowsStatus(status: ConnectionStatus, showsConnect: Bool) async throws {
+        let model = try await observed(FakeController(), Fixtures.snapshot(status, []))
+
+        #expect(model.showsConnectButton == showsConnect)
+    }
+
     @Test func ancShowsAdaptiveToggleOnly() async throws {
         let model = try await observed(
             FakeController(), Fixtures.snapshot(.connected, [.setting("noiseMode", .choice("anc"))]))

@@ -18,6 +18,12 @@ struct StatusTextTests {
         ]
     )
     func statusTextCopy(status: ConnectionStatus, text: String) {
-        #expect(StatusText.describe(status) == text)
+        #expect(StatusText.describe(status, deviceName: "Test Phones") == text)
+    }
+
+    @Test func waitingNamesDevice() {
+        #expect(
+            StatusText.describe(.waiting, deviceName: "JBL Live 770NC")
+                == "Waiting for JBL Live 770NC — turn it on or connect it")
     }
 }

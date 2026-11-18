@@ -37,7 +37,7 @@ struct ConnectionFooter: View {
 
     @ViewBuilder
     private var connectionButton: some View {
-        if viewModel.snapshot.status == .disconnectedByUser {
+        if viewModel.showsConnectButton {
             Button {
                 viewModel.connect()
             } label: {

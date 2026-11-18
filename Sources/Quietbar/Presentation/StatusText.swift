@@ -1,12 +1,13 @@
 import HeadphoneKit
 
 enum StatusText {
-    static func describe(_ status: ConnectionStatus) -> String {
+    static func describe(_ status: ConnectionStatus, deviceName: String) -> String {
         switch status {
         case .idle: "Starting…"
         case .searching, .retrying(_, phoneHint: false): "Searching…"
         case .connected: "Connected"
-        case .disconnectedByUser, .waiting: "Disconnected"
+        case .disconnectedByUser: "Disconnected"
+        case .waiting: "Waiting for \(deviceName) — turn it on or connect it"
         case .retrying(_, phoneHint: true): "Disconnected — phone app may hold the link"
         case .unavailable(let issue): describe(issue)
         }
