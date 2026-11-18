@@ -45,6 +45,11 @@ connection and shows the name you gave it in Bluetooth settings.
 
 ### moto buds+
 
+<p align="center">
+  <img src="docs/images/moto-light.png" width="340" alt="Quietbar menu for moto buds+ in light mode">
+  <img src="docs/images/moto-dark.png" width="340" alt="Quietbar menu for moto buds+ in dark mode">
+</p>
+
 - Noise control: Noise Cancellation, Adaptive, Transparency, Off
 - EQ presets: Brilliant Treble, Bass Boost, Vocal Boost, Flat, Custom
 - Spatial Sound, Hi-Res Audio (the buds reconnect briefly to apply it), Volume Boost
