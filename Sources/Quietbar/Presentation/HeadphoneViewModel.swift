@@ -70,6 +70,18 @@ final class HeadphoneViewModel {
         await observing
     }
 
+    func start() async {
+        await controller.start()
+    }
+
+    func stop() async {
+        await controller.stop()
+    }
+
+    func connectNow() async {
+        await controller.userConnect()
+    }
+
     func observe() async {
         for await next in controller.snapshots {
             snapshot = next

@@ -59,6 +59,7 @@ public actor DeviceSession {
     }
 
     public func userConnect() async {
+        startListening()
         preferences.set(true, forKey: connectionPreferenceKey)
         await runLink()
     }

@@ -16,4 +16,14 @@ struct UserDefaultsStoreTests {
         #expect(before == nil)
         #expect(store.bool(forKey: "wantsConnection") == false)
     }
+
+    @Test func storesAndReadsBackString() {
+        let store = UserDefaultsStore(suiteName: suiteName)
+        defer { UserDefaults().removePersistentDomain(forName: suiteName) }
+
+        store.set("moto.budsplus", forKey: "selectedDevice")
+
+        #expect(store.string(forKey: "selectedDevice") == "moto.budsplus")
+        #expect(InMemoryPreferenceStore().string(forKey: "selectedDevice") == nil)
+    }
 }

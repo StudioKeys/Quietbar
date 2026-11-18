@@ -78,6 +78,16 @@ struct DeviceSessionTests {
         #expect(await session.current.status == .connected)
     }
 
+    @Test func userConnectWithoutStartStillHandlesLinkEvents() async throws {
+        let transport = FakeByteTransport()
+        let session = makeSession(transport)
+        await session.userConnect()
+
+        await transport.emit(.disconnected)
+
+        try await waitUntil { await transport.connectCount == 2 }
+    }
+
     @Test func sessionsUsePerDeviceKey() async {
         let store = InMemoryPreferenceStore()
         store.set(false, forKey: "wantsConnection.a")
