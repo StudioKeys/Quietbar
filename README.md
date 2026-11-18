@@ -15,14 +15,19 @@ puts the everyday controls one click away in the menu bar.
 | Headphones | Status |
 |---|---|
 | JBL Live 770NC | Supported |
-| Moto Buds | Planned |
+| moto buds+ | Supported |
 
 Quietbar is an independent project. It is not affiliated with, endorsed by, or sponsored by JBL, Harman
 International, Samsung Electronics, Motorola, Motorola Mobility, Lenovo, Apple or any other headphone or device
 maker. All product names, trademarks and registered trademarks belong to their respective owners and are used only
 to describe compatibility.
 
-## Features (JBL Live 770NC)
+## Features
+
+Pick your headphones from the switcher in the menu header. Quietbar remembers each pair after the first
+connection and shows the name you gave it in Bluetooth settings.
+
+### JBL Live 770NC
 
 - Noise control: Noise Cancellation, Ambient Aware, Talk-Thru, Off
   - Adaptive ANC and leakage compensation while noise cancellation is on
@@ -37,6 +42,15 @@ to describe compatibility.
 - Battery-friendly reconnects: after five failed attempts Quietbar waits, and tries again when the headphones
   connect to the Mac, when you click **Connect** or when Bluetooth turns back on
 - Liquid Glass styling that can be turned off in Settings
+
+### moto buds+
+
+- Noise control: Noise Cancellation, Adaptive, Transparency, Off
+- EQ presets: Brilliant Treble, Bass Boost, Vocal Boost, Flat, Custom
+- Spatial Sound, Hi-Res Audio (the buds reconnect briefly to apply it), Volume Boost
+- Game Mode, In-ear detection, Dual connection
+- Left, right and case battery rings in the menu, and "L 65 R 61" in the menu bar (the buds report the case only
+  while the buds are in it)
 
 <p align="center">
   <img src="docs/images/settings.png" width="340" alt="Quietbar settings panel">
@@ -79,7 +93,10 @@ Scripts/make-icon.sh         # regenerates Resources/AppIcon.icns
 | `HeadphoneKit` | Device-neutral settings model, driver contract, connection session and reconnect policy |
 | `JBLProtocol` | JBL frame encoding and decoding |
 | `JBLDriver` | Maps JBL Live 770NC settings to frames |
+| `MotoProtocol` | Moto frame encoding, decoding and stream reassembly |
+| `MotoDriver` | Maps moto buds+ settings to frames |
 | `BluetoothLE` | CoreBluetooth transport configured by each driver's GATT profile |
+| `ClassicBluetooth` | IOBluetooth RFCOMM transport and audio-connection watcher |
 | `Quietbar` | SwiftUI menu bar app |
 
 Adding headphones means writing a driver: describe the settings the device has and translate setting changes to
