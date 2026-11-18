@@ -3,28 +3,28 @@ import os
 
 public actor DeviceSession {
     public static let wantsConnectionKey = "wantsConnection"
-    private static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "DeviceSession")
+    static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "DeviceSession")
 
     public nonisolated let snapshots: AsyncStream<DeviceSnapshot>
-    private let continuation: AsyncStream<DeviceSnapshot>.Continuation
-    private let driver: any DeviceDriver
-    private let transport: any DeviceTransport
-    private let replyTimeout: Duration
-    private let sleep: Sleeper
-    private let preferences: any PreferenceStore
-    private let policy: ReconnectPolicy
-    private let batteryInterval: Duration
-    private let watcher: (any ConnectionWatcher)?
-    private let connectionPreferenceKey: String
-    private let identityPreferenceKey: String
-    private var memory: HeadphoneMemory
-    private var snapshot = DeviceSnapshot.initial
-    private var listeners: [Task<Void, Never>] = []
-    private var linking: Task<Void, Never>?
-    private var isLinking = false
-    private var linkGeneration = 0
-    private var poller: Task<Void, Never>?
-    private var waiters = ReplyWaiters<SettingID>()
+    let continuation: AsyncStream<DeviceSnapshot>.Continuation
+    let driver: any DeviceDriver
+    let transport: any DeviceTransport
+    let replyTimeout: Duration
+    let sleep: Sleeper
+    let preferences: any PreferenceStore
+    let policy: ReconnectPolicy
+    let batteryInterval: Duration
+    let watcher: (any ConnectionWatcher)?
+    let connectionPreferenceKey: String
+    let identityPreferenceKey: String
+    var memory: HeadphoneMemory
+    var snapshot = DeviceSnapshot.initial
+    var listeners: [Task<Void, Never>] = []
+    var linking: Task<Void, Never>?
+    var isLinking = false
+    var linkGeneration = 0
+    var poller: Task<Void, Never>?
+    var waiters = ReplyWaiters<SettingID>()
 
     public var current: DeviceSnapshot { snapshot }
 
@@ -62,7 +62,7 @@ public actor DeviceSession {
         deviceID.map { "identity.\($0)" } ?? "identity"
     }
 
-    private func saveMemory() {
+    func saveMemory() {
         guard let identity = memory.identity else { return }
         preferences.set(identity.encoded, forKey: identityPreferenceKey)
         publish(snapshot.with(deviceName: identity.displayName))
@@ -110,84 +110,11 @@ public actor DeviceSession {
         }
     }
 
-    public func apply(_ change: SettingChange) async throws(ApplyError) {
-        guard snapshot.status == .connected else { throw .notConnected }
-        do throws(ApplyError) {
-            guard let requests = driver.requests(for: change, current: snapshot.state) else {
-                throw ApplyError.unsupported
-            }
-            if appliesWithReconnect(change.id) {
-                try await sendAll(requests)
-            } else {
-                try await confirmWithFollowUp(requests, setting: change.id)
-            }
-            publish(snapshot.with(lastError: nil))
-        } catch {
-            Self.logger.notice(
-                "\(change.id.rawValue, privacy: .public) not confirmed: \(error.message, privacy: .public)")
-            publish(snapshot.with(lastError: error.message))
-            throw error
-        }
-    }
-
-    private func appliesWithReconnect(_ id: SettingID) -> Bool {
-        driver.model.settings.first { $0.id == id }?.appliesWithReconnect ?? false
-    }
-
-    private func sendAll(_ requests: [Data]) async throws(ApplyError) {
-        do {
-            for request in requests {
-                try await transport.send(request)
-            }
-        } catch {
-            throw .writeFailed
-        }
-    }
-
-    private func confirmWithFollowUp(_ requests: [Data], setting: SettingID) async throws(ApplyError) {
-        do {
-            try await confirm(requests, setting: setting)
-        } catch .timedOut {
-            guard let query = driver.confirmingRequest(for: setting) else { throw .timedOut }
-            try await confirm([query], setting: setting)
-        }
-    }
-
-    private func confirm(_ requests: [Data], setting: SettingID) async throws(ApplyError) {
-        let ticket = waiters.expect(setting)
-        do {
-            for request in requests {
-                try await transport.send(request)
-            }
-        } catch {
-            _ = waiters.expire(ticket)
-            throw .writeFailed
-        }
-        guard await waitForReply(ticket) else { throw .timedOut }
-    }
-
-    private func waitForReply(_ ticket: ReplyWaiters<SettingID>.Ticket) async -> Bool {
-        if waiters.consumeFulfilled(ticket) { return true }
-        guard waiters.isPending(ticket) else { return false }
-        let timeout = replyTimeout
-        return await withCheckedContinuation { continuation in
-            waiters.park(ticket, continuation)
-            Task { [weak self] in
-                try? await Task.sleep(for: timeout)
-                await self?.expire(ticket)
-            }
-        }
-    }
-
-    private func expire(_ ticket: ReplyWaiters<SettingID>.Ticket) {
-        waiters.expire(ticket)?.resume(returning: false)
-    }
-
-    private var wantsConnection: Bool {
+    var wantsConnection: Bool {
         preferences.bool(forKey: connectionPreferenceKey) ?? true
     }
 
-    private func runLink() async {
+    func runLink() async {
         linkGeneration += 1
         let generation = linkGeneration
         let previous = linking
@@ -202,7 +129,7 @@ public actor DeviceSession {
         await link.value
     }
 
-    private func establishLink() async {
+    func establishLink() async {
         isLinking = true
         defer { isLinking = false }
         guard await linkUp() else { return }
@@ -213,7 +140,7 @@ public actor DeviceSession {
         await didConnect()
     }
 
-    private func linkUp() async -> Bool {
+    func linkUp() async -> Bool {
         guard snapshot.status != .connected, wantsConnection else { return false }
         publish(snapshot.with(status: .searching))
         var failures = 0
@@ -237,7 +164,7 @@ public actor DeviceSession {
         return false
     }
 
-    private func backOff(after error: TransportError, failures: Int) async -> Bool {
+    func backOff(after error: TransportError, failures: Int) async -> Bool {
         guard wantsConnection, !Task.isCancelled else { return false }
         let delay = policy.delay(afterFailures: failures)
         Self.logger.notice(
@@ -251,7 +178,7 @@ public actor DeviceSession {
         }
     }
 
-    private func didConnect() async {
+    func didConnect() async {
         guard wantsConnection else {
             await transport.disconnect()
             return
@@ -263,7 +190,7 @@ public actor DeviceSession {
         startPolling()
     }
 
-    private func startPolling() {
+    func startPolling() {
         poller?.cancel()
         let sleep = sleep
         let interval = batteryInterval
@@ -275,17 +202,17 @@ public actor DeviceSession {
         }
     }
 
-    private func stopPolling() {
+    func stopPolling() {
         poller?.cancel()
         poller = nil
     }
 
-    private func pollBattery() async {
+    func pollBattery() async {
         guard snapshot.status == .connected, let query = driver.confirmingRequest(for: .battery) else { return }
         await send(query)
     }
 
-    private func handle(_ event: LinkEvent) {
+    func handle(_ event: LinkEvent) {
         switch event {
         case .connected:
             return
@@ -303,7 +230,7 @@ public actor DeviceSession {
         }
     }
 
-    private func send(_ request: Data) async {
+    func send(_ request: Data) async {
         do {
             try await transport.send(request)
         } catch {
@@ -311,7 +238,7 @@ public actor DeviceSession {
         }
     }
 
-    private func startListening() {
+    func startListening() {
         guard listeners.isEmpty else { return }
         let incoming = transport.incoming
         let events = transport.events
@@ -337,14 +264,14 @@ public actor DeviceSession {
         }
     }
 
-    private func recordIdentity() async {
+    func recordIdentity() async {
         guard let link = await transport.connectedIdentity() else { return }
         memory.connected(as: link)
         saveMemory()
         await transport.remember(memory.identity)
     }
 
-    private func classicDeviceConnected(_ connection: ClassicConnection) {
+    func classicDeviceConnected(_ connection: ClassicConnection) {
         guard memory.isOurs(connection) else { return }
         memory.noteClassic(connection)
         saveMemory()
@@ -359,7 +286,7 @@ public actor DeviceSession {
         }
     }
 
-    private func receive(_ packet: Data) {
+    func receive(_ packet: Data) {
         let updates = driver.updates(from: packet)
         let updated = snapshot.state.applying(updates)
         if updated != snapshot.state {
@@ -372,7 +299,7 @@ public actor DeviceSession {
         }
     }
 
-    private func publish(_ next: DeviceSnapshot) {
+    func publish(_ next: DeviceSnapshot) {
         snapshot = next
         continuation.yield(next)
     }
