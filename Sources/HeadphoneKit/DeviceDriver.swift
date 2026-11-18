@@ -4,24 +4,29 @@ public struct GattProfile: Hashable, Sendable {
     public let service: String
     public let notify: String
     public let write: String
-    public let nameFragment: String
 
-    public init(service: String, notify: String, write: String, nameFragment: String) {
+    public init(service: String, notify: String, write: String) {
         self.service = service
         self.notify = notify
         self.write = write
-        self.nameFragment = nameFragment
     }
+}
+
+public enum LinkProfile: Hashable, Sendable {
+    case gatt(GattProfile)
+    case rfcomm(serviceUUID: String)
 }
 
 public struct DeviceModel: Hashable, Sendable {
     public let name: String
-    public let gatt: GattProfile
+    public let nameFragment: String
+    public let link: LinkProfile
     public let settings: [SettingDescriptor]
 
-    public init(name: String, gatt: GattProfile, settings: [SettingDescriptor]) {
+    public init(name: String, nameFragment: String, link: LinkProfile, settings: [SettingDescriptor]) {
         self.name = name
-        self.gatt = gatt
+        self.nameFragment = nameFragment
+        self.link = link
         self.settings = settings
     }
 }

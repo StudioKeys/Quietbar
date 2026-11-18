@@ -164,7 +164,7 @@ struct JBLLive770NCDriverTests {
         #expect(settings[10].visibleWhen == .equals("smartAudioVideo", .bool(true)))
         #expect(settings[8].kind == .level(-16...16, style: .balance))
         #expect(driver.model.name == "JBL Live 770NC")
-        #expect(driver.model.gatt.nameFragment == "770NC")
+        #expect(driver.model.nameFragment == "770NC")
     }
 
     @Test func onlySmartAudioVideoSettingsReconnect() {

@@ -5,16 +5,18 @@ import JBLProtocol
 public struct JBLLive770NCDriver: DeviceDriver {
     public let model = DeviceModel(
         name: "JBL Live 770NC",
-        gatt: GattProfile(
-            service: "65786365-6c70-6f69-6e74-2e636f6d0000",
-            notify: "65786365-6c70-6f69-6e74-2e636f6d0001",
-            write: "65786365-6c70-6f69-6e74-2e636f6d0002",
-            nameFragment: "770NC"
-        ),
+        nameFragment: "770NC",
+        link: .gatt(Self.gatt),
         settings: JBLSetting.descriptors
     )
 
     private static let refreshCommands: [Command] = Command.refreshAll + [.querySmartAudioVideo, .queryDeviceStatus]
+
+    public static let gatt = GattProfile(
+        service: "65786365-6c70-6f69-6e74-2e636f6d0000",
+        notify: "65786365-6c70-6f69-6e74-2e636f6d0001",
+        write: "65786365-6c70-6f69-6e74-2e636f6d0002"
+    )
 
     public init() {}
 

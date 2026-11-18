@@ -10,7 +10,8 @@ enum LiveCatalog {
             DeviceEntry(id: "jbl.live770nc", model: jbl.model) { deviceID in
                 DeviceSession(
                     driver: jbl,
-                    transport: CoreBluetoothTransport(profile: jbl.model.gatt),
+                    transport: CoreBluetoothTransport(
+                        profile: JBLLive770NCDriver.gatt, nameFragment: jbl.model.nameFragment),
                     preferences: preferences,
                     watcher: IOBluetoothConnectionWatcher(),
                     deviceID: deviceID

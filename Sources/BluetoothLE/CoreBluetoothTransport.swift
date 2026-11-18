@@ -14,6 +14,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
     public let events: AsyncStream<LinkEvent>
     let incomingContinuation: AsyncStream<Data>.Continuation
     let profile: GattProfile
+    let nameFragment: String
     let eventsContinuation: AsyncStream<LinkEvent>.Continuation
     let queue = DispatchQueue(label: "dev.studiokeys.quietbar.bluetooth")
     var central: CBCentralManager?
@@ -25,8 +26,9 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
     var isLinkAnnounced = false
     var rememberedID: UUID?
 
-    public init(profile: GattProfile) {
+    public init(profile: GattProfile, nameFragment: String) {
         self.profile = profile
+        self.nameFragment = nameFragment
         (incoming, incomingContinuation) = AsyncStream.makeStream()
         (events, eventsContinuation) = AsyncStream.makeStream()
         super.init()
@@ -64,7 +66,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
                     done.resume(returning: nil)
                     return
                 }
-                let name = peripheral.name ?? self.profile.nameFragment
+                let name = peripheral.name ?? self.nameFragment
                 done.resume(
                     returning: DeviceIdentity(name: name, linkID: peripheral.identifier.uuidString, classicAddress: nil)
                 )

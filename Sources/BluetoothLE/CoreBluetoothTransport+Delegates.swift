@@ -19,7 +19,7 @@ extension CoreBluetoothTransport: CBCentralManagerDelegate {
     ) {
         let name = discovered.name ?? advertisementData[CBAdvertisementDataLocalNameKey] as? String ?? ""
         let isRemembered = rememberedID == discovered.identifier
-        guard pendingConnect != nil, peripheral == nil, isRemembered || name.contains(profile.nameFragment) else {
+        guard pendingConnect != nil, peripheral == nil, isRemembered || name.contains(nameFragment) else {
             return
         }
         Self.logger.info("Found \(name, privacy: .public)")

@@ -78,7 +78,8 @@ enum Fixtures {
 
     static let model = DeviceModel(
         name: "Test Phones",
-        gatt: GattProfile(service: "0", notify: "1", write: "2", nameFragment: "Test"),
+        nameFragment: "Test",
+        link: .gatt(GattProfile(service: "0", notify: "1", write: "2")),
         settings: [
             SettingDescriptor(
                 id: "noiseMode", title: "Noise", kind: .choice(noiseOptions, style: .modeButtons), section: .noise),

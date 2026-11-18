@@ -6,7 +6,8 @@ struct FakeDriver: DeviceDriver {
 
     let model = DeviceModel(
         name: "Fake Buds",
-        gatt: GattProfile(service: "0000", notify: "0001", write: "0002", nameFragment: "Fake"),
+        nameFragment: "Fake",
+        link: .gatt(GattProfile(service: "0000", notify: "0001", write: "0002")),
         settings: [
             SettingDescriptor(id: "power", title: "Power", kind: .toggle, section: .sound),
             SettingDescriptor(id: "volume", title: "Volume", kind: .level(0...10, style: .slider), section: .sound),

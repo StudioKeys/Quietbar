@@ -53,7 +53,7 @@ public actor DeviceSession {
         self.connectionPreferenceKey = Self.connectionKey(for: deviceID)
         self.identityPreferenceKey = Self.identityKey(for: deviceID)
         let stored = preferences.string(forKey: Self.identityKey(for: deviceID)).flatMap(DeviceIdentity.decode)
-        self.memory = HeadphoneMemory(identity: stored, nameFragment: driver.model.gatt.nameFragment)
+        self.memory = HeadphoneMemory(identity: stored, nameFragment: driver.model.nameFragment)
     }
 
     public static func connectionKey(for deviceID: String?) -> String {
