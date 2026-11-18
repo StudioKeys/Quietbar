@@ -19,6 +19,7 @@ public actor DeviceSession {
     private var listeners: [Task<Void, Never>] = []
     private var linking: Task<Void, Never>?
     private var isLinking = false
+    private var linkGeneration = 0
     private var poller: Task<Void, Never>?
     private var waiters = ReplyWaiters<SettingID>()
 
@@ -151,9 +152,12 @@ public actor DeviceSession {
     }
 
     private func runLink() async {
+        linkGeneration += 1
+        let generation = linkGeneration
         let previous = linking
         previous?.cancel()
         await previous?.value
+        guard generation == linkGeneration else { return }
         let link = Task { [weak self] in
             guard let self else { return }
             await establishLink()
@@ -295,9 +299,9 @@ public actor DeviceSession {
     private func classicDeviceConnected(_ name: String) {
         guard name.localizedCaseInsensitiveContains(driver.model.gatt.nameFragment), wantsConnection else { return }
         switch snapshot.status {
-        case .connected, .disconnectedByUser, .unavailable:
+        case .idle, .connected, .searching, .disconnectedByUser, .unavailable:
             return
-        case .idle, .searching, .retrying, .waiting:
+        case .retrying, .waiting:
             Self.logger.notice("\(name, privacy: .public) connected to the Mac; reconnecting")
             Task { [weak self] in await self?.runLink() }
         }

@@ -81,6 +81,40 @@ struct DeviceSessionTests {
         #expect(await session.current.status == .connected)
     }
 
+    @Test func wakesDuringPendingConnectRunOneRound() async throws {
+        let transport = FakeByteTransport(connectFailures: 1, holdsConnect: true, heldConnectNumber: 2)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10), watcher: watcher)
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.connectCount == 2 }
+
+        watcher.emit("Fake Phones")
+        watcher.emit("Fake Phones")
+        try await Task.sleep(for: .milliseconds(20))
+        await transport.releaseHeldConnect(succeeding: false)
+
+        try await waitUntil { await session.current.status == .connected }
+        try await Task.sleep(for: .milliseconds(50))
+        #expect(await transport.connectCount == 3)
+    }
+
+    @Test func connectionReportedBeforeStartDoesNotRestartFirstAttempt() async throws {
+        let transport = FakeByteTransport(holdsConnect: true)
+        let watcher = FakeConnectionWatcher()
+        let session = makeSession(transport, watcher: watcher)
+        watcher.emit("Fake Phones")
+        let starting = Task { await session.start() }
+        defer { starting.cancel() }
+        try await waitUntil { await transport.connectCount == 1 }
+        try await Task.sleep(for: .milliseconds(20))
+
+        await transport.releaseHeldConnect(succeeding: false)
+
+        try await waitUntil { await session.current.status == .retrying(after: .seconds(1), phoneHint: true) }
+        #expect(await transport.connectCount == 1)
+    }
+
     @Test func wakeDuringBackOffRestartsSingleRound() async throws {
         let transport = FakeByteTransport(connectFailures: 1)
         let watcher = FakeConnectionWatcher()
@@ -208,7 +242,7 @@ struct DeviceSessionTests {
 
     @Test func dropWhileConnectedEndsInWaiting() async throws {
         let transport = FakeByteTransport()
-        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10))
+        let session = makeSession(transport, sleeper: ScriptedSleeper(immediateCount: 10, blocksFrom: .seconds(300)))
         await session.start()
 
         await transport.failNextConnects(10)

@@ -16,15 +16,18 @@ func waitUntil(
 
 actor ScriptedSleeper {
     private let immediateCount: Int
+    private let blocksFrom: Duration?
     private(set) var requested: [Duration] = []
 
-    init(immediateCount: Int = .max) {
+    init(immediateCount: Int = .max, blocksFrom: Duration? = nil) {
         self.immediateCount = immediateCount
+        self.blocksFrom = blocksFrom
     }
 
     func sleep(_ duration: Duration) async throws {
         requested.append(duration)
-        guard requested.count > immediateCount else { return }
+        let alwaysBlocks = blocksFrom.map { duration >= $0 } ?? false
+        guard alwaysBlocks || requested.count > immediateCount else { return }
         try await Task.sleep(for: .seconds(3600))
     }
 
