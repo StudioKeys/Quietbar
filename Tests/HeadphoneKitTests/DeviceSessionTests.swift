@@ -164,6 +164,20 @@ struct DeviceSessionTests {
         #expect(storedIdentity(store)?.classicAddress == "CC")
     }
 
+    @Test func audioNameReportedBeforeStartNamesTheHeadphones() async {
+        let store = InMemoryPreferenceStore()
+        let transport = FakeByteTransport(identity: Self.identity)
+        let watcher = FakeConnectionWatcher()
+        watcher.emit("Fake Phones", address: "CC")
+        let session = makeSession(transport, store: store, watcher: watcher, deviceID: "dev")
+
+        await session.start()
+        try? await Task.sleep(for: .milliseconds(30))
+
+        #expect(await session.current.deviceName == "Fake Phones")
+        #expect(storedIdentity(store)?.classicAddress == "CC")
+    }
+
     @Test func sessionsUsePerDeviceKey() async {
         let store = InMemoryPreferenceStore()
         store.set(false, forKey: DeviceSession.connectionKey(for: "a"))

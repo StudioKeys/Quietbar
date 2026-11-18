@@ -17,7 +17,7 @@ public actor DeviceSession {
     private let watcher: (any ConnectionWatcher)?
     private let connectionPreferenceKey: String
     private let identityPreferenceKey: String
-    private var pendingClassicAddress: String?
+    private var memory: HeadphoneMemory
     private var snapshot = DeviceSnapshot.initial
     private var listeners: [Task<Void, Never>] = []
     private var linking: Task<Void, Never>?
@@ -50,6 +50,8 @@ public actor DeviceSession {
         self.watcher = watcher
         self.connectionPreferenceKey = Self.connectionKey(for: deviceID)
         self.identityPreferenceKey = Self.identityKey(for: deviceID)
+        let stored = preferences.string(forKey: Self.identityKey(for: deviceID)).flatMap(DeviceIdentity.decode)
+        self.memory = HeadphoneMemory(identity: stored, nameFragment: driver.model.gatt.nameFragment)
     }
 
     public static func connectionKey(for deviceID: String?) -> String {
@@ -60,15 +62,17 @@ public actor DeviceSession {
         deviceID.map { "identity.\($0)" } ?? "identity"
     }
 
-    private var rememberedIdentity: DeviceIdentity? {
-        preferences.string(forKey: identityPreferenceKey).flatMap(DeviceIdentity.decode)
+    private func saveMemory() {
+        guard let identity = memory.identity else { return }
+        preferences.set(identity.encoded, forKey: identityPreferenceKey)
+        publish(snapshot.with(deviceName: identity.displayName))
     }
 
     public func start() async {
         startListening()
-        if let identity = rememberedIdentity {
+        if let identity = memory.identity {
             await transport.remember(identity)
-            publish(snapshot.with(deviceName: identity.name))
+            publish(snapshot.with(deviceName: identity.displayName))
         }
         guard wantsConnection else {
             publish(snapshot.with(status: .disconnectedByUser))
@@ -334,31 +338,23 @@ public actor DeviceSession {
     }
 
     private func recordIdentity() async {
-        guard let connected = await transport.connectedIdentity() else { return }
-        let address = rememberedIdentity?.classicAddress ?? pendingClassicAddress
-        let identity = connected.with(classicAddress: address)
-        pendingClassicAddress = nil
-        preferences.set(identity.encoded, forKey: identityPreferenceKey)
-        await transport.remember(identity)
-        publish(snapshot.with(deviceName: identity.name))
-    }
-
-    private func isOurs(_ connection: ClassicConnection) -> Bool {
-        if let address = rememberedIdentity?.classicAddress {
-            return address == connection.address
-        }
-        return connection.name.localizedCaseInsensitiveContains(driver.model.gatt.nameFragment)
+        guard let link = await transport.connectedIdentity() else { return }
+        memory.connected(as: link)
+        saveMemory()
+        await transport.remember(memory.identity)
     }
 
     private func classicDeviceConnected(_ connection: ClassicConnection) {
-        guard isOurs(connection), wantsConnection else { return }
+        guard memory.isOurs(connection) else { return }
+        memory.noteClassic(connection)
+        saveMemory()
+        guard wantsConnection else { return }
         let name = connection.name
         switch snapshot.status {
         case .idle, .connected, .searching, .disconnectedByUser, .unavailable:
             return
         case .retrying, .waiting:
             Self.logger.notice("\(name, privacy: .public) connected to the Mac; reconnecting")
-            if rememberedIdentity?.classicAddress == nil { pendingClassicAddress = connection.address }
             Task { [weak self] in await self?.runLink() }
         }
     }
