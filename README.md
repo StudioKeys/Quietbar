@@ -93,6 +93,11 @@ Quietbar was built with the help of an AI coding assistant. The Bluetooth protoc
 the official companion apps talk to the headphones, for interoperability. No vendor code, firmware or assets are
 included in this repository.
 
+## Acknowledgements
+
+The pull request template and issue forms are adapted from
+[robinebers/openusage](https://github.com/robinebers/openusage) (MIT).
+
 ## License
 
 [MIT](LICENSE)
