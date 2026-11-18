@@ -3,6 +3,8 @@ import os
 
 public actor DeviceSession {
     public static let wantsConnectionKey = "wantsConnection"
+    public static let defaultReplyTimeout: Duration = .seconds(3)
+    public static let defaultBatteryInterval: Duration = .seconds(300)
     static let logger = Logger.quietbar("DeviceSession")
 
     public nonisolated let snapshots: AsyncStream<DeviceSnapshot>
@@ -37,11 +39,11 @@ public actor DeviceSession {
     public init(
         driver: any DeviceDriver,
         transport: any DeviceTransport,
-        replyTimeout: Duration = .seconds(3),
+        replyTimeout: Duration = defaultReplyTimeout,
         sleep: @escaping Sleeper = { try await Task.sleep(for: $0) },
         preferences: any PreferenceStore = InMemoryPreferenceStore(),
         policy: ReconnectPolicy = .standard,
-        batteryInterval: Duration = .seconds(300),
+        batteryInterval: Duration = defaultBatteryInterval,
         watcher: (any ConnectionWatcher)? = nil,
         deviceID: String? = nil
     ) {
