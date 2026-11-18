@@ -6,6 +6,7 @@ public enum MotoFrame {
     static let lengthFieldSize = 2
     static let checksumSize = 4
     static let overhead = head.count + lengthFieldSize + checksumSize + tail.count
+    static let maxBodyLength = 1024
 
     public static func encode(_ pdu: MotoPDU) -> Data {
         let body = pdu.bytes

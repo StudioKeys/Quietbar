@@ -23,6 +23,10 @@ public struct MotoFramer: PacketFramer {
             }
             buffer = Data(buffer[start...])
             guard let length = MotoFrame.bodyLength(in: buffer) else { return nil }
+            guard length <= MotoFrame.maxBodyLength else {
+                buffer = Data(buffer.dropFirst())
+                continue
+            }
             let total = MotoFrame.overhead + length
             guard buffer.count >= total else { return nil }
             let frame = Data(buffer.prefix(total))

@@ -40,4 +40,13 @@ struct MotoFramerTests {
 
         #expect(frames == [MotoFrameTests.versionReply])
     }
+
+    @Test func oversizedLengthIsSkipped() {
+        var framer = MotoFramer()
+        let bogus = Data("HEAD".utf8) + Data([0xFF, 0xFF])
+
+        let frames = framer.push(bogus + MotoFrameTests.versionReply)
+
+        #expect(frames == [MotoFrameTests.versionReply])
+    }
 }
