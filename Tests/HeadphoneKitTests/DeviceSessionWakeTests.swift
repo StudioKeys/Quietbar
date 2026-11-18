@@ -77,6 +77,7 @@ struct DeviceSessionWakeTests: DeviceSessionHarness {
         await session.stop()
 
         watcher.emit("Fake Phones")
+        try await waitUntil { watcher.hasHandledAll }
         await settle()
 
         #expect(await transport.connectCount == 5)
