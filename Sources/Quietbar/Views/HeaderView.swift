@@ -7,6 +7,15 @@ struct HeaderView: View {
     private var viewModel: HeadphoneViewModel { activeDevice.viewModel }
 
     var body: some View {
+        VStack(spacing: 12) {
+            deviceRow
+            if let battery = viewModel.battery, battery.hasComponents {
+                BudsBatteryView(battery: battery)
+            }
+        }
+    }
+
+    private var deviceRow: some View {
         HStack(spacing: 10) {
             Image(systemName: viewModel.icon.symbolName)
                 .font(.system(size: 16, weight: .medium))
@@ -19,7 +28,7 @@ struct HeaderView: View {
                     .foregroundStyle(.secondary)
             }
             Spacer()
-            if let battery = viewModel.battery {
+            if let battery = viewModel.battery, !battery.hasComponents {
                 BatteryLabel(battery: battery)
             }
         }

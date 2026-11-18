@@ -37,4 +37,24 @@ struct MenuBarIconTests {
                 == MenuBarIcon(symbolName: "headphones", isDimmed: false, batteryText: nil)
         )
     }
+
+    @Test func menuBarItemsListKnownBuds() {
+        let buds = Battery.buds(
+            left: BatteryLevel(percent: 77, isCharging: false), right: BatteryLevel(percent: 72, isCharging: false),
+            caseLevel: BatteryLevel(percent: 40, isCharging: false))!
+        let snapshot = Fixtures.snapshot(.connected, [.battery(buds)])
+
+        let icon = MenuBarIcon.make(for: snapshot, model: Fixtures.model)
+
+        #expect(icon.batteryText == nil)
+        #expect(icon.budLevels == [BudLevel(side: "L", percent: 77), BudLevel(side: "R", percent: 72)])
+    }
+
+    @Test func menuBarOmitsUnknownBud() {
+        let buds = Battery.buds(left: nil, right: BatteryLevel(percent: 72, isCharging: false), caseLevel: nil)!
+
+        let icon = MenuBarIcon.make(for: Fixtures.snapshot(.connected, [.battery(buds)]), model: Fixtures.model)
+
+        #expect(icon.budLevels == [BudLevel(side: "R", percent: 72)])
+    }
 }
