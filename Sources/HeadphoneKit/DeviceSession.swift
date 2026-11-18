@@ -3,7 +3,7 @@ import os
 
 public actor DeviceSession {
     public static let wantsConnectionKey = "wantsConnection"
-    static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "DeviceSession")
+    static let logger = Logger.quietbar("DeviceSession")
 
     public nonisolated let snapshots: AsyncStream<DeviceSnapshot>
     let continuation: AsyncStream<DeviceSnapshot>.Continuation

@@ -6,7 +6,7 @@ import os
 public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked Sendable {
     typealias Completion = CheckedContinuation<Result<Void, TransportError>, Never>
 
-    static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "CoreBluetoothTransport")
+    static let logger = Logger.quietbar("CoreBluetoothTransport")
 
     static let connectTimeout: TimeInterval = 10
 
@@ -16,7 +16,7 @@ public final class CoreBluetoothTransport: NSObject, DeviceTransport, @unchecked
     let profile: GattProfile
     let nameFragment: String
     let eventsContinuation: AsyncStream<LinkEvent>.Continuation
-    let queue = DispatchQueue(label: "dev.studiokeys.quietbar.bluetooth")
+    let queue = DispatchQueue(label: "\(Logger.subsystem).bluetooth")
     var central: CBCentralManager?
     var peripheral: CBPeripheral?
     var writeCharacteristic: CBCharacteristic?

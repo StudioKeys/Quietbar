@@ -20,7 +20,7 @@ struct SectionModel: Identifiable, Equatable {
 @MainActor
 @Observable
 final class HeadphoneViewModel {
-    private static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "HeadphoneViewModel")
+    private static let logger = Logger.quietbar("HeadphoneViewModel")
 
     private(set) var snapshot = DeviceSnapshot.initial
     private(set) var pending: Set<SettingID> = []

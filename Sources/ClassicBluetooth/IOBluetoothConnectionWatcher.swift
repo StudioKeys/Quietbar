@@ -4,7 +4,7 @@ import os
 
 // IOBluetooth delivers connect notifications on the main run loop, which owns all mutable state here.
 public final class IOBluetoothConnectionWatcher: NSObject, ConnectionWatcher, @unchecked Sendable {
-    private static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "ConnectionWatcher")
+    private static let logger = Logger.quietbar("ConnectionWatcher")
 
     public let connections: AsyncStream<ClassicConnection>
     private let continuation: AsyncStream<ClassicConnection>.Continuation

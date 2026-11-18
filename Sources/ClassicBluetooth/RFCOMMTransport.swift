@@ -7,7 +7,7 @@ import os
 public final class RFCOMMTransport: NSObject, DeviceTransport, @unchecked Sendable {
     typealias Completion = CheckedContinuation<Result<Void, TransportError>, Never>
 
-    static let logger = Logger(subsystem: "dev.studiokeys.quietbar", category: "RFCOMMTransport")
+    static let logger = Logger.quietbar("RFCOMMTransport")
     static let connectTimeout: TimeInterval = 10
     static let writeTimeout: TimeInterval = 3
 
