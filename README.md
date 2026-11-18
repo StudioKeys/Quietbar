@@ -7,13 +7,13 @@
 <p align="center">A macOS menu bar app for controlling your headphones without reaching for your phone.</p>
 
 <p align="center">
-  <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/StudioKeys/Quietbar?label=release" alt="Latest release"></a>
-  <a href="../../releases"><img src="https://img.shields.io/github/downloads/StudioKeys/Quietbar/total?label=downloads" alt="Total downloads"></a>
-  <a href="../../stargazers"><img src="https://img.shields.io/github/stars/StudioKeys/Quietbar?style=flat" alt="GitHub stars"></a>
+  <a href="https://github.com/StudioKeys/Quietbar/releases/latest"><img src="https://img.shields.io/github/v/release/StudioKeys/Quietbar?label=release" alt="Latest release"></a>
+  <a href="https://github.com/StudioKeys/Quietbar/releases"><img src="https://img.shields.io/github/downloads/StudioKeys/Quietbar/total?label=downloads" alt="Total downloads"></a>
+  <a href="https://github.com/StudioKeys/Quietbar/stargazers"><img src="https://img.shields.io/github/stars/StudioKeys/Quietbar?style=flat" alt="GitHub stars"></a>
 </p>
 
 <p align="center">
-  <a href="../../releases/latest"><img src="https://img.shields.io/badge/Download-for%20macOS-0A84FF?style=for-the-badge" alt="Download for macOS"></a>
+  <a href="https://github.com/StudioKeys/Quietbar/releases/latest"><img src="https://img.shields.io/badge/Download-for%20macOS-0A84FF?style=for-the-badge" alt="Download for macOS"></a>
 </p>
 
 Quietbar talks to the headphones directly over Bluetooth, the same way the manufacturer's phone app does, and
@@ -77,20 +77,24 @@ connection and shows the name you gave it in Bluetooth settings.
 
 ## Requirements
 
-- macOS 26 or later
+- macOS 26 or later on an Apple silicon Mac
 - Headphones paired with the Mac
 
 ## Install
 
-1. Download `Quietbar.zip` from the [latest release](../../releases/latest) and unzip it.
+1. Download `Quietbar.zip` from the [latest release](https://github.com/StudioKeys/Quietbar/releases/latest)
+   and unzip it.
 2. Move `Quietbar.app` to `/Applications`.
-3. The release is not notarized, so the first time, Control-click the app and choose **Open**.
+3. Open the app. The release is not notarized, so macOS blocks it the first time: open **System Settings** →
+   **Privacy & Security**, scroll down and click **Open Anyway** next to the Quietbar message.
 4. Allow Bluetooth access when macOS asks.
 
 Only one app can control the headphones at a time. Close the manufacturer's phone app, or choose **Disconnect** in
 Quietbar to hand control back to the phone. Quietbar remembers that choice until you click **Connect**.
 
 ## Build from source
+
+Requires Xcode 26 (Swift 6.2).
 
 ```sh
 Scripts/bundle.sh            # builds .build/Quietbar.app (ad-hoc signed)
@@ -102,6 +106,7 @@ Set `QUIETBAR_SIGN_IDENTITY` to a code-signing identity to keep the Bluetooth pe
 ```sh
 swift test                   # unit tests (Swift Testing)
 Scripts/coverage.sh          # line coverage gate, 80% minimum
+Scripts/package.sh           # builds and zips .build/Quietbar.zip for a release
 Scripts/make-icon.sh         # regenerates Resources/AppIcon.icns and docs/images/icon.png
 ```
 
@@ -133,7 +138,7 @@ included in this repository.
 
 The pull request template and issue forms are adapted from
 [robinebers/openusage](https://github.com/robinebers/openusage), Copyright (c) 2026 Robin Ebers, used under the
-[MIT License](https://github.com/robinebers/openusage/blob/main/LICENSE).
+MIT License. The full notice is in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
 
 ## License
 
