@@ -1,14 +1,23 @@
-# Quietbar
+<p align="center">
+  <img src="docs/images/icon.png" width="128" alt="Quietbar app icon">
+</p>
 
-A macOS menu bar app for controlling your headphones without reaching for your phone.
+<h1 align="center">Quietbar</h1>
 
-Quietbar talks to the headphones directly over Bluetooth LE, the same way the manufacturer's phone app does, and
-puts the everyday controls one click away in the menu bar.
+<p align="center">A macOS menu bar app for controlling your headphones without reaching for your phone.</p>
 
 <p align="center">
-  <img src="docs/images/menu-light.png" width="340" alt="Quietbar menu in light mode">
-  <img src="docs/images/menu-dark.png" width="340" alt="Quietbar menu in dark mode">
+  <a href="../../releases/latest"><img src="https://img.shields.io/github/v/release/StudioKeys/Quietbar?label=release" alt="Latest release"></a>
+  <a href="../../releases"><img src="https://img.shields.io/github/downloads/StudioKeys/Quietbar/total?label=downloads" alt="Total downloads"></a>
+  <a href="../../stargazers"><img src="https://img.shields.io/github/stars/StudioKeys/Quietbar?style=flat" alt="GitHub stars"></a>
 </p>
+
+<p align="center">
+  <a href="../../releases/latest"><img src="https://img.shields.io/badge/Download-for%20macOS-0A84FF?style=for-the-badge" alt="Download for macOS"></a>
+</p>
+
+Quietbar talks to the headphones directly over Bluetooth, the same way the manufacturer's phone app does, and
+puts the everyday controls one click away in the menu bar.
 
 ## Supported headphones
 
@@ -28,6 +37,11 @@ Pick your headphones from the switcher in the menu header. Quietbar remembers ea
 connection and shows the name you gave it in Bluetooth settings.
 
 ### JBL Live 770NC
+
+<p align="center">
+  <img src="docs/images/menu-light.png" width="340" alt="Quietbar menu for JBL Live 770NC in light mode">
+  <img src="docs/images/menu-dark.png" width="340" alt="Quietbar menu for JBL Live 770NC in dark mode">
+</p>
 
 - Noise control: Noise Cancellation, Ambient Aware, Talk-Thru, Off
   - Adaptive ANC and leakage compensation while noise cancellation is on
