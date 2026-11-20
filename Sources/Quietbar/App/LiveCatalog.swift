@@ -1,4 +1,5 @@
 import BluetoothLE
+import CMFDriver
 import ClassicBluetooth
 import HeadphoneKit
 import JBLDriver
@@ -8,7 +9,20 @@ enum LiveCatalog {
     static func entries(preferences: any PreferenceStore) -> [DeviceEntry] {
         let jbl = JBLLive770NCDriver()
         let moto = MotoBudsPlusDriver()
+        let cmf = CMFHeadphonesProDriver {
+            preferences.bool(forKey: ExperimentalWritePreference.key) ?? false
+        }
         return [
+            DeviceEntry(id: "cmf.headphonespro", model: cmf.model) { deviceID in
+                DeviceSession(
+                    driver: cmf,
+                    transport: RFCOMMTransport(
+                        serviceUUID: CMFHeadphonesProDriver.serviceUUID, nameFragment: cmf.model.nameFragment),
+                    preferences: preferences,
+                    watcher: IOBluetoothConnectionWatcher(),
+                    deviceID: deviceID
+                )
+            },
             DeviceEntry(id: "jbl.live770nc", model: jbl.model) { deviceID in
                 DeviceSession(
                     driver: jbl,

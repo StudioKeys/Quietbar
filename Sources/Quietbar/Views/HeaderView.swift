@@ -41,7 +41,7 @@ private struct BatteryLabel: View {
     var body: some View {
         HStack(spacing: 4) {
             Text("\(battery.percent)%")
-                .font(.callout.weight(.semibold))
+                .font(.system(.callout, design: .monospaced, weight: .semibold))
                 .monospacedDigit()
             Image(systemName: symbol)
                 .symbolRenderingMode(.hierarchical)

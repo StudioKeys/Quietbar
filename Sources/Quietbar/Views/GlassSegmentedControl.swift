@@ -16,8 +16,8 @@ struct GlassSegmentedControl: View {
                 thumb
                     .frame(width: width - 4, height: proxy.size.height - 4)
                     .offset(x: thumbOffset(segmentWidth: width) + 2)
-                    .animation(.spring(response: 0.3, dampingFraction: 0.75), value: selectedIndex)
-                    .animation(.interactiveSpring, value: dragLocation)
+                    .animation(.easeOut(duration: 0.16), value: selectedIndex)
+                    .animation(.linear(duration: 0.08), value: dragLocation)
                 HStack(spacing: 0) {
                     ForEach(options, id: \.id) { option in
                         Text(option.title)
@@ -39,7 +39,9 @@ struct GlassSegmentedControl: View {
         if isGlassEnabled {
             Capsule().fill(.clear).glassEffect(.regular.interactive(), in: .capsule)
         } else {
-            Capsule().fill(.background).shadow(color: .black.opacity(0.15), radius: 1, y: 1)
+            Capsule()
+                .fill(.background)
+                .overlay(Capsule().stroke(.quaternary))
         }
     }
 

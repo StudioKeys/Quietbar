@@ -20,8 +20,8 @@ struct MenuContentView: View {
         }
         .padding(14)
         .frame(width: 340)
-        .animation(.smooth(duration: 0.25), value: viewModel.snapshot)
-        .animation(.snappy(duration: 0.3), value: isShowingSettings)
+        .animation(.easeOut(duration: 0.18), value: viewModel.snapshot)
+        .animation(.easeOut(duration: 0.18), value: isShowingSettings)
         .onAppear { viewModel.menuOpened() }
     }
 
@@ -52,8 +52,9 @@ struct SectionCard<Content: View>: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.caption.weight(.semibold))
+            Text(title.uppercased())
+                .font(.system(.caption2, design: .monospaced, weight: .medium))
+                .tracking(0.8)
                 .foregroundStyle(.secondary)
             content
         }

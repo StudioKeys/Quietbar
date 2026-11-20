@@ -23,6 +23,7 @@ puts the everyday controls one click away in the menu bar.
 
 | Headphones | Status |
 |---|---|
+| CMF Headphone Pro | Supported |
 | JBL Live 770NC | Supported |
 | moto buds+ | Supported |
 
@@ -35,6 +36,21 @@ to describe compatibility.
 
 Pick your headphones from the switcher in the menu header. Quietbar remembers each pair after the first
 connection and shows the name you gave it in Bluetooth settings.
+
+### CMF Headphone Pro
+
+- Noise control: ANC High, ANC Mid, ANC Low, Adaptive ANC, Transparency, Off
+- EQ presets: Balanced, Electronic, Pop, Rock, Classical, Vocals
+- Spatial Audio, Low lag mode and Dual connection
+- Battery level, status read-back and automatic reconnection
+
+CMF controls are shown read-only by default. The protocol writes reconstructed from Nothing X are available behind
+the **Experimental controls** switch in Settings, with read-back and reconnect behavior where required.
+
+The CMF control channel is implemented through the same public Bluetooth interoperability boundary used by the
+Nothing X companion app. Quietbar does not send firmware-update or factory-reset commands. Standby mode, gesture remapping,
+dual-connection device management, Find my headphones and codec switching are not enabled until their exact
+read-back and rollback behavior is verified.
 
 ### JBL Live 770NC
 
@@ -99,6 +115,8 @@ Requires Xcode 26 (Swift 6.2).
 ```sh
 Scripts/bundle.sh            # builds .build/Quietbar.app (ad-hoc signed)
 open .build/Quietbar.app
+
+open Quietbar.xcodeproj       # generated from project.yml; all targets and tests included
 ```
 
 Set `QUIETBAR_SIGN_IDENTITY` to a code-signing identity to keep the Bluetooth permission across rebuilds.
@@ -115,6 +133,8 @@ Scripts/make-icon.sh         # regenerates Resources/AppIcon.icns and docs/image
 | Module | Responsibility |
 |---|---|
 | `HeadphoneKit` | Device-neutral settings model, driver contract, connection session and reconnect policy |
+| `CMFProtocol` | CMF Headphone Pro RFCOMM framing and CRC |
+| `CMFDriver` | Maps CMF Headphone Pro settings to control frames |
 | `JBLProtocol` | JBL frame encoding and decoding |
 | `JBLDriver` | Maps JBL Live 770NC settings to frames |
 | `MotoProtocol` | Moto frame encoding, decoding and stream reassembly |

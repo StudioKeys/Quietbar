@@ -7,6 +7,7 @@ struct SettingLabel: View {
     var body: some View {
         if let symbol = descriptor.symbol {
             Label(descriptor.title, systemImage: symbol)
+                .symbolRenderingMode(.monochrome)
         } else {
             Text(descriptor.title)
         }
@@ -78,7 +79,7 @@ struct ModeButtons: View {
                                 in: .circle
                             )
                         Text(option.title)
-                            .font(.caption2.weight(.medium))
+                            .font(.system(.caption2, design: .monospaced, weight: .medium))
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
                             .fixedSize(horizontal: false, vertical: true)

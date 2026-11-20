@@ -1,0 +1,2990 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0079AF224E1A29E84C756630 /* JBLDriver.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		00CB8975F80A1622183079A9 /* IOBluetoothConnectionWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F83B0821DC9910776FAD008 /* IOBluetoothConnectionWatcher.swift */; };
+		015E601E947131DC755D4AF1 /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		025F8932D8C498962D9E0C19 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		063136A96723BA7C1095096F /* CMFCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625DBBDCAA056874DD0C07C /* CMFCommand.swift */; };
+		0A6F8F10A426DF2DE632231D /* LiveCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919C202E5CA7B7E6BB7EDC89 /* LiveCatalog.swift */; };
+		0BBA1382C08F0865376755E8 /* MotoProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; };
+		14544689DFA9DD5AF6A396CF /* DeviceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808D6A3366340711503930D /* DeviceSession.swift */; };
+		15628AF05D6769E23AB52490 /* ReplyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D186643B7C26279D2D14E92 /* ReplyTests.swift */; };
+		160685AD32C35CB987A063EE /* SettingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279B8D246620BA90B43D97 /* SettingRow.swift */; };
+		162418BBCACF41D94FD28E4C /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		1A8AED55F386F77276D8CF19 /* MotoSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6913BA34D93F2190CB1249C3 /* MotoSettings.swift */; };
+		1AAEBF7FED82D13A5788737B /* TestSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF119F2A76471BF051423CE6 /* TestSupport.swift */; };
+		1B1E04755161CB32A6A88AFD /* CMFProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; };
+		1C04F4E83E4B298152B48BBF /* DeviceSessionWakeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C685F5E123B7E2CCD4B656FD /* DeviceSessionWakeTests.swift */; };
+		1C0D969C176208F843952776 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		1D914F9015B80CE3A44282D9 /* PacketFramer.swift in Sources */ = {isa = PBXBuildFile; fileRef = FDFEA157D241431D1698A16A /* PacketFramer.swift */; };
+		1FF1C8792AEF2F17145B5DCA /* SettingID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FB5EF89DFA8B6B1DDF9429E /* SettingID.swift */; };
+		20DFA3E232498253F4A9A472 /* CMFProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; };
+		229B9B8A17749C495140540E /* MotoDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45D3157E55630D2AFF881CC /* MotoDriver.framework */; };
+		22CA90621C622D11DA1E173C /* SettingDescriptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 359011ECD17B69411315A1DC /* SettingDescriptorTests.swift */; };
+		23317039ABF770A172C385DF /* ReconnectPolicyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A54DA4E819B8FA97D31DAA1E /* ReconnectPolicyTests.swift */; };
+		237EEE15C35FCE2666BAC9A9 /* ActiveDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFB3EA2554EEB5A5A68376C6 /* ActiveDevice.swift */; };
+		238AAC52B6E8816BEED8050C /* CMFHeadphonesProDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698B8086FD1A7B8FB57B5018 /* CMFHeadphonesProDriver.swift */; };
+		287B40BB1061C8C038EF75A2 /* BatteryRingStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E40F25B56EB5DF8D4C6049D /* BatteryRingStyle.swift */; };
+		29C9DA800696A5466004370B /* DeviceSession+Handshake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64BEB964246E16AA35C2FBF4 /* DeviceSession+Handshake.swift */; };
+		2A6B3E6615E508AD6606A2FD /* Battery.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA386F86CE9EE0D7F32B1029 /* Battery.swift */; };
+		2CA6E895D5B33BBE032D0E1D /* BluetoothLE.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = EB5F861EB1CFF98550F965A7 /* BluetoothLE.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D01DFA456AD5BE5240CB8FD /* MotoProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D11DEC13EF92AF4B5182828 /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		2D4AECAD3ED70286098B1C3B /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A383B99FC80CFAA914717C0D /* HeaderView.swift */; };
+		33F3894D49AA5B02D674202C /* CMFFramer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26721313237D1F6A2229AB4F /* CMFFramer.swift */; };
+		3405E083A82130D07B625BB2 /* DeviceSessionIdentityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BE8FFE7DEBA7564D2ED4E3F /* DeviceSessionIdentityTests.swift */; };
+		37D28B1CF8A6DEEDE3A57365 /* ReplyWaiters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5920BF468F994D2A70E23856 /* ReplyWaiters.swift */; };
+		3965A9CC4256EDA6F52FB700 /* SmartAudioVideoPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D7BC61B5E835A602981E18 /* SmartAudioVideoPreset.swift */; };
+		3A590660ED8B2C8F656F37AA /* JBLChangeEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FDA32C7435B9596233D73DF /* JBLChangeEncoder.swift */; };
+		3C462EED218A1565CF810310 /* MotoFramerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA17EB705120C10EBF54BF23 /* MotoFramerTests.swift */; };
+		3D024ACBD9D31C13A8C7A458 /* UserDefaultsStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56210A94AB49E01E6F6419E7 /* UserDefaultsStoreTests.swift */; };
+		3D0A0C4EEC4F23B8F344CDFC /* CMFDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9EB447F89726B08596FD7C2 /* CMFDriver.framework */; };
+		3ECA19069513E84EAFFEC505 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		3FF5463B9BEF492D70D2024F /* MotoProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; };
+		40E9CEB799347A10DDD204C1 /* Balance.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2268595A0570298BDDB2234 /* Balance.swift */; };
+		4113A03462F1354A7FCA11B4 /* EqFrameBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 875E78F59630C2237D2DAFE6 /* EqFrameBuilder.swift */; };
+		41C4B51EA68E93FB93C77260 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		4254EB02C8E39D1CD8376387 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		444BDB2838B685A1DA2C6363 /* DeviceStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22619D0B7543DE9117D1733C /* DeviceStateTests.swift */; };
+		44A7E9F913CF2F405F8AE1FF /* MotoProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		45EA2FDAEAE46B148C5354AE /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		484BFC18726F0D0B8FA35884 /* StatusText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670AFD9B4688FB7AEB91FFE6 /* StatusText.swift */; };
+		4A58EBAF362A91DA5E7DC2CB /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		4ACD8CE801ED4C61F1B2D88E /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		4BA3E92067D1744A84A3572F /* LinkEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF98B01D26D03374186551 /* LinkEvent.swift */; };
+		4C168A5A90BE2A95E183E863 /* MotoDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D45D3157E55630D2AFF881CC /* MotoDriver.framework */; };
+		4C2E10484E6D1173051B4CA4 /* FrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F1E3C187758F074B14EC9AB /* FrameTests.swift */; };
+		4D291328BB546BE70B448A63 /* SpatialSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 983363499A6431331CB059B7 /* SpatialSetting.swift */; };
+		4DA01F9E5154916A581FDDF6 /* MotoFrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F92F6A57AC3D00FF4E70BA /* MotoFrameTests.swift */; };
+		4E62C106D1D75C0FBB8D9D5B /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		4FC77076801AA262190A8552 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		503DC5B3B8FDC5497F92C44E /* CMFCRC16.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27A868C8F7FA5A75FF48A5 /* CMFCRC16.swift */; };
+		52070650AB6B3B0EA71678E4 /* MotoDriver.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D45D3157E55630D2AFF881CC /* MotoDriver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		535B936D7D64F308F0188E4B /* LevelRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE41421138EB32FAF429775D /* LevelRow.swift */; };
+		5577F1CE64040458CE2B125E /* EqPresetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC458E2AA2C5CD844EB3E3AE /* EqPresetTests.swift */; };
+		56DF373E28C25CC070F7A4A5 /* JBLDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */; };
+		56E313DA49DEBF4967B23116 /* SettingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79603F2B19F20977A1AE8391 /* SettingControls.swift */; };
+		593D0CA451949EC3D3B619E2 /* BluetoothLE.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB5F861EB1CFF98550F965A7 /* BluetoothLE.framework */; };
+		5991B2F41D12A6E189FE24F4 /* DeviceDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D203521A3528C3822BE0379 /* DeviceDriver.swift */; };
+		599855967E028699DB0AA4AA /* HeadphoneMemoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FF2FAA86E92E2DDB113C898 /* HeadphoneMemoryTests.swift */; };
+		5B141CCB9260A8D88D534E57 /* MotoPDU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CF73CB0B6EF213935007BA0 /* MotoPDU.swift */; };
+		5EC965DF8CA247411DB27B24 /* FakeConnectionWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14FF0F4496693C6FE789292A /* FakeConnectionWatcher.swift */; };
+		5FDE1296270F3AF5EDD4FEFD /* QuietbarApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80265ED9657EDDA534C69D62 /* QuietbarApp.swift */; };
+		613ED3EE420B848F6A56C9CD /* JBLProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; };
+		621E02CDDBCB35AD89027764 /* MenuContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BCAAA4337EC72FB201ADBEC /* MenuContentView.swift */; };
+		6855F1839DB4840D77C151D8 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACD6AD6181F8979CAAD1149C /* Frame.swift */; };
+		6B9206DAA09ABA5D401F50CB /* SettingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E731107E97A65E92A1A1257 /* SettingTests.swift */; };
+		6C32DD6552A5BFCBC6C196BE /* CMFSequence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D70E71ED21CED5F86A41531 /* CMFSequence.swift */; };
+		6CA554EF13CAED162A996108 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		6D717286AA21E4FC76B6E708 /* GlassSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444760096DF0C72999885FD0 /* GlassSegmentedControl.swift */; };
+		6F9FEB9B13F8D0378B2DE2D0 /* BudsBatteryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B81A3D4F0702A0B803938807 /* BudsBatteryView.swift */; };
+		6FA6CFDC0320EBBAC6061CAE /* ConnectionStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA43F17D1D5B19E86D63F5ED /* ConnectionStatus.swift */; };
+		731371D59F5526BAA2D98E02 /* JBLLive770NCDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0698E80DE63172365B5377A3 /* JBLLive770NCDriver.swift */; };
+		73FAAB559A901FBD0828CACA /* DeviceSessionSettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D6335E3023D5B5489DB4341 /* DeviceSessionSettingsTests.swift */; };
+		754B2DB1F39821AEA6FEA868 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		755CC4F51AB3E1DB838F9AC1 /* JBLUpdateDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE68B4EA14822236128AEB14 /* JBLUpdateDecoder.swift */; };
+		75AF645CDF1D9CB3F6A808F1 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF718E800CDBD21D9BCB6388 /* Command.swift */; };
+		75B469C751625D31C4AE4652 /* MotoBudsPlusDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58764307A395ACE7F8D31C48 /* MotoBudsPlusDriver.swift */; };
+		79683157AD620708F3B854FA /* CoreBluetoothTransport+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A417138A1EF26A4ACE69E598 /* CoreBluetoothTransport+Delegates.swift */; };
+		799B062E8B472F0F49FF0394 /* CMFProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; };
+		7A23A4AB6B1A901677F66E19 /* HeadphoneControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9987A3668BBC0285FA17B /* HeadphoneControlling.swift */; };
+		7E9F2BD9764A10771AC4ADF6 /* CommandTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49ECBB2A450B6B44D9526B8B /* CommandTests.swift */; };
+		7EB82FE45606477214A8F8F1 /* CMFHeadphonesProDriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9E68CEBE17B9251D475BCD8 /* CMFHeadphonesProDriverTests.swift */; };
+		80C3AB75CBD8E04EF7AC156B /* JBLProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; };
+		8242EA8188CF935D86E700D1 /* Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCE97049BF4FEAFE7E3C026 /* Hex.swift */; };
+		8342EB35830D1DDF1BDD5538 /* BatteryRingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA7C722396CC2B545390DC /* BatteryRingTests.swift */; };
+		8776A3C1CFBB7C8D62AD5194 /* JBLProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		88B64B63847EA0E060D9482C /* JBLProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		897980085AB205648DFE06A9 /* Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529919147167488564C47BDC /* Reply.swift */; };
+		89E7702CE6340D437E3BCF2A /* HeadphoneViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62331A8B030CC2C493799B42 /* HeadphoneViewModel.swift */; };
+		8DFA560866B9222ACDA8EACD /* DeviceSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07F333DA4B98F27803F9E90F /* DeviceSnapshot.swift */; };
+		9081315ADFB7940A0482684E /* CMFFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = F74E5D911D40E5CEED86FEF4 /* CMFFrame.swift */; };
+		90A4D2D4F3D2CE2C9AE66926 /* CMFProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		938D7241E2DC0D807F493ED0 /* DeviceSessionLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D30A54A4EA7BF6A46EF9CF8 /* DeviceSessionLifecycleTests.swift */; };
+		944561B75B46F147C25AE091 /* RFCOMMTransport+Connect.swift in Sources */ = {isa = PBXBuildFile; fileRef = D303E74D6D8884CE72AAB866 /* RFCOMMTransport+Connect.swift */; };
+		94BD8E437D71DE14529B9492 /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
+		9529B005444B3B70E7A7C916 /* MotoFrame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5714C912075945E7C2E9C613 /* MotoFrame.swift */; };
+		967D24BFF209347F21ABC9A7 /* JBLLive770NCDriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD72E0684A50885F0735402 /* JBLLive770NCDriverTests.swift */; };
+		97CBB374712DE6EB04F40116 /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9888AB4971ED41C0B75CE34D /* CoreBluetoothTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C0CCE5E853495CADEECB1A3 /* CoreBluetoothTransport.swift */; };
+		9981B9A4D4B0569BDC24AF94 /* ClassicBluetooth.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E3F87AF2747EF8A8CC5F8617 /* ClassicBluetooth.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9B1D2116A2584C1FD95E39D2 /* JBLDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */; };
+		9C2EBF63F4731936B3F4B4C7 /* JBLDriver.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		9CD6C575AB4356A0D1D3373E /* DeviceState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 747AF7EA9AF6684428C0E4AE /* DeviceState.swift */; };
+		A0D7AF6C2A15848D0715CA7C /* JBLProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; };
+		A1D4FE2AA449B74F9D468CC5 /* CMFDriver.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F9EB447F89726B08596FD7C2 /* CMFDriver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A1FCDB83A65A2A1C1E7FA5C7 /* ApplyError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18F44C0385D81A84DC7EBB87 /* ApplyError.swift */; };
+		A3DB20E067B1F11AEBAEC899 /* FakeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BCDC61D95116553D30787FD /* FakeController.swift */; };
+		A54188B9BB1A00AF8BAF116F /* JBLProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A950BB3C952D5EA33AF79384 /* IOBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3FAD409812AC26310D97661 /* IOBluetooth.framework */; };
+		A9AD91CD0FF12A15C2C0B15E /* ClassicBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E3F87AF2747EF8A8CC5F8617 /* ClassicBluetooth.framework */; };
+		AC99A8D19B22E4A0DC9182D4 /* MenuBarIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A06E22554A269D1B423E03D /* MenuBarIcon.swift */; };
+		AE512E60307E4BA862D73785 /* CMFProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AF202E0BF854DA57D207CD1A /* GlassStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5068735274C75C4B8DDD7D9 /* GlassStyle.swift */; };
+		B1F5BB659F6D3397847694FF /* Logging.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A45B39F9ABDC336697D35A /* Logging.swift */; };
+		B22DFEC65DFE54E6479E775B /* CMFProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B61E18DA8FF5DED2E59276FF /* MotoBudsPlusDriverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7BFC6EFCB7CD44F863F8A7 /* MotoBudsPlusDriverTests.swift */; };
+		B6939340591D6E3889475E5F /* MenuBarIconTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 545209F03B32EB6E7DD8E93A /* MenuBarIconTests.swift */; };
+		B745A034C03A91FE342B63F4 /* MotoDriver.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D45D3157E55630D2AFF881CC /* MotoDriver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B9B48D69FE7AE5D6C190460E /* HeadphoneMemory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E04BD6ACE8F11A643BECB505 /* HeadphoneMemory.swift */; };
+		BA0B918D69B6F3B3B5F67106 /* DeviceSession+Apply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA6E0701FBF7A4DBE33E5BA /* DeviceSession+Apply.swift */; };
+		BB445A978231C502C0DE99FC /* JBLSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E0EAD2C336B52CC838D187A /* JBLSettings.swift */; };
+		BDB929FDFCD0FBEB66248C17 /* ConnectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7968036499A060B856974E40 /* ConnectionFooter.swift */; };
+		BE18F69916F71A84113ADD06 /* DeviceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CD7FDC7847BB689E22355F8 /* DeviceEntry.swift */; };
+		C4E17A3A478BC76913F9D259 /* JBLProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; };
+		C4E4828B3B9F213657AB674E /* MenuBarLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C1E1C63F4E07E287A7B4F0 /* MenuBarLabel.swift */; };
+		C74375527EA9CFE438C498C8 /* ReplyWaitersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 071B1BBD08FD9296AEA7186F /* ReplyWaitersTests.swift */; };
+		C79D783B761DFC0FB2396860 /* DeviceSessionHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDFC7BC3540F5E06FAAC76B /* DeviceSessionHarness.swift */; };
+		CA4ED76E1EFF7132DF1600A2 /* EqPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AEE20B7C3CFEF07B0C7E8B1 /* EqPreset.swift */; };
+		CCA83F1BCB7592D0901FC8DC /* AmbientLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD86E83C8ADDE6E81403CC36 /* AmbientLevel.swift */; };
+		CD7C562A1F2A8B0DBE17E88E /* CMFDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9EB447F89726B08596FD7C2 /* CMFDriver.framework */; };
+		D07F2089C1D876946CAB0711 /* StatusTextTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553323B4BD4E4C45B137D081 /* StatusTextTests.swift */; };
+		D3BF86583578E000DBCA9CBB /* MotoChangeEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 579B58F3B324E87B121D08E8 /* MotoChangeEncoder.swift */; };
+		D4513B92652817D8CA668838 /* MotoProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D46022877722EBFF1A43AA7C /* DeviceSessionReconnectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AC0CE30B7C2F361890F339 /* DeviceSessionReconnectTests.swift */; };
+		D4D1C2EB3CCD715EC5D94F7D /* DeviceIdentity.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB16AF9705E8872BBEA5F7B /* DeviceIdentity.swift */; };
+		D60D5078EEC55B614D6BC30D /* ActiveDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771BC31E58D9DE4995701DC6 /* ActiveDeviceTests.swift */; };
+		D83EF4A352AE11C3873E520F /* FakeDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453D6043C8C7D3B36647E56 /* FakeDriver.swift */; };
+		D96C300205C1DB3A58E92617 /* NoiseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173A2586A3677DD62B674B51 /* NoiseMode.swift */; };
+		DB874109232015478C81F6B0 /* MotoProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; };
+		DCA18AE82BE670DF854332CD /* MotoOpcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE26CEA5E0E15716FDB93BBA /* MotoOpcode.swift */; };
+		DECBCC2A853A74BFC660F2EB /* MotoFramer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D284CA262CCCCDFB9D491CB /* MotoFramer.swift */; };
+		DFEA0EC612118C5723B5605E /* SettingDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5FB94E68BE4B73B6978CA42 /* SettingDescriptor.swift */; };
+		E07987E8FFB67CED1F1BA1E6 /* MotoUpdateDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC5C49BBB194223120FAB78 /* MotoUpdateDecoder.swift */; };
+		E0FE4AD327397760C52A0319 /* AppIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = 6DD0EC83F5F008886E92071E /* AppIcon.icns */; };
+		E134322F1DDEA8CE04C7220A /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 823E651DFC0EBBBE8BBAEDFE /* CoreBluetooth.framework */; };
+		E2307C0640DA5499D07F7E0F /* PreferenceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB02318DDF5B807043E11A68 /* PreferenceStore.swift */; };
+		E280AA71606407997106858A /* ConnectionWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8B4E1467491B96FCA55964 /* ConnectionWatcher.swift */; };
+		E49F1D2D3880443EC36B1453 /* SettingsPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7316F27C8B06A1A19711FB /* SettingsPanel.swift */; };
+		E558E0A0D7F4DC91AFA91AC2 /* CMFProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; };
+		E701396B74992930B50D295D /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E76C39E674C12A18A6A309EC /* RFCOMMTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = AFB410127B0338DB1020AC1C /* RFCOMMTransport.swift */; };
+		E8C42146ACCA86D09A9A6ECB /* CMFFrameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E7172A0A6F00C53CAA8CD77 /* CMFFrameTests.swift */; };
+		EBCAE1828B8CE0626E6ACB74 /* Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F2E929F20D88014BC46AF1 /* Hex.swift */; };
+		ED089FA72C80C21F665A3C22 /* CMFDriver.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F9EB447F89726B08596FD7C2 /* CMFDriver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		ED0D65338F6DBC7750363AC4 /* CMFSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4C18F442A05FA19E0AA5096 /* CMFSettings.swift */; };
+		EDE588DDA4C43E5AB90BFC49 /* ReplyDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C3DDC72B5EEF1C5CD1D239F /* ReplyDecoder.swift */; };
+		EF98A854B511724D861974FC /* ReconnectPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF4E4C83CFF4AFA97CD368E /* ReconnectPolicy.swift */; };
+		F031D95959C4DE0B11445FCE /* MotoProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; };
+		F40A0717181216A537FBF3B2 /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F5A39475E169678DD29A5E1E /* HeadphoneViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6C9F2D9D27D97E8246DD80 /* HeadphoneViewModelTests.swift */; };
+		F60707763952FB8957FB3939 /* Sleeper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1A5BC4EB1AF313673D7C79 /* Sleeper.swift */; };
+		FE91EF38F4F9ED062CA84C4D /* CRC32.swift in Sources */ = {isa = PBXBuildFile; fileRef = 12FD0CA4B08EDEFA7A4EB874 /* CRC32.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		015DFDB6A7E33F46AF094CD8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A46703F7EA2B7DC7F6A03C30;
+			remoteInfo = JBLDriver;
+		};
+		131E5E6EA89837F099402098 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		1835C1300894AEDABB8B02F3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B056FFA57A7E84BF6178DDC8;
+			remoteInfo = CMFProtocol;
+		};
+		2631A05E637A7159169E190F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6132221D249C7EC07FCAF677;
+			remoteInfo = Quietbar;
+		};
+		2A75138D28DB566299B8C821 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6CFBF124169C01C3E414E11;
+			remoteInfo = MotoProtocol;
+		};
+		34FB8E0C974F9FCC4397F30F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		36E508CE7826D8148FFCDDE8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		3D05618656CE2E0332B6984B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		45AED7C12D36EBA86D650C80 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		579CC5BF987DDF51DE8CCD15 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		5C14C27C08968283AB8DDA6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FE0517F4F1C4DA37AFE9361D;
+			remoteInfo = BluetoothLE;
+		};
+		5F50337B5492E9F169E89771 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6CFBF124169C01C3E414E11;
+			remoteInfo = MotoProtocol;
+		};
+		6C46D88BE7DF213168AF78C1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77297031F43FF3CB6AD99C05;
+			remoteInfo = JBLProtocol;
+		};
+		70C87F3F294A1913A2B50D91 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25ACBD42793C978252571766;
+			remoteInfo = CMFDriver;
+		};
+		7394480B239532B65350CF67 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		789C365E0AB113C4B451D295 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		894EDF90058BD203CF551F92 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		8D1734F6017F8446C0950B9B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77297031F43FF3CB6AD99C05;
+			remoteInfo = JBLProtocol;
+		};
+		959403DC08EFD7A2293CF5BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B056FFA57A7E84BF6178DDC8;
+			remoteInfo = CMFProtocol;
+		};
+		96B2FA3D94068FED99F26AC5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B056FFA57A7E84BF6178DDC8;
+			remoteInfo = CMFProtocol;
+		};
+		A21FEB986C51169EED1BE960 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A46703F7EA2B7DC7F6A03C30;
+			remoteInfo = JBLDriver;
+		};
+		A4D8A02C0F785B5D5E88D871 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		A6BC907BD614AAAD093D8FC4 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77297031F43FF3CB6AD99C05;
+			remoteInfo = JBLProtocol;
+		};
+		A87B20887597D1ED648BAF74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6CFBF124169C01C3E414E11;
+			remoteInfo = MotoProtocol;
+		};
+		B062E1611D44E548AAEA603F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5DBEC93CD548CDD76CFBA362;
+			remoteInfo = ClassicBluetooth;
+		};
+		B57FE7535E433C2CE94DB5BD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC25330B757003C37506080C;
+			remoteInfo = MotoDriver;
+		};
+		BAD11214F3B8A78294EA9F85 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77297031F43FF3CB6AD99C05;
+			remoteInfo = JBLProtocol;
+		};
+		C39209E4F678890C6ACB93F1 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 25ACBD42793C978252571766;
+			remoteInfo = CMFDriver;
+		};
+		CBB8AB2D6405BBAB470844B7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		CDD9A9286A176D928141994C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E6CFBF124169C01C3E414E11;
+			remoteInfo = MotoProtocol;
+		};
+		DDCBFBD6B7DC429FFE2588F6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B056FFA57A7E84BF6178DDC8;
+			remoteInfo = CMFProtocol;
+		};
+		EDB3AF83E26B3CDAC4C3FC55 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+		F23FE74C59971853CBFF2853 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = AC25330B757003C37506080C;
+			remoteInfo = MotoDriver;
+		};
+		FE78853BAA13632E16C4EAE9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BBB92CA0DB2C979FABC1641B;
+			remoteInfo = HeadphoneKit;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0E209BE6F1DF6F3963DB675F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A54188B9BB1A00AF8BAF116F /* JBLProtocol.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		27795D485233AF33A17DB793 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				AE512E60307E4BA862D73785 /* CMFProtocol.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A2DD131F2217E7E352F3A1C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0079AF224E1A29E84C756630 /* JBLDriver.framework in Embed Frameworks */,
+				8776A3C1CFBB7C8D62AD5194 /* JBLProtocol.framework in Embed Frameworks */,
+				015E601E947131DC755D4AF1 /* HeadphoneKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		629DF9959D15BB35A11DA07C /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				E701396B74992930B50D295D /* HeadphoneKit.framework in Embed Frameworks */,
+				B22DFEC65DFE54E6479E775B /* CMFProtocol.framework in Embed Frameworks */,
+				A1D4FE2AA449B74F9D468CC5 /* CMFDriver.framework in Embed Frameworks */,
+				88B64B63847EA0E060D9482C /* JBLProtocol.framework in Embed Frameworks */,
+				9C2EBF63F4731936B3F4B4C7 /* JBLDriver.framework in Embed Frameworks */,
+				D4513B92652817D8CA668838 /* MotoProtocol.framework in Embed Frameworks */,
+				B745A034C03A91FE342B63F4 /* MotoDriver.framework in Embed Frameworks */,
+				2CA6E895D5B33BBE032D0E1D /* BluetoothLE.framework in Embed Frameworks */,
+				9981B9A4D4B0569BDC24AF94 /* ClassicBluetooth.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6A83011A56C26CE772AF8FC4 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				52070650AB6B3B0EA71678E4 /* MotoDriver.framework in Embed Frameworks */,
+				44A7E9F913CF2F405F8AE1FF /* MotoProtocol.framework in Embed Frameworks */,
+				F40A0717181216A537FBF3B2 /* HeadphoneKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		89AC90A7BA04A57E86635B93 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2D01DFA456AD5BE5240CB8FD /* MotoProtocol.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D29867E2381D78FD8A88A84 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2D11DEC13EF92AF4B5182828 /* HeadphoneKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C5D406AE65DFDD753F6AB984 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				45EA2FDAEAE46B148C5354AE /* HeadphoneKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E960E9F7B927025FADB43B00 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				ED089FA72C80C21F665A3C22 /* CMFDriver.framework in Embed Frameworks */,
+				90A4D2D4F3D2CE2C9AE66926 /* CMFProtocol.framework in Embed Frameworks */,
+				97CBB374712DE6EB04F40116 /* HeadphoneKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		04C1E1C63F4E07E287A7B4F0 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
+		0698E80DE63172365B5377A3 /* JBLLive770NCDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JBLLive770NCDriver.swift; sourceTree = "<group>"; };
+		071B1BBD08FD9296AEA7186F /* ReplyWaitersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWaitersTests.swift; sourceTree = "<group>"; };
+		07F333DA4B98F27803F9E90F /* DeviceSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSnapshot.swift; sourceTree = "<group>"; };
+		0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HeadphoneKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BCDC61D95116553D30787FD /* FakeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeController.swift; sourceTree = "<group>"; };
+		0BE8FFE7DEBA7564D2ED4E3F /* DeviceSessionIdentityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionIdentityTests.swift; sourceTree = "<group>"; };
+		12FD0CA4B08EDEFA7A4EB874 /* CRC32.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRC32.swift; sourceTree = "<group>"; };
+		14FF0F4496693C6FE789292A /* FakeConnectionWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeConnectionWatcher.swift; sourceTree = "<group>"; };
+		173A2586A3677DD62B674B51 /* NoiseMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoiseMode.swift; sourceTree = "<group>"; };
+		18F44C0385D81A84DC7EBB87 /* ApplyError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplyError.swift; sourceTree = "<group>"; };
+		1BCE97049BF4FEAFE7E3C026 /* Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
+		1C3DDC72B5EEF1C5CD1D239F /* ReplyDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyDecoder.swift; sourceTree = "<group>"; };
+		1CF73CB0B6EF213935007BA0 /* MotoPDU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoPDU.swift; sourceTree = "<group>"; };
+		1E40F25B56EB5DF8D4C6049D /* BatteryRingStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryRingStyle.swift; sourceTree = "<group>"; };
+		1F27A868C8F7FA5A75FF48A5 /* CMFCRC16.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFCRC16.swift; sourceTree = "<group>"; };
+		1F83B0821DC9910776FAD008 /* IOBluetoothConnectionWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBluetoothConnectionWatcher.swift; sourceTree = "<group>"; };
+		22619D0B7543DE9117D1733C /* DeviceStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStateTests.swift; sourceTree = "<group>"; };
+		26721313237D1F6A2229AB4F /* CMFFramer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFFramer.swift; sourceTree = "<group>"; };
+		2896447514062F222ABEA565 /* CMFProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CMFProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B8B4E1467491B96FCA55964 /* ConnectionWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionWatcher.swift; sourceTree = "<group>"; };
+		2CD7FDC7847BB689E22355F8 /* DeviceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceEntry.swift; sourceTree = "<group>"; };
+		356D6C26F7231383B9BA0C02 /* MotoDriverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotoDriverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		359011ECD17B69411315A1DC /* SettingDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDescriptorTests.swift; sourceTree = "<group>"; };
+		3625DBBDCAA056874DD0C07C /* CMFCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFCommand.swift; sourceTree = "<group>"; };
+		3C7BFC6EFCB7CD44F863F8A7 /* MotoBudsPlusDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoBudsPlusDriverTests.swift; sourceTree = "<group>"; };
+		3F1E3C187758F074B14EC9AB /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
+		444760096DF0C72999885FD0 /* GlassSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassSegmentedControl.swift; sourceTree = "<group>"; };
+		46F2E929F20D88014BC46AF1 /* Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
+		4808D6A3366340711503930D /* DeviceSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSession.swift; sourceTree = "<group>"; };
+		49ECBB2A450B6B44D9526B8B /* CommandTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandTests.swift; sourceTree = "<group>"; };
+		4D30A54A4EA7BF6A46EF9CF8 /* DeviceSessionLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionLifecycleTests.swift; sourceTree = "<group>"; };
+		4E7172A0A6F00C53CAA8CD77 /* CMFFrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFFrameTests.swift; sourceTree = "<group>"; };
+		4E7316F27C8B06A1A19711FB /* SettingsPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsPanel.swift; sourceTree = "<group>"; };
+		4FA6E0701FBF7A4DBE33E5BA /* DeviceSession+Apply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceSession+Apply.swift"; sourceTree = "<group>"; };
+		4FF2FAA86E92E2DDB113C898 /* HeadphoneMemoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneMemoryTests.swift; sourceTree = "<group>"; };
+		5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JBLDriver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		529919147167488564C47BDC /* Reply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reply.swift; sourceTree = "<group>"; };
+		545209F03B32EB6E7DD8E93A /* MenuBarIconTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIconTests.swift; sourceTree = "<group>"; };
+		5453D6043C8C7D3B36647E56 /* FakeDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeDriver.swift; sourceTree = "<group>"; };
+		553323B4BD4E4C45B137D081 /* StatusTextTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusTextTests.swift; sourceTree = "<group>"; };
+		56210A94AB49E01E6F6419E7 /* UserDefaultsStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStoreTests.swift; sourceTree = "<group>"; };
+		5714C912075945E7C2E9C613 /* MotoFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoFrame.swift; sourceTree = "<group>"; };
+		579B58F3B324E87B121D08E8 /* MotoChangeEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoChangeEncoder.swift; sourceTree = "<group>"; };
+		58764307A395ACE7F8D31C48 /* MotoBudsPlusDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoBudsPlusDriver.swift; sourceTree = "<group>"; };
+		5920BF468F994D2A70E23856 /* ReplyWaiters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWaiters.swift; sourceTree = "<group>"; };
+		5BD72E0684A50885F0735402 /* JBLLive770NCDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JBLLive770NCDriverTests.swift; sourceTree = "<group>"; };
+		5C0CCE5E853495CADEECB1A3 /* CoreBluetoothTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreBluetoothTransport.swift; sourceTree = "<group>"; };
+		5D6335E3023D5B5489DB4341 /* DeviceSessionSettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionSettingsTests.swift; sourceTree = "<group>"; };
+		62331A8B030CC2C493799B42 /* HeadphoneViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneViewModel.swift; sourceTree = "<group>"; };
+		64BEB964246E16AA35C2FBF4 /* DeviceSession+Handshake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DeviceSession+Handshake.swift"; sourceTree = "<group>"; };
+		670AFD9B4688FB7AEB91FFE6 /* StatusText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusText.swift; sourceTree = "<group>"; };
+		6913BA34D93F2190CB1249C3 /* MotoSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoSettings.swift; sourceTree = "<group>"; };
+		698B8086FD1A7B8FB57B5018 /* CMFHeadphonesProDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFHeadphonesProDriver.swift; sourceTree = "<group>"; };
+		6C1A5BC4EB1AF313673D7C79 /* Sleeper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sleeper.swift; sourceTree = "<group>"; };
+		6D186643B7C26279D2D14E92 /* ReplyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyTests.swift; sourceTree = "<group>"; };
+		6DD0EC83F5F008886E92071E /* AppIcon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = AppIcon.icns; sourceTree = "<group>"; };
+		6E0EAD2C336B52CC838D187A /* JBLSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JBLSettings.swift; sourceTree = "<group>"; };
+		747AF7EA9AF6684428C0E4AE /* DeviceState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceState.swift; sourceTree = "<group>"; };
+		771BC31E58D9DE4995701DC6 /* ActiveDeviceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveDeviceTests.swift; sourceTree = "<group>"; };
+		79603F2B19F20977A1AE8391 /* SettingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingControls.swift; sourceTree = "<group>"; };
+		7968036499A060B856974E40 /* ConnectionFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionFooter.swift; sourceTree = "<group>"; };
+		7D70E71ED21CED5F86A41531 /* CMFSequence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFSequence.swift; sourceTree = "<group>"; };
+		7DF4E4C83CFF4AFA97CD368E /* ReconnectPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicy.swift; sourceTree = "<group>"; };
+		7F6C9F2D9D27D97E8246DD80 /* HeadphoneViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneViewModelTests.swift; sourceTree = "<group>"; };
+		80265ED9657EDDA534C69D62 /* QuietbarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietbarApp.swift; sourceTree = "<group>"; };
+		823E651DFC0EBBBE8BBAEDFE /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		85AC0CE30B7C2F361890F339 /* DeviceSessionReconnectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionReconnectTests.swift; sourceTree = "<group>"; };
+		875E78F59630C2237D2DAFE6 /* EqFrameBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqFrameBuilder.swift; sourceTree = "<group>"; };
+		8A06E22554A269D1B423E03D /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
+		8BCAAA4337EC72FB201ADBEC /* MenuContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuContentView.swift; sourceTree = "<group>"; };
+		8E731107E97A65E92A1A1257 /* SettingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTests.swift; sourceTree = "<group>"; };
+		8FDA32C7435B9596233D73DF /* JBLChangeEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JBLChangeEncoder.swift; sourceTree = "<group>"; };
+		919C202E5CA7B7E6BB7EDC89 /* LiveCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveCatalog.swift; sourceTree = "<group>"; };
+		91DE1923DAF2BB827358AFE1 /* MotoProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotoProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		983363499A6431331CB059B7 /* SpatialSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpatialSetting.swift; sourceTree = "<group>"; };
+		9AEE20B7C3CFEF07B0C7E8B1 /* EqPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqPreset.swift; sourceTree = "<group>"; };
+		9D203521A3528C3822BE0379 /* DeviceDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDriver.swift; sourceTree = "<group>"; };
+		9D284CA262CCCCDFB9D491CB /* MotoFramer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoFramer.swift; sourceTree = "<group>"; };
+		9FB5EF89DFA8B6B1DDF9429E /* SettingID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingID.swift; sourceTree = "<group>"; };
+		A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CMFProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A383B99FC80CFAA914717C0D /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		A417138A1EF26A4ACE69E598 /* CoreBluetoothTransport+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBluetoothTransport+Delegates.swift"; sourceTree = "<group>"; };
+		A4C18F442A05FA19E0AA5096 /* CMFSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFSettings.swift; sourceTree = "<group>"; };
+		A54DA4E819B8FA97D31DAA1E /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
+		AA43F17D1D5B19E86D63F5ED /* ConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatus.swift; sourceTree = "<group>"; };
+		AA88B8EF1B453D899EE9138E /* JBLProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JBLProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB02318DDF5B807043E11A68 /* PreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceStore.swift; sourceTree = "<group>"; };
+		ACD6AD6181F8979CAAD1149C /* Frame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		AE68B4EA14822236128AEB14 /* JBLUpdateDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JBLUpdateDecoder.swift; sourceTree = "<group>"; };
+		AFB410127B0338DB1020AC1C /* RFCOMMTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFCOMMTransport.swift; sourceTree = "<group>"; };
+		B81A3D4F0702A0B803938807 /* BudsBatteryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudsBatteryView.swift; sourceTree = "<group>"; };
+		B905F2693E801AFADC4CA9B4 /* HeadphoneKitTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeadphoneKitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCB16AF9705E8872BBEA5F7B /* DeviceIdentity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceIdentity.swift; sourceTree = "<group>"; };
+		BD279B8D246620BA90B43D97 /* SettingRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingRow.swift; sourceTree = "<group>"; };
+		BEC5C49BBB194223120FAB78 /* MotoUpdateDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoUpdateDecoder.swift; sourceTree = "<group>"; };
+		C0A45B39F9ABDC336697D35A /* Logging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logging.swift; sourceTree = "<group>"; };
+		C3D7BC61B5E835A602981E18 /* SmartAudioVideoPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAudioVideoPreset.swift; sourceTree = "<group>"; };
+		C3E9987A3668BBC0285FA17B /* HeadphoneControlling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneControlling.swift; sourceTree = "<group>"; };
+		C5068735274C75C4B8DDD7D9 /* GlassStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassStyle.swift; sourceTree = "<group>"; };
+		C685F5E123B7E2CCD4B656FD /* DeviceSessionWakeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionWakeTests.swift; sourceTree = "<group>"; };
+		CA17EB705120C10EBF54BF23 /* MotoFramerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoFramerTests.swift; sourceTree = "<group>"; };
+		CD86E83C8ADDE6E81403CC36 /* AmbientLevel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmbientLevel.swift; sourceTree = "<group>"; };
+		CF718E800CDBD21D9BCB6388 /* Command.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Command.swift; sourceTree = "<group>"; };
+		D2098E44906205C3E301EA24 /* Quietbar.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quietbar.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2268595A0570298BDDB2234 /* Balance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Balance.swift; sourceTree = "<group>"; };
+		D303E74D6D8884CE72AAB866 /* RFCOMMTransport+Connect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RFCOMMTransport+Connect.swift"; sourceTree = "<group>"; };
+		D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = JBLProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D45D3157E55630D2AFF881CC /* MotoDriver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotoDriver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D924C4CAE4EAF3D64470A1DF /* JBLDriverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JBLDriverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE41421138EB32FAF429775D /* LevelRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelRow.swift; sourceTree = "<group>"; };
+		DEDFC7BC3540F5E06FAAC76B /* DeviceSessionHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionHarness.swift; sourceTree = "<group>"; };
+		DF119F2A76471BF051423CE6 /* TestSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestSupport.swift; sourceTree = "<group>"; };
+		E04BD6ACE8F11A643BECB505 /* HeadphoneMemory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneMemory.swift; sourceTree = "<group>"; };
+		E3F87AF2747EF8A8CC5F8617 /* ClassicBluetooth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ClassicBluetooth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3FAD409812AC26310D97661 /* IOBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOBluetooth.framework; path = System/Library/Frameworks/IOBluetooth.framework; sourceTree = SDKROOT; };
+		E53F6B689DF058776CDADD78 /* MotoProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MotoProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E5FB94E68BE4B73B6978CA42 /* SettingDescriptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDescriptor.swift; sourceTree = "<group>"; };
+		E6148BBCFE4B3D943EF93D94 /* CMFDriverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CMFDriverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E83A3ED2187487B76CBAEB0D /* QuietbarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuietbarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E9E68CEBE17B9251D475BCD8 /* CMFHeadphonesProDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFHeadphonesProDriverTests.swift; sourceTree = "<group>"; };
+		EA386F86CE9EE0D7F32B1029 /* Battery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Battery.swift; sourceTree = "<group>"; };
+		EB5F861EB1CFF98550F965A7 /* BluetoothLE.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BluetoothLE.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EFB3EA2554EEB5A5A68376C6 /* ActiveDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActiveDevice.swift; sourceTree = "<group>"; };
+		F2DA7C722396CC2B545390DC /* BatteryRingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryRingTests.swift; sourceTree = "<group>"; };
+		F5BF98B01D26D03374186551 /* LinkEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkEvent.swift; sourceTree = "<group>"; };
+		F74E5D911D40E5CEED86FEF4 /* CMFFrame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFFrame.swift; sourceTree = "<group>"; };
+		F7F92F6A57AC3D00FF4E70BA /* MotoFrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoFrameTests.swift; sourceTree = "<group>"; };
+		F9EB447F89726B08596FD7C2 /* CMFDriver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CMFDriver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		FC458E2AA2C5CD844EB3E3AE /* EqPresetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqPresetTests.swift; sourceTree = "<group>"; };
+		FDFEA157D241431D1698A16A /* PacketFramer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketFramer.swift; sourceTree = "<group>"; };
+		FE26CEA5E0E15716FDB93BBA /* MotoOpcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoOpcode.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		06321239665084CD2DE61377 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4ACD8CE801ED4C61F1B2D88E /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2C1D8754ED0BA25076D0BCDB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D0A0C4EEC4F23B8F344CDFC /* CMFDriver.framework in Frameworks */,
+				20DFA3E232498253F4A9A472 /* CMFProtocol.framework in Frameworks */,
+				4FC77076801AA262190A8552 /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3AA60B68823CB3F57C16409C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				799B062E8B472F0F49FF0394 /* CMFProtocol.framework in Frameworks */,
+				4E62C106D1D75C0FBB8D9D5B /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3CE8FE7B565A5656AAD0A94C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0D7AF6C2A15848D0715CA7C /* JBLProtocol.framework in Frameworks */,
+				025F8932D8C498962D9E0C19 /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		565D4D509C913158B2208400 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F031D95959C4DE0B11445FCE /* MotoProtocol.framework in Frameworks */,
+				41C4B51EA68E93FB93C77260 /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		650CF9992CE11D3F5CE8029F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DB874109232015478C81F6B0 /* MotoProtocol.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6BC8E0948A8C1145E294DC74 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E558E0A0D7F4DC91AFA91AC2 /* CMFProtocol.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8044C68CD882BCF49BA02466 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6CA554EF13CAED162A996108 /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		881B182D1AD997669EF1CDEE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				80C3AB75CBD8E04EF7AC156B /* JBLProtocol.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		994545E0C89C7D1B7975E0B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A58EBAF362A91DA5E7DC2CB /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B552732E53B482707A7EEB6D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				754B2DB1F39821AEA6FEA868 /* HeadphoneKit.framework in Frameworks */,
+				E134322F1DDEA8CE04C7220A /* CoreBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BCC7DDC57E2C5853CD8A37A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4C168A5A90BE2A95E183E863 /* MotoDriver.framework in Frameworks */,
+				3FF5463B9BEF492D70D2024F /* MotoProtocol.framework in Frameworks */,
+				1C0D969C176208F843952776 /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CF8FA152D225D9611B1926B4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				162418BBCACF41D94FD28E4C /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DD0395E82114302A70AEF0CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				94BD8E437D71DE14529B9492 /* HeadphoneKit.framework in Frameworks */,
+				1B1E04755161CB32A6A88AFD /* CMFProtocol.framework in Frameworks */,
+				CD7C562A1F2A8B0DBE17E88E /* CMFDriver.framework in Frameworks */,
+				613ED3EE420B848F6A56C9CD /* JBLProtocol.framework in Frameworks */,
+				9B1D2116A2584C1FD95E39D2 /* JBLDriver.framework in Frameworks */,
+				0BBA1382C08F0865376755E8 /* MotoProtocol.framework in Frameworks */,
+				229B9B8A17749C495140540E /* MotoDriver.framework in Frameworks */,
+				593D0CA451949EC3D3B619E2 /* BluetoothLE.framework in Frameworks */,
+				A9AD91CD0FF12A15C2C0B15E /* ClassicBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E2C0312652C9D73A97D17E96 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				56DF373E28C25CC070F7A4A5 /* JBLDriver.framework in Frameworks */,
+				C4E17A3A478BC76913F9D259 /* JBLProtocol.framework in Frameworks */,
+				4254EB02C8E39D1CD8376387 /* HeadphoneKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EDC320E63576EFCE708208B9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3ECA19069513E84EAFFEC505 /* HeadphoneKit.framework in Frameworks */,
+				A950BB3C952D5EA33AF79384 /* IOBluetooth.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		06EA07B961610D94A6F46066 /* CMFDriverTests */ = {
+			isa = PBXGroup;
+			children = (
+				E9E68CEBE17B9251D475BCD8 /* CMFHeadphonesProDriverTests.swift */,
+			);
+			path = CMFDriverTests;
+			sourceTree = "<group>";
+		};
+		13AEA1B0BC479A3C62A76AAA /* CMFDriver */ = {
+			isa = PBXGroup;
+			children = (
+				698B8086FD1A7B8FB57B5018 /* CMFHeadphonesProDriver.swift */,
+				A4C18F442A05FA19E0AA5096 /* CMFSettings.swift */,
+			);
+			path = CMFDriver;
+			sourceTree = "<group>";
+		};
+		1D34E59FFD9AE1227824C2F9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				823E651DFC0EBBBE8BBAEDFE /* CoreBluetooth.framework */,
+				E3FAD409812AC26310D97661 /* IOBluetooth.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F61D5064324D747AD25DB4F /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				EFB3EA2554EEB5A5A68376C6 /* ActiveDevice.swift */,
+				1E40F25B56EB5DF8D4C6049D /* BatteryRingStyle.swift */,
+				2CD7FDC7847BB689E22355F8 /* DeviceEntry.swift */,
+				C3E9987A3668BBC0285FA17B /* HeadphoneControlling.swift */,
+				62331A8B030CC2C493799B42 /* HeadphoneViewModel.swift */,
+				8A06E22554A269D1B423E03D /* MenuBarIcon.swift */,
+				670AFD9B4688FB7AEB91FFE6 /* StatusText.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		445F5774D0BEEDC932F54F60 /* CMFProtocolTests */ = {
+			isa = PBXGroup;
+			children = (
+				4E7172A0A6F00C53CAA8CD77 /* CMFFrameTests.swift */,
+			);
+			path = CMFProtocolTests;
+			sourceTree = "<group>";
+		};
+		490527B7B39C871B8C999822 /* Quietbar */ = {
+			isa = PBXGroup;
+			children = (
+				50C513EFE7FB018AEE7B427A /* App */,
+				3F61D5064324D747AD25DB4F /* Presentation */,
+				CCECC5B0104389B4027038B0 /* Views */,
+			);
+			path = Quietbar;
+			sourceTree = "<group>";
+		};
+		50C513EFE7FB018AEE7B427A /* App */ = {
+			isa = PBXGroup;
+			children = (
+				919C202E5CA7B7E6BB7EDC89 /* LiveCatalog.swift */,
+				80265ED9657EDDA534C69D62 /* QuietbarApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		53B27B9AFA0AF03ECAE921C3 /* MotoDriver */ = {
+			isa = PBXGroup;
+			children = (
+				58764307A395ACE7F8D31C48 /* MotoBudsPlusDriver.swift */,
+				579B58F3B324E87B121D08E8 /* MotoChangeEncoder.swift */,
+				6913BA34D93F2190CB1249C3 /* MotoSettings.swift */,
+				BEC5C49BBB194223120FAB78 /* MotoUpdateDecoder.swift */,
+			);
+			path = MotoDriver;
+			sourceTree = "<group>";
+		};
+		5F63E67272417E5EA9571403 /* HeadphoneKitTests */ = {
+			isa = PBXGroup;
+			children = (
+				DEDFC7BC3540F5E06FAAC76B /* DeviceSessionHarness.swift */,
+				0BE8FFE7DEBA7564D2ED4E3F /* DeviceSessionIdentityTests.swift */,
+				4D30A54A4EA7BF6A46EF9CF8 /* DeviceSessionLifecycleTests.swift */,
+				85AC0CE30B7C2F361890F339 /* DeviceSessionReconnectTests.swift */,
+				5D6335E3023D5B5489DB4341 /* DeviceSessionSettingsTests.swift */,
+				C685F5E123B7E2CCD4B656FD /* DeviceSessionWakeTests.swift */,
+				22619D0B7543DE9117D1733C /* DeviceStateTests.swift */,
+				14FF0F4496693C6FE789292A /* FakeConnectionWatcher.swift */,
+				5453D6043C8C7D3B36647E56 /* FakeDriver.swift */,
+				4FF2FAA86E92E2DDB113C898 /* HeadphoneMemoryTests.swift */,
+				A54DA4E819B8FA97D31DAA1E /* ReconnectPolicyTests.swift */,
+				071B1BBD08FD9296AEA7186F /* ReplyWaitersTests.swift */,
+				359011ECD17B69411315A1DC /* SettingDescriptorTests.swift */,
+				DF119F2A76471BF051423CE6 /* TestSupport.swift */,
+				56210A94AB49E01E6F6419E7 /* UserDefaultsStoreTests.swift */,
+			);
+			path = HeadphoneKitTests;
+			sourceTree = "<group>";
+		};
+		6C4240E8FC11EDB802CBA5D5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EB5F861EB1CFF98550F965A7 /* BluetoothLE.framework */,
+				E3F87AF2747EF8A8CC5F8617 /* ClassicBluetooth.framework */,
+				F9EB447F89726B08596FD7C2 /* CMFDriver.framework */,
+				E6148BBCFE4B3D943EF93D94 /* CMFDriverTests.xctest */,
+				A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */,
+				2896447514062F222ABEA565 /* CMFProtocolTests.xctest */,
+				0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */,
+				B905F2693E801AFADC4CA9B4 /* HeadphoneKitTests.xctest */,
+				5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */,
+				D924C4CAE4EAF3D64470A1DF /* JBLDriverTests.xctest */,
+				D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */,
+				AA88B8EF1B453D899EE9138E /* JBLProtocolTests.xctest */,
+				D45D3157E55630D2AFF881CC /* MotoDriver.framework */,
+				356D6C26F7231383B9BA0C02 /* MotoDriverTests.xctest */,
+				E53F6B689DF058776CDADD78 /* MotoProtocol.framework */,
+				91DE1923DAF2BB827358AFE1 /* MotoProtocolTests.xctest */,
+				D2098E44906205C3E301EA24 /* Quietbar.app */,
+				E83A3ED2187487B76CBAEB0D /* QuietbarTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		75BCC8C61F1E8CF45A637F91 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				6DD0EC83F5F008886E92071E /* AppIcon.icns */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		7ACD02B3FB7E9E57B4826466 = {
+			isa = PBXGroup;
+			children = (
+				75BCC8C61F1E8CF45A637F91 /* Resources */,
+				E3DC6BA35F1453459D4C4F93 /* Sources */,
+				FD18D0AD8E16168DFE778079 /* Tests */,
+				1D34E59FFD9AE1227824C2F9 /* Frameworks */,
+				6C4240E8FC11EDB802CBA5D5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		7C731AD18118DCF462DD20C6 /* CMFProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				3625DBBDCAA056874DD0C07C /* CMFCommand.swift */,
+				1F27A868C8F7FA5A75FF48A5 /* CMFCRC16.swift */,
+				F74E5D911D40E5CEED86FEF4 /* CMFFrame.swift */,
+				26721313237D1F6A2229AB4F /* CMFFramer.swift */,
+				7D70E71ED21CED5F86A41531 /* CMFSequence.swift */,
+			);
+			path = CMFProtocol;
+			sourceTree = "<group>";
+		};
+		7C758A7877C0530D62EED2F1 /* MotoProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				12FD0CA4B08EDEFA7A4EB874 /* CRC32.swift */,
+				5714C912075945E7C2E9C613 /* MotoFrame.swift */,
+				9D284CA262CCCCDFB9D491CB /* MotoFramer.swift */,
+				FE26CEA5E0E15716FDB93BBA /* MotoOpcode.swift */,
+				1CF73CB0B6EF213935007BA0 /* MotoPDU.swift */,
+			);
+			path = MotoProtocol;
+			sourceTree = "<group>";
+		};
+		81AED4FD88A0EC897DF934AA /* HeadphoneKit */ = {
+			isa = PBXGroup;
+			children = (
+				18F44C0385D81A84DC7EBB87 /* ApplyError.swift */,
+				AA43F17D1D5B19E86D63F5ED /* ConnectionStatus.swift */,
+				2B8B4E1467491B96FCA55964 /* ConnectionWatcher.swift */,
+				9D203521A3528C3822BE0379 /* DeviceDriver.swift */,
+				BCB16AF9705E8872BBEA5F7B /* DeviceIdentity.swift */,
+				4808D6A3366340711503930D /* DeviceSession.swift */,
+				4FA6E0701FBF7A4DBE33E5BA /* DeviceSession+Apply.swift */,
+				64BEB964246E16AA35C2FBF4 /* DeviceSession+Handshake.swift */,
+				07F333DA4B98F27803F9E90F /* DeviceSnapshot.swift */,
+				E04BD6ACE8F11A643BECB505 /* HeadphoneMemory.swift */,
+				F5BF98B01D26D03374186551 /* LinkEvent.swift */,
+				C0A45B39F9ABDC336697D35A /* Logging.swift */,
+				FDFEA157D241431D1698A16A /* PacketFramer.swift */,
+				AB02318DDF5B807043E11A68 /* PreferenceStore.swift */,
+				7DF4E4C83CFF4AFA97CD368E /* ReconnectPolicy.swift */,
+				5920BF468F994D2A70E23856 /* ReplyWaiters.swift */,
+				6C1A5BC4EB1AF313673D7C79 /* Sleeper.swift */,
+				88EEBA23E315A131EE2CB7CF /* Settings */,
+			);
+			path = HeadphoneKit;
+			sourceTree = "<group>";
+		};
+		88EEBA23E315A131EE2CB7CF /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				747AF7EA9AF6684428C0E4AE /* DeviceState.swift */,
+				E5FB94E68BE4B73B6978CA42 /* SettingDescriptor.swift */,
+				9FB5EF89DFA8B6B1DDF9429E /* SettingID.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		90AA6D8D2837E1A8656E05AF /* JBLProtocolTests */ = {
+			isa = PBXGroup;
+			children = (
+				49ECBB2A450B6B44D9526B8B /* CommandTests.swift */,
+				FC458E2AA2C5CD844EB3E3AE /* EqPresetTests.swift */,
+				3F1E3C187758F074B14EC9AB /* FrameTests.swift */,
+				46F2E929F20D88014BC46AF1 /* Hex.swift */,
+				6D186643B7C26279D2D14E92 /* ReplyTests.swift */,
+				8E731107E97A65E92A1A1257 /* SettingTests.swift */,
+			);
+			path = JBLProtocolTests;
+			sourceTree = "<group>";
+		};
+		922F35CD3D4078497F771683 /* JBLDriver */ = {
+			isa = PBXGroup;
+			children = (
+				8FDA32C7435B9596233D73DF /* JBLChangeEncoder.swift */,
+				0698E80DE63172365B5377A3 /* JBLLive770NCDriver.swift */,
+				6E0EAD2C336B52CC838D187A /* JBLSettings.swift */,
+				AE68B4EA14822236128AEB14 /* JBLUpdateDecoder.swift */,
+			);
+			path = JBLDriver;
+			sourceTree = "<group>";
+		};
+		A9911F9EEECBFED372A63EC4 /* JBLDriverTests */ = {
+			isa = PBXGroup;
+			children = (
+				1BCE97049BF4FEAFE7E3C026 /* Hex.swift */,
+				5BD72E0684A50885F0735402 /* JBLLive770NCDriverTests.swift */,
+			);
+			path = JBLDriverTests;
+			sourceTree = "<group>";
+		};
+		BD278D0BD65E048D3C650C72 /* ClassicBluetooth */ = {
+			isa = PBXGroup;
+			children = (
+				1F83B0821DC9910776FAD008 /* IOBluetoothConnectionWatcher.swift */,
+				AFB410127B0338DB1020AC1C /* RFCOMMTransport.swift */,
+				D303E74D6D8884CE72AAB866 /* RFCOMMTransport+Connect.swift */,
+			);
+			path = ClassicBluetooth;
+			sourceTree = "<group>";
+		};
+		C31BE8B9F55EA87AD5696B26 /* QuietbarTests */ = {
+			isa = PBXGroup;
+			children = (
+				771BC31E58D9DE4995701DC6 /* ActiveDeviceTests.swift */,
+				F2DA7C722396CC2B545390DC /* BatteryRingTests.swift */,
+				0BCDC61D95116553D30787FD /* FakeController.swift */,
+				7F6C9F2D9D27D97E8246DD80 /* HeadphoneViewModelTests.swift */,
+				545209F03B32EB6E7DD8E93A /* MenuBarIconTests.swift */,
+				553323B4BD4E4C45B137D081 /* StatusTextTests.swift */,
+			);
+			path = QuietbarTests;
+			sourceTree = "<group>";
+		};
+		C71D7E6B97F656168C79B408 /* MotoDriverTests */ = {
+			isa = PBXGroup;
+			children = (
+				3C7BFC6EFCB7CD44F863F8A7 /* MotoBudsPlusDriverTests.swift */,
+			);
+			path = MotoDriverTests;
+			sourceTree = "<group>";
+		};
+		CCECC5B0104389B4027038B0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B81A3D4F0702A0B803938807 /* BudsBatteryView.swift */,
+				7968036499A060B856974E40 /* ConnectionFooter.swift */,
+				444760096DF0C72999885FD0 /* GlassSegmentedControl.swift */,
+				C5068735274C75C4B8DDD7D9 /* GlassStyle.swift */,
+				A383B99FC80CFAA914717C0D /* HeaderView.swift */,
+				DE41421138EB32FAF429775D /* LevelRow.swift */,
+				04C1E1C63F4E07E287A7B4F0 /* MenuBarLabel.swift */,
+				8BCAAA4337EC72FB201ADBEC /* MenuContentView.swift */,
+				79603F2B19F20977A1AE8391 /* SettingControls.swift */,
+				BD279B8D246620BA90B43D97 /* SettingRow.swift */,
+				4E7316F27C8B06A1A19711FB /* SettingsPanel.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		DC688299C0892D6C273AA51F /* BluetoothLE */ = {
+			isa = PBXGroup;
+			children = (
+				5C0CCE5E853495CADEECB1A3 /* CoreBluetoothTransport.swift */,
+				A417138A1EF26A4ACE69E598 /* CoreBluetoothTransport+Delegates.swift */,
+			);
+			path = BluetoothLE;
+			sourceTree = "<group>";
+		};
+		E0B1EE74ED6ED13A5C4A9C16 /* MotoProtocolTests */ = {
+			isa = PBXGroup;
+			children = (
+				CA17EB705120C10EBF54BF23 /* MotoFramerTests.swift */,
+				F7F92F6A57AC3D00FF4E70BA /* MotoFrameTests.swift */,
+			);
+			path = MotoProtocolTests;
+			sourceTree = "<group>";
+		};
+		E3DC6BA35F1453459D4C4F93 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				DC688299C0892D6C273AA51F /* BluetoothLE */,
+				BD278D0BD65E048D3C650C72 /* ClassicBluetooth */,
+				13AEA1B0BC479A3C62A76AAA /* CMFDriver */,
+				7C731AD18118DCF462DD20C6 /* CMFProtocol */,
+				81AED4FD88A0EC897DF934AA /* HeadphoneKit */,
+				922F35CD3D4078497F771683 /* JBLDriver */,
+				F1490210CAD42886FD7BB977 /* JBLProtocol */,
+				53B27B9AFA0AF03ECAE921C3 /* MotoDriver */,
+				7C758A7877C0530D62EED2F1 /* MotoProtocol */,
+				490527B7B39C871B8C999822 /* Quietbar */,
+			);
+			path = Sources;
+			sourceTree = "<group>";
+		};
+		F1490210CAD42886FD7BB977 /* JBLProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				CD86E83C8ADDE6E81403CC36 /* AmbientLevel.swift */,
+				D2268595A0570298BDDB2234 /* Balance.swift */,
+				EA386F86CE9EE0D7F32B1029 /* Battery.swift */,
+				CF718E800CDBD21D9BCB6388 /* Command.swift */,
+				875E78F59630C2237D2DAFE6 /* EqFrameBuilder.swift */,
+				9AEE20B7C3CFEF07B0C7E8B1 /* EqPreset.swift */,
+				ACD6AD6181F8979CAAD1149C /* Frame.swift */,
+				173A2586A3677DD62B674B51 /* NoiseMode.swift */,
+				529919147167488564C47BDC /* Reply.swift */,
+				1C3DDC72B5EEF1C5CD1D239F /* ReplyDecoder.swift */,
+				C3D7BC61B5E835A602981E18 /* SmartAudioVideoPreset.swift */,
+				983363499A6431331CB059B7 /* SpatialSetting.swift */,
+			);
+			path = JBLProtocol;
+			sourceTree = "<group>";
+		};
+		FD18D0AD8E16168DFE778079 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				06EA07B961610D94A6F46066 /* CMFDriverTests */,
+				445F5774D0BEEDC932F54F60 /* CMFProtocolTests */,
+				5F63E67272417E5EA9571403 /* HeadphoneKitTests */,
+				A9911F9EEECBFED372A63EC4 /* JBLDriverTests */,
+				90AA6D8D2837E1A8656E05AF /* JBLProtocolTests */,
+				C71D7E6B97F656168C79B408 /* MotoDriverTests */,
+				E0B1EE74ED6ED13A5C4A9C16 /* MotoProtocolTests */,
+				C31BE8B9F55EA87AD5696B26 /* QuietbarTests */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		25ACBD42793C978252571766 /* CMFDriver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7ECCBF8C496E5DCDFA69B830 /* Build configuration list for PBXNativeTarget "CMFDriver" */;
+			buildPhases = (
+				53E7761E50B8FEFE00F8CB44 /* Sources */,
+				3AA60B68823CB3F57C16409C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DDDCF887B36F330B941DFC53 /* PBXTargetDependency */,
+				3423A9D9FED3C4EC189DE9F4 /* PBXTargetDependency */,
+			);
+			name = CMFDriver;
+			packageProductDependencies = (
+			);
+			productName = CMFDriver;
+			productReference = F9EB447F89726B08596FD7C2 /* CMFDriver.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		5DBEC93CD548CDD76CFBA362 /* ClassicBluetooth */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 05CFC89AC5E413519DF405A3 /* Build configuration list for PBXNativeTarget "ClassicBluetooth" */;
+			buildPhases = (
+				C1894141866E394B6F03DB71 /* Sources */,
+				EDC320E63576EFCE708208B9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8A9C6F981048D4C7EB0F24B7 /* PBXTargetDependency */,
+			);
+			name = ClassicBluetooth;
+			packageProductDependencies = (
+			);
+			productName = ClassicBluetooth;
+			productReference = E3F87AF2747EF8A8CC5F8617 /* ClassicBluetooth.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		6132221D249C7EC07FCAF677 /* Quietbar */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8F42DD5810247CFBAD7FA688 /* Build configuration list for PBXNativeTarget "Quietbar" */;
+			buildPhases = (
+				15715B534A4E9EF9FE8164A6 /* Sources */,
+				0A3BDCA89CCACAA6639CD8D5 /* Resources */,
+				DD0395E82114302A70AEF0CD /* Frameworks */,
+				629DF9959D15BB35A11DA07C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D785B6F0E0828AEC0F72C505 /* PBXTargetDependency */,
+				19FBE023F2C8B10361C2E9C9 /* PBXTargetDependency */,
+				282B1D2A9D185534CA7E7FD4 /* PBXTargetDependency */,
+				60D8C907FB8A4EBF41930B8A /* PBXTargetDependency */,
+				4FCB5CDF4BFC2E6B95C88FC5 /* PBXTargetDependency */,
+				E6A8D853B1E2BFEE1B07426B /* PBXTargetDependency */,
+				C3D10D54B478DC70CFF6FD87 /* PBXTargetDependency */,
+				3A7C922064D7FAE48954BFB2 /* PBXTargetDependency */,
+				B85655643C2C6898721DC245 /* PBXTargetDependency */,
+			);
+			name = Quietbar;
+			packageProductDependencies = (
+			);
+			productName = Quietbar;
+			productReference = D2098E44906205C3E301EA24 /* Quietbar.app */;
+			productType = "com.apple.product-type.application";
+		};
+		651982281F102AB9DE7EA73D /* MotoDriverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ABDC6DFDE0AA8634667AF3E3 /* Build configuration list for PBXNativeTarget "MotoDriverTests" */;
+			buildPhases = (
+				F2B244C7E0F356D5FD0DD095 /* Sources */,
+				BCC7DDC57E2C5853CD8A37A5 /* Frameworks */,
+				6A83011A56C26CE772AF8FC4 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				15BE730A9DE9AFBAACC35254 /* PBXTargetDependency */,
+				564F024C129954C5DDC0884E /* PBXTargetDependency */,
+				41FE7A7925CB0FD338AD3C39 /* PBXTargetDependency */,
+			);
+			name = MotoDriverTests;
+			packageProductDependencies = (
+			);
+			productName = MotoDriverTests;
+			productReference = 356D6C26F7231383B9BA0C02 /* MotoDriverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		747DF06B0B1CE0167D7D4D00 /* HeadphoneKitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B8DFD713BB5BCCF68D7172F9 /* Build configuration list for PBXNativeTarget "HeadphoneKitTests" */;
+			buildPhases = (
+				1CF3C91099CD519ECD828B83 /* Sources */,
+				CF8FA152D225D9611B1926B4 /* Frameworks */,
+				8D29867E2381D78FD8A88A84 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				49D827EB5D9F2B470364C2DC /* PBXTargetDependency */,
+			);
+			name = HeadphoneKitTests;
+			packageProductDependencies = (
+			);
+			productName = HeadphoneKitTests;
+			productReference = B905F2693E801AFADC4CA9B4 /* HeadphoneKitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		77297031F43FF3CB6AD99C05 /* JBLProtocol */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F6349D4DC0DA268CB00B8FD6 /* Build configuration list for PBXNativeTarget "JBLProtocol" */;
+			buildPhases = (
+				1B164E16A4743817019A175A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = JBLProtocol;
+			packageProductDependencies = (
+			);
+			productName = JBLProtocol;
+			productReference = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		773ABB50DAB2B3D8293E00CA /* JBLProtocolTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3ED4A0800C7D4B7236D0190F /* Build configuration list for PBXNativeTarget "JBLProtocolTests" */;
+			buildPhases = (
+				A2E82AA75E47A94B0DB8F10B /* Sources */,
+				881B182D1AD997669EF1CDEE /* Frameworks */,
+				0E209BE6F1DF6F3963DB675F /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				10D1FCF6F5492668C06DDF47 /* PBXTargetDependency */,
+			);
+			name = JBLProtocolTests;
+			packageProductDependencies = (
+			);
+			productName = JBLProtocolTests;
+			productReference = AA88B8EF1B453D899EE9138E /* JBLProtocolTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8B985B0FEA7ABEA08556F704 /* QuietbarTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7978D4C50DA77ED8E436FA4C /* Build configuration list for PBXNativeTarget "QuietbarTests" */;
+			buildPhases = (
+				D6CE84AA39807BD2A19EE14C /* Sources */,
+				06321239665084CD2DE61377 /* Frameworks */,
+				C5D406AE65DFDD753F6AB984 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				202157594CE504691437549B /* PBXTargetDependency */,
+				91CE36C7CBA8A8B31CE09643 /* PBXTargetDependency */,
+			);
+			name = QuietbarTests;
+			packageProductDependencies = (
+			);
+			productName = QuietbarTests;
+			productReference = E83A3ED2187487B76CBAEB0D /* QuietbarTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8E256C9919C9A52CDD398C8A /* JBLDriverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C05424C6F7C645A91C7E1018 /* Build configuration list for PBXNativeTarget "JBLDriverTests" */;
+			buildPhases = (
+				F6948A08DFD0304DB09B87F0 /* Sources */,
+				E2C0312652C9D73A97D17E96 /* Frameworks */,
+				4A2DD131F2217E7E352F3A1C /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				06AE5EB017B575F4EA3B1ADF /* PBXTargetDependency */,
+				B1EB5AC314026D4A36F1F317 /* PBXTargetDependency */,
+				9AED7507362175ECF11CB39C /* PBXTargetDependency */,
+			);
+			name = JBLDriverTests;
+			packageProductDependencies = (
+			);
+			productName = JBLDriverTests;
+			productReference = D924C4CAE4EAF3D64470A1DF /* JBLDriverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A46703F7EA2B7DC7F6A03C30 /* JBLDriver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 37959A92316E360D254CC87F /* Build configuration list for PBXNativeTarget "JBLDriver" */;
+			buildPhases = (
+				34CCDDDE0A99A94FDDAC9FB2 /* Sources */,
+				3CE8FE7B565A5656AAD0A94C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AB75F4BA1DB639D7F905862F /* PBXTargetDependency */,
+				80180BC6C3CDFCC4A1EDE869 /* PBXTargetDependency */,
+			);
+			name = JBLDriver;
+			packageProductDependencies = (
+			);
+			productName = JBLDriver;
+			productReference = 5063245AC8FBBFFB5C710C68 /* JBLDriver.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		AA36898A3F9B53B1BE5E85BB /* CMFProtocolTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5967121D635AEE500689C7A9 /* Build configuration list for PBXNativeTarget "CMFProtocolTests" */;
+			buildPhases = (
+				9B333569ED371A98113764D4 /* Sources */,
+				6BC8E0948A8C1145E294DC74 /* Frameworks */,
+				27795D485233AF33A17DB793 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				590289D44A3F21738F7C8D69 /* PBXTargetDependency */,
+			);
+			name = CMFProtocolTests;
+			packageProductDependencies = (
+			);
+			productName = CMFProtocolTests;
+			productReference = 2896447514062F222ABEA565 /* CMFProtocolTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		AC25330B757003C37506080C /* MotoDriver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E0A70A074EAF942DCBADB2F /* Build configuration list for PBXNativeTarget "MotoDriver" */;
+			buildPhases = (
+				708F3B98B3C64C2E7408FDD2 /* Sources */,
+				565D4D509C913158B2208400 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9D38AF20ED1E99A73CC39AF1 /* PBXTargetDependency */,
+				94AD01B6DD6919B201283332 /* PBXTargetDependency */,
+			);
+			name = MotoDriver;
+			packageProductDependencies = (
+			);
+			productName = MotoDriver;
+			productReference = D45D3157E55630D2AFF881CC /* MotoDriver.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		B056FFA57A7E84BF6178DDC8 /* CMFProtocol */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8314CE2CB74613E1EE7A42FE /* Build configuration list for PBXNativeTarget "CMFProtocol" */;
+			buildPhases = (
+				9C8D689B9BEFB36012FB130C /* Sources */,
+				994545E0C89C7D1B7975E0B9 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6FB878146C39B42162206EE1 /* PBXTargetDependency */,
+			);
+			name = CMFProtocol;
+			packageProductDependencies = (
+			);
+			productName = CMFProtocol;
+			productReference = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		BBB92CA0DB2C979FABC1641B /* HeadphoneKit */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6CF72C2985F513EAE6146319 /* Build configuration list for PBXNativeTarget "HeadphoneKit" */;
+			buildPhases = (
+				497497A552A7E924E049CAAD /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HeadphoneKit;
+			packageProductDependencies = (
+			);
+			productName = HeadphoneKit;
+			productReference = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		E6CFBF124169C01C3E414E11 /* MotoProtocol */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0EEEE961796ED60F6407CAA /* Build configuration list for PBXNativeTarget "MotoProtocol" */;
+			buildPhases = (
+				497C8AE5B9014C2445DE4AE4 /* Sources */,
+				8044C68CD882BCF49BA02466 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CE1E6E7299C41A51D9F76C18 /* PBXTargetDependency */,
+			);
+			name = MotoProtocol;
+			packageProductDependencies = (
+			);
+			productName = MotoProtocol;
+			productReference = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EF29DE139F7D8538161FDD26 /* CMFDriverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 128098F33C40B07EE9482463 /* Build configuration list for PBXNativeTarget "CMFDriverTests" */;
+			buildPhases = (
+				7E9EDC1DF2FC397969757908 /* Sources */,
+				2C1D8754ED0BA25076D0BCDB /* Frameworks */,
+				E960E9F7B927025FADB43B00 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7413D614F6A9A724AD045F0D /* PBXTargetDependency */,
+				7F261AAF2A07C882B4C5D1E6 /* PBXTargetDependency */,
+				1630609099373A0CE3E13FC1 /* PBXTargetDependency */,
+			);
+			name = CMFDriverTests;
+			packageProductDependencies = (
+			);
+			productName = CMFDriverTests;
+			productReference = E6148BBCFE4B3D943EF93D94 /* CMFDriverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FB217F30F20FE0CDF670FF86 /* MotoProtocolTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EF9E7262BFF061FE79596EA /* Build configuration list for PBXNativeTarget "MotoProtocolTests" */;
+			buildPhases = (
+				94DC17A77AC72BAC59B1EE44 /* Sources */,
+				650CF9992CE11D3F5CE8029F /* Frameworks */,
+				89AC90A7BA04A57E86635B93 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				572A0E5666C1D916ABEFAE93 /* PBXTargetDependency */,
+			);
+			name = MotoProtocolTests;
+			packageProductDependencies = (
+			);
+			productName = MotoProtocolTests;
+			productReference = 91DE1923DAF2BB827358AFE1 /* MotoProtocolTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		FE0517F4F1C4DA37AFE9361D /* BluetoothLE */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0F6D18F60FEC8D1F081BF716 /* Build configuration list for PBXNativeTarget "BluetoothLE" */;
+			buildPhases = (
+				59A46C4BA9A2A2812D869EAA /* Sources */,
+				B552732E53B482707A7EEB6D /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D480E1C105633F2989DB7DA2 /* PBXTargetDependency */,
+			);
+			name = BluetoothLE;
+			packageProductDependencies = (
+			);
+			productName = BluetoothLE;
+			productReference = EB5F861EB1CFF98550F965A7 /* BluetoothLE.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BA85D3BE48B2BE9640A1CCF8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+			};
+			buildConfigurationList = 63BF756BDF3026C93AFDEF14 /* Build configuration list for PBXProject "Quietbar" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 7ACD02B3FB7E9E57B4826466;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FE0517F4F1C4DA37AFE9361D /* BluetoothLE */,
+				25ACBD42793C978252571766 /* CMFDriver */,
+				EF29DE139F7D8538161FDD26 /* CMFDriverTests */,
+				B056FFA57A7E84BF6178DDC8 /* CMFProtocol */,
+				AA36898A3F9B53B1BE5E85BB /* CMFProtocolTests */,
+				5DBEC93CD548CDD76CFBA362 /* ClassicBluetooth */,
+				BBB92CA0DB2C979FABC1641B /* HeadphoneKit */,
+				747DF06B0B1CE0167D7D4D00 /* HeadphoneKitTests */,
+				A46703F7EA2B7DC7F6A03C30 /* JBLDriver */,
+				8E256C9919C9A52CDD398C8A /* JBLDriverTests */,
+				77297031F43FF3CB6AD99C05 /* JBLProtocol */,
+				773ABB50DAB2B3D8293E00CA /* JBLProtocolTests */,
+				AC25330B757003C37506080C /* MotoDriver */,
+				651982281F102AB9DE7EA73D /* MotoDriverTests */,
+				E6CFBF124169C01C3E414E11 /* MotoProtocol */,
+				FB217F30F20FE0CDF670FF86 /* MotoProtocolTests */,
+				6132221D249C7EC07FCAF677 /* Quietbar */,
+				8B985B0FEA7ABEA08556F704 /* QuietbarTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0A3BDCA89CCACAA6639CD8D5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E0FE4AD327397760C52A0319 /* AppIcon.icns in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		15715B534A4E9EF9FE8164A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				237EEE15C35FCE2666BAC9A9 /* ActiveDevice.swift in Sources */,
+				287B40BB1061C8C038EF75A2 /* BatteryRingStyle.swift in Sources */,
+				6F9FEB9B13F8D0378B2DE2D0 /* BudsBatteryView.swift in Sources */,
+				BDB929FDFCD0FBEB66248C17 /* ConnectionFooter.swift in Sources */,
+				BE18F69916F71A84113ADD06 /* DeviceEntry.swift in Sources */,
+				6D717286AA21E4FC76B6E708 /* GlassSegmentedControl.swift in Sources */,
+				AF202E0BF854DA57D207CD1A /* GlassStyle.swift in Sources */,
+				2D4AECAD3ED70286098B1C3B /* HeaderView.swift in Sources */,
+				7A23A4AB6B1A901677F66E19 /* HeadphoneControlling.swift in Sources */,
+				89E7702CE6340D437E3BCF2A /* HeadphoneViewModel.swift in Sources */,
+				535B936D7D64F308F0188E4B /* LevelRow.swift in Sources */,
+				0A6F8F10A426DF2DE632231D /* LiveCatalog.swift in Sources */,
+				AC99A8D19B22E4A0DC9182D4 /* MenuBarIcon.swift in Sources */,
+				C4E4828B3B9F213657AB674E /* MenuBarLabel.swift in Sources */,
+				621E02CDDBCB35AD89027764 /* MenuContentView.swift in Sources */,
+				5FDE1296270F3AF5EDD4FEFD /* QuietbarApp.swift in Sources */,
+				56E313DA49DEBF4967B23116 /* SettingControls.swift in Sources */,
+				160685AD32C35CB987A063EE /* SettingRow.swift in Sources */,
+				E49F1D2D3880443EC36B1453 /* SettingsPanel.swift in Sources */,
+				484BFC18726F0D0B8FA35884 /* StatusText.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1B164E16A4743817019A175A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CCA83F1BCB7592D0901FC8DC /* AmbientLevel.swift in Sources */,
+				40E9CEB799347A10DDD204C1 /* Balance.swift in Sources */,
+				2A6B3E6615E508AD6606A2FD /* Battery.swift in Sources */,
+				75AF645CDF1D9CB3F6A808F1 /* Command.swift in Sources */,
+				4113A03462F1354A7FCA11B4 /* EqFrameBuilder.swift in Sources */,
+				CA4ED76E1EFF7132DF1600A2 /* EqPreset.swift in Sources */,
+				6855F1839DB4840D77C151D8 /* Frame.swift in Sources */,
+				D96C300205C1DB3A58E92617 /* NoiseMode.swift in Sources */,
+				897980085AB205648DFE06A9 /* Reply.swift in Sources */,
+				EDE588DDA4C43E5AB90BFC49 /* ReplyDecoder.swift in Sources */,
+				3965A9CC4256EDA6F52FB700 /* SmartAudioVideoPreset.swift in Sources */,
+				4D291328BB546BE70B448A63 /* SpatialSetting.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1CF3C91099CD519ECD828B83 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C79D783B761DFC0FB2396860 /* DeviceSessionHarness.swift in Sources */,
+				3405E083A82130D07B625BB2 /* DeviceSessionIdentityTests.swift in Sources */,
+				938D7241E2DC0D807F493ED0 /* DeviceSessionLifecycleTests.swift in Sources */,
+				D46022877722EBFF1A43AA7C /* DeviceSessionReconnectTests.swift in Sources */,
+				73FAAB559A901FBD0828CACA /* DeviceSessionSettingsTests.swift in Sources */,
+				1C04F4E83E4B298152B48BBF /* DeviceSessionWakeTests.swift in Sources */,
+				444BDB2838B685A1DA2C6363 /* DeviceStateTests.swift in Sources */,
+				5EC965DF8CA247411DB27B24 /* FakeConnectionWatcher.swift in Sources */,
+				D83EF4A352AE11C3873E520F /* FakeDriver.swift in Sources */,
+				599855967E028699DB0AA4AA /* HeadphoneMemoryTests.swift in Sources */,
+				23317039ABF770A172C385DF /* ReconnectPolicyTests.swift in Sources */,
+				C74375527EA9CFE438C498C8 /* ReplyWaitersTests.swift in Sources */,
+				22CA90621C622D11DA1E173C /* SettingDescriptorTests.swift in Sources */,
+				1AAEBF7FED82D13A5788737B /* TestSupport.swift in Sources */,
+				3D024ACBD9D31C13A8C7A458 /* UserDefaultsStoreTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		34CCDDDE0A99A94FDDAC9FB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3A590660ED8B2C8F656F37AA /* JBLChangeEncoder.swift in Sources */,
+				731371D59F5526BAA2D98E02 /* JBLLive770NCDriver.swift in Sources */,
+				BB445A978231C502C0DE99FC /* JBLSettings.swift in Sources */,
+				755CC4F51AB3E1DB838F9AC1 /* JBLUpdateDecoder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		497497A552A7E924E049CAAD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1FCDB83A65A2A1C1E7FA5C7 /* ApplyError.swift in Sources */,
+				6FA6CFDC0320EBBAC6061CAE /* ConnectionStatus.swift in Sources */,
+				E280AA71606407997106858A /* ConnectionWatcher.swift in Sources */,
+				5991B2F41D12A6E189FE24F4 /* DeviceDriver.swift in Sources */,
+				D4D1C2EB3CCD715EC5D94F7D /* DeviceIdentity.swift in Sources */,
+				BA0B918D69B6F3B3B5F67106 /* DeviceSession+Apply.swift in Sources */,
+				29C9DA800696A5466004370B /* DeviceSession+Handshake.swift in Sources */,
+				14544689DFA9DD5AF6A396CF /* DeviceSession.swift in Sources */,
+				8DFA560866B9222ACDA8EACD /* DeviceSnapshot.swift in Sources */,
+				9CD6C575AB4356A0D1D3373E /* DeviceState.swift in Sources */,
+				B9B48D69FE7AE5D6C190460E /* HeadphoneMemory.swift in Sources */,
+				4BA3E92067D1744A84A3572F /* LinkEvent.swift in Sources */,
+				B1F5BB659F6D3397847694FF /* Logging.swift in Sources */,
+				1D914F9015B80CE3A44282D9 /* PacketFramer.swift in Sources */,
+				E2307C0640DA5499D07F7E0F /* PreferenceStore.swift in Sources */,
+				EF98A854B511724D861974FC /* ReconnectPolicy.swift in Sources */,
+				37D28B1CF8A6DEEDE3A57365 /* ReplyWaiters.swift in Sources */,
+				DFEA0EC612118C5723B5605E /* SettingDescriptor.swift in Sources */,
+				1FF1C8792AEF2F17145B5DCA /* SettingID.swift in Sources */,
+				F60707763952FB8957FB3939 /* Sleeper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		497C8AE5B9014C2445DE4AE4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FE91EF38F4F9ED062CA84C4D /* CRC32.swift in Sources */,
+				9529B005444B3B70E7A7C916 /* MotoFrame.swift in Sources */,
+				DECBCC2A853A74BFC660F2EB /* MotoFramer.swift in Sources */,
+				DCA18AE82BE670DF854332CD /* MotoOpcode.swift in Sources */,
+				5B141CCB9260A8D88D534E57 /* MotoPDU.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		53E7761E50B8FEFE00F8CB44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				238AAC52B6E8816BEED8050C /* CMFHeadphonesProDriver.swift in Sources */,
+				ED0D65338F6DBC7750363AC4 /* CMFSettings.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59A46C4BA9A2A2812D869EAA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				79683157AD620708F3B854FA /* CoreBluetoothTransport+Delegates.swift in Sources */,
+				9888AB4971ED41C0B75CE34D /* CoreBluetoothTransport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		708F3B98B3C64C2E7408FDD2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				75B469C751625D31C4AE4652 /* MotoBudsPlusDriver.swift in Sources */,
+				D3BF86583578E000DBCA9CBB /* MotoChangeEncoder.swift in Sources */,
+				1A8AED55F386F77276D8CF19 /* MotoSettings.swift in Sources */,
+				E07987E8FFB67CED1F1BA1E6 /* MotoUpdateDecoder.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E9EDC1DF2FC397969757908 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EB82FE45606477214A8F8F1 /* CMFHeadphonesProDriverTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		94DC17A77AC72BAC59B1EE44 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DA01F9E5154916A581FDDF6 /* MotoFrameTests.swift in Sources */,
+				3C462EED218A1565CF810310 /* MotoFramerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9B333569ED371A98113764D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				E8C42146ACCA86D09A9A6ECB /* CMFFrameTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9C8D689B9BEFB36012FB130C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				503DC5B3B8FDC5497F92C44E /* CMFCRC16.swift in Sources */,
+				063136A96723BA7C1095096F /* CMFCommand.swift in Sources */,
+				9081315ADFB7940A0482684E /* CMFFrame.swift in Sources */,
+				33F3894D49AA5B02D674202C /* CMFFramer.swift in Sources */,
+				6C32DD6552A5BFCBC6C196BE /* CMFSequence.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A2E82AA75E47A94B0DB8F10B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7E9F2BD9764A10771AC4ADF6 /* CommandTests.swift in Sources */,
+				5577F1CE64040458CE2B125E /* EqPresetTests.swift in Sources */,
+				4C2E10484E6D1173051B4CA4 /* FrameTests.swift in Sources */,
+				EBCAE1828B8CE0626E6ACB74 /* Hex.swift in Sources */,
+				15628AF05D6769E23AB52490 /* ReplyTests.swift in Sources */,
+				6B9206DAA09ABA5D401F50CB /* SettingTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1894141866E394B6F03DB71 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				00CB8975F80A1622183079A9 /* IOBluetoothConnectionWatcher.swift in Sources */,
+				944561B75B46F147C25AE091 /* RFCOMMTransport+Connect.swift in Sources */,
+				E76C39E674C12A18A6A309EC /* RFCOMMTransport.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D6CE84AA39807BD2A19EE14C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D60D5078EEC55B614D6BC30D /* ActiveDeviceTests.swift in Sources */,
+				8342EB35830D1DDF1BDD5538 /* BatteryRingTests.swift in Sources */,
+				A3DB20E067B1F11AEBAEC899 /* FakeController.swift in Sources */,
+				F5A39475E169678DD29A5E1E /* HeadphoneViewModelTests.swift in Sources */,
+				B6939340591D6E3889475E5F /* MenuBarIconTests.swift in Sources */,
+				D07F2089C1D876946CAB0711 /* StatusTextTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F2B244C7E0F356D5FD0DD095 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B61E18DA8FF5DED2E59276FF /* MotoBudsPlusDriverTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F6948A08DFD0304DB09B87F0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8242EA8188CF935D86E700D1 /* Hex.swift in Sources */,
+				967D24BFF209347F21ABC9A7 /* JBLLive770NCDriverTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		06AE5EB017B575F4EA3B1ADF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A46703F7EA2B7DC7F6A03C30 /* JBLDriver */;
+			targetProxy = A21FEB986C51169EED1BE960 /* PBXContainerItemProxy */;
+		};
+		10D1FCF6F5492668C06DDF47 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77297031F43FF3CB6AD99C05 /* JBLProtocol */;
+			targetProxy = 8D1734F6017F8446C0950B9B /* PBXContainerItemProxy */;
+		};
+		15BE730A9DE9AFBAACC35254 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC25330B757003C37506080C /* MotoDriver */;
+			targetProxy = F23FE74C59971853CBFF2853 /* PBXContainerItemProxy */;
+		};
+		1630609099373A0CE3E13FC1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 789C365E0AB113C4B451D295 /* PBXContainerItemProxy */;
+		};
+		19FBE023F2C8B10361C2E9C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B056FFA57A7E84BF6178DDC8 /* CMFProtocol */;
+			targetProxy = DDCBFBD6B7DC429FFE2588F6 /* PBXContainerItemProxy */;
+		};
+		202157594CE504691437549B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6132221D249C7EC07FCAF677 /* Quietbar */;
+			targetProxy = 2631A05E637A7159169E190F /* PBXContainerItemProxy */;
+		};
+		282B1D2A9D185534CA7E7FD4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25ACBD42793C978252571766 /* CMFDriver */;
+			targetProxy = 70C87F3F294A1913A2B50D91 /* PBXContainerItemProxy */;
+		};
+		3423A9D9FED3C4EC189DE9F4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 36E508CE7826D8148FFCDDE8 /* PBXContainerItemProxy */;
+		};
+		3A7C922064D7FAE48954BFB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FE0517F4F1C4DA37AFE9361D /* BluetoothLE */;
+			targetProxy = 5C14C27C08968283AB8DDA6F /* PBXContainerItemProxy */;
+		};
+		41FE7A7925CB0FD338AD3C39 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 579CC5BF987DDF51DE8CCD15 /* PBXContainerItemProxy */;
+		};
+		49D827EB5D9F2B470364C2DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 3D05618656CE2E0332B6984B /* PBXContainerItemProxy */;
+		};
+		4FCB5CDF4BFC2E6B95C88FC5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A46703F7EA2B7DC7F6A03C30 /* JBLDriver */;
+			targetProxy = 015DFDB6A7E33F46AF094CD8 /* PBXContainerItemProxy */;
+		};
+		564F024C129954C5DDC0884E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6CFBF124169C01C3E414E11 /* MotoProtocol */;
+			targetProxy = 5F50337B5492E9F169E89771 /* PBXContainerItemProxy */;
+		};
+		572A0E5666C1D916ABEFAE93 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6CFBF124169C01C3E414E11 /* MotoProtocol */;
+			targetProxy = CDD9A9286A176D928141994C /* PBXContainerItemProxy */;
+		};
+		590289D44A3F21738F7C8D69 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B056FFA57A7E84BF6178DDC8 /* CMFProtocol */;
+			targetProxy = 96B2FA3D94068FED99F26AC5 /* PBXContainerItemProxy */;
+		};
+		60D8C907FB8A4EBF41930B8A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77297031F43FF3CB6AD99C05 /* JBLProtocol */;
+			targetProxy = A6BC907BD614AAAD093D8FC4 /* PBXContainerItemProxy */;
+		};
+		6FB878146C39B42162206EE1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 45AED7C12D36EBA86D650C80 /* PBXContainerItemProxy */;
+		};
+		7413D614F6A9A724AD045F0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 25ACBD42793C978252571766 /* CMFDriver */;
+			targetProxy = C39209E4F678890C6ACB93F1 /* PBXContainerItemProxy */;
+		};
+		7F261AAF2A07C882B4C5D1E6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B056FFA57A7E84BF6178DDC8 /* CMFProtocol */;
+			targetProxy = 1835C1300894AEDABB8B02F3 /* PBXContainerItemProxy */;
+		};
+		80180BC6C3CDFCC4A1EDE869 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 34FB8E0C974F9FCC4397F30F /* PBXContainerItemProxy */;
+		};
+		8A9C6F981048D4C7EB0F24B7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = EDB3AF83E26B3CDAC4C3FC55 /* PBXContainerItemProxy */;
+		};
+		91CE36C7CBA8A8B31CE09643 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = A4D8A02C0F785B5D5E88D871 /* PBXContainerItemProxy */;
+		};
+		94AD01B6DD6919B201283332 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 7394480B239532B65350CF67 /* PBXContainerItemProxy */;
+		};
+		9AED7507362175ECF11CB39C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = CBB8AB2D6405BBAB470844B7 /* PBXContainerItemProxy */;
+		};
+		9D38AF20ED1E99A73CC39AF1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6CFBF124169C01C3E414E11 /* MotoProtocol */;
+			targetProxy = 2A75138D28DB566299B8C821 /* PBXContainerItemProxy */;
+		};
+		AB75F4BA1DB639D7F905862F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77297031F43FF3CB6AD99C05 /* JBLProtocol */;
+			targetProxy = 6C46D88BE7DF213168AF78C1 /* PBXContainerItemProxy */;
+		};
+		B1EB5AC314026D4A36F1F317 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77297031F43FF3CB6AD99C05 /* JBLProtocol */;
+			targetProxy = BAD11214F3B8A78294EA9F85 /* PBXContainerItemProxy */;
+		};
+		B85655643C2C6898721DC245 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5DBEC93CD548CDD76CFBA362 /* ClassicBluetooth */;
+			targetProxy = B062E1611D44E548AAEA603F /* PBXContainerItemProxy */;
+		};
+		C3D10D54B478DC70CFF6FD87 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = AC25330B757003C37506080C /* MotoDriver */;
+			targetProxy = B57FE7535E433C2CE94DB5BD /* PBXContainerItemProxy */;
+		};
+		CE1E6E7299C41A51D9F76C18 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 894EDF90058BD203CF551F92 /* PBXContainerItemProxy */;
+		};
+		D480E1C105633F2989DB7DA2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = 131E5E6EA89837F099402098 /* PBXContainerItemProxy */;
+		};
+		D785B6F0E0828AEC0F72C505 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BBB92CA0DB2C979FABC1641B /* HeadphoneKit */;
+			targetProxy = FE78853BAA13632E16C4EAE9 /* PBXContainerItemProxy */;
+		};
+		DDDCF887B36F330B941DFC53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B056FFA57A7E84BF6178DDC8 /* CMFProtocol */;
+			targetProxy = 959403DC08EFD7A2293CF5BD /* PBXContainerItemProxy */;
+		};
+		E6A8D853B1E2BFEE1B07426B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E6CFBF124169C01C3E414E11 /* MotoProtocol */;
+			targetProxy = A87B20887597D1ED648BAF74 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0AB8598CF4B21A1A88FB7DE9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.ClassicBluetooth;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		1A65C69AEBE8E1FE39486B15 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLDriver;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		1B6D57882994DDA69B8A8624 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFProtocolTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		1E841480CAAFB7DABB90E4C9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.ClassicBluetooth;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		22347331AB7BEC682FAD1994 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoDriver;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		278223A4FCBDF8045300AF1E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.QuietbarTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quietbar.app/Contents/MacOS/Quietbar";
+			};
+			name = Debug;
+		};
+		28321831392AC6A89DA50228 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		368C8DCF83F54617B6385453 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.HeadphoneKitTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3C43837FE41E919F64C8DFED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoDriverTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3D7EFDB0344F34DFEC0A10C2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoDriverTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		45E032B05FCB3CF02C23C74A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLProtocolTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		48C636338C9DCDB057166BBF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.quietbar;
+				PRODUCT_NAME = Quietbar;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4BFC20BE8EAB28DE914F37F7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFDriver;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		503065AA122E748C64904111 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLDriver;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		5226F685BEA21858D5AFD522 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLProtocolTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		5AE792095851C728335324BA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoProtocolTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		662ED6726F9FB19D919C9173 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.HeadphoneKit;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		6853124F3663C22B68577730 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoProtocol;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		688567D9D77F5FCDAB4722E4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoProtocol;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		6E64A4E47F9519B07D60B3F5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLDriverTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		8044330F5E85F14E25D9A7D3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFDriverTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		854398E9AEEA8F11631440EC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFDriverTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		A8C43DEBB0F45A07A774EAB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFProtocolTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		B1584A3D53EF8D6A10D341E4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.HeadphoneKit;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		B67A15A43C830AD53BDB0B4C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLProtocol;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		C02A4A623DA33C681E175DB0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoProtocolTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		C9A303606289EE0C234BC251 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFProtocol;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		CBFDED578BE0EA0EF1B06EA9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Resources/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.quietbar;
+				PRODUCT_NAME = Quietbar;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		CF97EA917499C51B1C22ADB6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFProtocol;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		D583F97A4F64D9BBCC22EEC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.BluetoothLE;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		D7D2D5491F5784F520406473 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.MotoDriver;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		DB06C9937571D141326ABFA3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		E56042CE3D77D25190320720 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.CMFDriver;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		E6EC5AA1F71C8DF4521D57A5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.BluetoothLE;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		E9ACF9D5D990C6E18045817E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLDriverTests;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		EA40AB69A57B325BD79D9677 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.HeadphoneKitTests;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		F67DE4BFA574A05A535C4F5E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				COMBINE_HIDPI_IMAGES = YES;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.JBLProtocol;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		FB193575DE75F9E25F6C24C8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = dev.studiokeys.QuietbarTests;
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quietbar.app/Contents/MacOS/Quietbar";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		05CFC89AC5E413519DF405A3 /* Build configuration list for PBXNativeTarget "ClassicBluetooth" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0AB8598CF4B21A1A88FB7DE9 /* Debug */,
+				1E841480CAAFB7DABB90E4C9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		0F6D18F60FEC8D1F081BF716 /* Build configuration list for PBXNativeTarget "BluetoothLE" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E6EC5AA1F71C8DF4521D57A5 /* Debug */,
+				D583F97A4F64D9BBCC22EEC3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		128098F33C40B07EE9482463 /* Build configuration list for PBXNativeTarget "CMFDriverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8044330F5E85F14E25D9A7D3 /* Debug */,
+				854398E9AEEA8F11631440EC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2E0A70A074EAF942DCBADB2F /* Build configuration list for PBXNativeTarget "MotoDriver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22347331AB7BEC682FAD1994 /* Debug */,
+				D7D2D5491F5784F520406473 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		37959A92316E360D254CC87F /* Build configuration list for PBXNativeTarget "JBLDriver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				503065AA122E748C64904111 /* Debug */,
+				1A65C69AEBE8E1FE39486B15 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		3ED4A0800C7D4B7236D0190F /* Build configuration list for PBXNativeTarget "JBLProtocolTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5226F685BEA21858D5AFD522 /* Debug */,
+				45E032B05FCB3CF02C23C74A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		5967121D635AEE500689C7A9 /* Build configuration list for PBXNativeTarget "CMFProtocolTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1B6D57882994DDA69B8A8624 /* Debug */,
+				A8C43DEBB0F45A07A774EAB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		63BF756BDF3026C93AFDEF14 /* Build configuration list for PBXProject "Quietbar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DB06C9937571D141326ABFA3 /* Debug */,
+				28321831392AC6A89DA50228 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		6CF72C2985F513EAE6146319 /* Build configuration list for PBXNativeTarget "HeadphoneKit" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B1584A3D53EF8D6A10D341E4 /* Debug */,
+				662ED6726F9FB19D919C9173 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7978D4C50DA77ED8E436FA4C /* Build configuration list for PBXNativeTarget "QuietbarTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				278223A4FCBDF8045300AF1E /* Debug */,
+				FB193575DE75F9E25F6C24C8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7ECCBF8C496E5DCDFA69B830 /* Build configuration list for PBXNativeTarget "CMFDriver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E56042CE3D77D25190320720 /* Debug */,
+				4BFC20BE8EAB28DE914F37F7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7EF9E7262BFF061FE79596EA /* Build configuration list for PBXNativeTarget "MotoProtocolTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C02A4A623DA33C681E175DB0 /* Debug */,
+				5AE792095851C728335324BA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8314CE2CB74613E1EE7A42FE /* Build configuration list for PBXNativeTarget "CMFProtocol" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CF97EA917499C51B1C22ADB6 /* Debug */,
+				C9A303606289EE0C234BC251 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8F42DD5810247CFBAD7FA688 /* Build configuration list for PBXNativeTarget "Quietbar" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				48C636338C9DCDB057166BBF /* Debug */,
+				CBFDED578BE0EA0EF1B06EA9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A0EEEE961796ED60F6407CAA /* Build configuration list for PBXNativeTarget "MotoProtocol" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6853124F3663C22B68577730 /* Debug */,
+				688567D9D77F5FCDAB4722E4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		ABDC6DFDE0AA8634667AF3E3 /* Build configuration list for PBXNativeTarget "MotoDriverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C43837FE41E919F64C8DFED /* Debug */,
+				3D7EFDB0344F34DFEC0A10C2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B8DFD713BB5BCCF68D7172F9 /* Build configuration list for PBXNativeTarget "HeadphoneKitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				368C8DCF83F54617B6385453 /* Debug */,
+				EA40AB69A57B325BD79D9677 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		C05424C6F7C645A91C7E1018 /* Build configuration list for PBXNativeTarget "JBLDriverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E9ACF9D5D990C6E18045817E /* Debug */,
+				6E64A4E47F9519B07D60B3F5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		F6349D4DC0DA268CB00B8FD6 /* Build configuration list for PBXNativeTarget "JBLProtocol" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B67A15A43C830AD53BDB0B4C /* Debug */,
+				F67DE4BFA574A05A535C4F5E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BA85D3BE48B2BE9640A1CCF8 /* Project object */;
+}

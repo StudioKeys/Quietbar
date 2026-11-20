@@ -1,0 +1,208 @@
+name: Quietbar
+options:
+  bundleIdPrefix: dev.studiokeys
+  deploymentTarget:
+    macOS: "26.0"
+  createIntermediateGroups: true
+  defaultConfig: Debug
+
+settings:
+  base:
+    GENERATE_INFOPLIST_FILE: YES
+    MACOSX_DEPLOYMENT_TARGET: "26.0"
+    SWIFT_STRICT_CONCURRENCY: complete
+    SWIFT_VERSION: "6.0"
+
+targets:
+  HeadphoneKit:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/HeadphoneKit
+
+  CMFProtocol:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/CMFProtocol
+    dependencies:
+      - target: HeadphoneKit
+
+  CMFDriver:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/CMFDriver
+    dependencies:
+      - target: CMFProtocol
+      - target: HeadphoneKit
+
+  JBLProtocol:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/JBLProtocol
+
+  JBLDriver:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/JBLDriver
+    dependencies:
+      - target: JBLProtocol
+      - target: HeadphoneKit
+
+  MotoProtocol:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/MotoProtocol
+    dependencies:
+      - target: HeadphoneKit
+
+  MotoDriver:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/MotoDriver
+    dependencies:
+      - target: MotoProtocol
+      - target: HeadphoneKit
+
+  BluetoothLE:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/BluetoothLE
+    dependencies:
+      - target: HeadphoneKit
+      - sdk: CoreBluetooth.framework
+
+  ClassicBluetooth:
+    type: framework
+    platform: macOS
+    sources:
+      - Sources/ClassicBluetooth
+    dependencies:
+      - target: HeadphoneKit
+      - sdk: IOBluetooth.framework
+
+  Quietbar:
+    type: application
+    platform: macOS
+    sources:
+      - Sources/Quietbar
+      - path: Resources/AppIcon.icns
+        buildPhase: resources
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: Resources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: dev.studiokeys.quietbar
+        PRODUCT_NAME: Quietbar
+    dependencies:
+      - target: HeadphoneKit
+        embed: true
+      - target: CMFProtocol
+        embed: true
+      - target: CMFDriver
+        embed: true
+      - target: JBLProtocol
+        embed: true
+      - target: JBLDriver
+        embed: true
+      - target: MotoProtocol
+        embed: true
+      - target: MotoDriver
+        embed: true
+      - target: BluetoothLE
+        embed: true
+      - target: ClassicBluetooth
+        embed: true
+
+  HeadphoneKitTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/HeadphoneKitTests
+    dependencies:
+      - target: HeadphoneKit
+
+  CMFProtocolTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/CMFProtocolTests
+    dependencies:
+      - target: CMFProtocol
+
+  CMFDriverTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/CMFDriverTests
+    dependencies:
+      - target: CMFDriver
+      - target: CMFProtocol
+      - target: HeadphoneKit
+
+  JBLProtocolTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/JBLProtocolTests
+    dependencies:
+      - target: JBLProtocol
+
+  JBLDriverTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/JBLDriverTests
+    dependencies:
+      - target: JBLDriver
+      - target: JBLProtocol
+      - target: HeadphoneKit
+
+  MotoProtocolTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/MotoProtocolTests
+    dependencies:
+      - target: MotoProtocol
+
+  MotoDriverTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/MotoDriverTests
+    dependencies:
+      - target: MotoDriver
+      - target: MotoProtocol
+      - target: HeadphoneKit
+
+  QuietbarTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests/QuietbarTests
+    dependencies:
+      - target: Quietbar
+      - target: HeadphoneKit
+
+schemes:
+  Quietbar:
+    build:
+      targets:
+        Quietbar: all
+    test:
+      targets:
+        - HeadphoneKitTests
+        - CMFProtocolTests
+        - CMFDriverTests
+        - JBLProtocolTests
+        - JBLDriverTests
+        - MotoProtocolTests
+        - MotoDriverTests
+        - QuietbarTests

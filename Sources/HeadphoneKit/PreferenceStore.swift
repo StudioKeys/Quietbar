@@ -1,6 +1,10 @@
 import Foundation
 import Synchronization
 
+public enum ExperimentalWritePreference {
+    public static let key = "experimentalHeadphoneWritesEnabled"
+}
+
 public protocol PreferenceStore: Sendable {
     func bool(forKey key: String) -> Bool?
     func set(_ value: Bool, forKey key: String)

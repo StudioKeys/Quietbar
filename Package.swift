@@ -5,6 +5,8 @@ let package = Package(
     name: "Quietbar",
     platforms: [.macOS(.v26)],
     targets: [
+        .target(name: "CMFProtocol", dependencies: ["HeadphoneKit"]),
+        .target(name: "CMFDriver", dependencies: ["CMFProtocol", "HeadphoneKit"]),
         .target(name: "JBLProtocol"),
         .target(name: "MotoProtocol", dependencies: ["HeadphoneKit"]),
         .target(name: "HeadphoneKit"),
@@ -18,8 +20,10 @@ let package = Package(
         ),
         .executableTarget(
             name: "Quietbar",
-            dependencies: ["BluetoothLE", "ClassicBluetooth", "HeadphoneKit", "JBLDriver", "MotoDriver"]
+            dependencies: ["BluetoothLE", "ClassicBluetooth", "CMFDriver", "HeadphoneKit", "JBLDriver", "MotoDriver"]
         ),
+        .testTarget(name: "CMFProtocolTests", dependencies: ["CMFProtocol"]),
+        .testTarget(name: "CMFDriverTests", dependencies: ["CMFDriver", "CMFProtocol", "HeadphoneKit"]),
         .testTarget(name: "JBLProtocolTests", dependencies: ["JBLProtocol"]),
         .testTarget(name: "MotoProtocolTests", dependencies: ["MotoProtocol"]),
         .testTarget(name: "MotoDriverTests", dependencies: ["MotoDriver", "MotoProtocol", "HeadphoneKit"]),

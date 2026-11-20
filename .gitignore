@@ -4,3 +4,4 @@
 *.profdata
 *.app
 *.zip
+tmp/

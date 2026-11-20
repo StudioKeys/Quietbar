@@ -4,6 +4,7 @@ import SwiftUI
 struct SettingRow: View {
     let descriptor: SettingDescriptor
     let viewModel: HeadphoneViewModel
+    @AppStorage(ExperimentalWritePreference.key) private var experimentalWritesEnabled = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -13,10 +14,16 @@ struct SettingRow: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            if descriptor.requiresExperimentalWrites && !experimentalWritesEnabled {
+                Text("Read-only. Enable experimental controls in Settings.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
         }
         .disabled(
             !viewModel.canEdit || viewModel.pending.contains(descriptor.id)
-                || viewModel.value(for: descriptor.id) == nil)
+                || viewModel.value(for: descriptor.id) == nil
+                || descriptor.requiresExperimentalWrites && !experimentalWritesEnabled)
     }
 
     @ViewBuilder
