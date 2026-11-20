@@ -39,13 +39,18 @@ connection and shows the name you gave it in Bluetooth settings.
 
 ### CMF Headphone Pro
 
-- Noise control: ANC High, ANC Mid, ANC Low, Adaptive ANC, Transparency, Off
-- EQ presets: Balanced, Electronic, Pop, Rock, Classical, Vocals
-- Spatial Audio, Low lag mode and Dual connection
+<p align="center">
+  <img src="docs/images/cmf-dark.png" width="340" alt="Quietbar menu for CMF Headphone Pro in dark mode">
+</p>
+
+- Noise control: Noise Cancellation (Low, Mid, High, Adaptive), Transparency, Off
+- Spatial Audio: Concert, Cinema, Off
+- EQ presets: Pop, Rock, Electronic, Vocals, Classical and Custom
+- Custom EQ: drag the Bass, Mid and Treble lobes on the dial, ±6 dB
+- Low Lag Mode and Dual Connection (the headphones reconnect briefly to apply Dual Connection)
 - Battery level, status read-back and automatic reconnection
 
-CMF controls are shown read-only by default. The protocol writes reconstructed from Nothing X are available behind
-the **Experimental controls** switch in Settings, with read-back and reconnect behavior where required.
+Every control is read back from the headphones after it changes.
 
 The CMF control channel is implemented through the same public Bluetooth interoperability boundary used by the
 Nothing X companion app. Quietbar does not send firmware-update or factory-reset commands. Standby mode, gesture remapping,

@@ -37,6 +37,10 @@ struct LevelRow: View {
     }
 
     private var badge: String {
-        style == .balance ? HeadphoneViewModel.balanceText(Int(draft)) : "\(Int(draft))"
+        switch style {
+        case .balance: HeadphoneViewModel.balanceText(Int(draft))
+        case .dial: HeadphoneViewModel.gainText(Int(draft))
+        case .slider: "\(Int(draft))"
+        }
     }
 }

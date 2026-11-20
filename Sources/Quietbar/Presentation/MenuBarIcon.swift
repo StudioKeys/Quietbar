@@ -12,17 +12,21 @@ struct MenuBarIcon: Equatable {
     let isDimmed: Bool
     let batteryText: String?
     var budLevels: [BudLevel] = []
+    var glyph: String?
 
     static func make(for snapshot: DeviceSnapshot, model: DeviceModel) -> MenuBarIcon {
         guard snapshot.status == .connected else {
-            return MenuBarIcon(symbolName: defaultSymbol, isDimmed: true, batteryText: nil)
+            return MenuBarIcon(symbolName: defaultSymbol, isDimmed: true, batteryText: nil, glyph: model.glyph)
         }
         let battery = snapshot.state.battery
         let symbol = modeSymbol(in: snapshot.state, model: model) ?? defaultSymbol
         guard let battery, battery.hasComponents else {
-            return MenuBarIcon(symbolName: symbol, isDimmed: false, batteryText: battery.map { "\($0.percent)%" })
+            return MenuBarIcon(
+                symbolName: symbol, isDimmed: false, batteryText: battery.map { "\($0.percent)%" }, glyph: model.glyph)
         }
-        return MenuBarIcon(symbolName: symbol, isDimmed: false, batteryText: nil, budLevels: budLevels(of: battery))
+        return MenuBarIcon(
+            symbolName: symbol, isDimmed: false, batteryText: nil, budLevels: budLevels(of: battery), glyph: model.glyph
+        )
     }
 
     private static func budLevels(of battery: Battery) -> [BudLevel] {

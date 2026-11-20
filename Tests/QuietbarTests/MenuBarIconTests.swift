@@ -31,6 +31,16 @@ struct MenuBarIconTests {
         )
     }
 
+    @Test(arguments: [ConnectionStatus.connected, .searching])
+    func productGlyphIsCarriedInEveryState(status: ConnectionStatus) {
+        let base = Fixtures.model
+        let model = DeviceModel(
+            name: base.name, nameFragment: base.nameFragment, link: base.link, settings: base.settings,
+            glyph: "cmf.headphonePro")
+
+        #expect(MenuBarIcon.make(for: Fixtures.snapshot(status), model: model).glyph == "cmf.headphonePro")
+    }
+
     @Test func connectedWithUnknownModeShowsDefaultIcon() {
         #expect(
             MenuBarIcon.make(for: Fixtures.snapshot(), model: Fixtures.model)

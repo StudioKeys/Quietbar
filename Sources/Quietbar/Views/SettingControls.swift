@@ -62,33 +62,40 @@ struct ModeButtons: View {
     let options: [ChoiceOption]
     let selection: String?
     let onSelect: (String) -> Void
+    @Environment(\.colorScheme) private var colorScheme
 
     var body: some View {
+        let selected = SelectedFill(colorScheme: colorScheme)
         HStack(alignment: .top) {
             ForEach(options, id: \.id) { option in
+                let isSelected = option.id == selection
                 Button {
                     onSelect(option.id)
                 } label: {
                     VStack(spacing: 6) {
                         Image(systemName: option.symbol ?? "circle")
-                            .font(.system(size: 18, weight: .medium))
-                            .frame(width: 46, height: 46)
-                            .foregroundStyle(option.id == selection ? .white : .primary)
+                            .font(.system(size: 18, weight: .regular))
+                            .frame(width: 48, height: 48)
+                            .foregroundStyle(isSelected ? AnyShapeStyle(selected.foreground) : AnyShapeStyle(.primary))
                             .background(
-                                option.id == selection ? AnyShapeStyle(.tint) : AnyShapeStyle(.quaternary),
+                                isSelected ? AnyShapeStyle(selected.background) : AnyShapeStyle(.quaternary),
                                 in: .circle
                             )
                         Text(option.title)
-                            .font(.system(.caption2, design: .monospaced, weight: .medium))
+                            .font(.caption)
+                            .foregroundStyle(isSelected ? .primary : .secondary)
                             .multilineTextAlignment(.center)
                             .lineLimit(2)
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     .frame(maxWidth: .infinity)
+                    .contentShape(.rect)
                 }
                 .buttonStyle(.plain)
-                .accessibilityAddTraits(option.id == selection ? .isSelected : [])
+                .accessibilityLabel(option.title)
+                .accessibilityAddTraits(isSelected ? .isSelected : [])
             }
         }
+        .animation(.easeOut(duration: 0.16), value: selection)
     }
 }

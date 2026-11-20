@@ -6,106 +6,150 @@ import Testing
 @testable import CMFDriver
 
 struct CMFHeadphonesProDriverTests {
-    private let driver = CMFHeadphonesProDriver { true }
+    private let driver = CMFHeadphonesProDriver()
 
-    @Test func descriptorsMatchSupportedControls() {
+    // Captured from a CMF Headphone Pro: bass +6, mid -6, treble 0.
+    private static let customEQPayload = hexBytes(
+        "030000c0c0010000c0c000007544c3f5283f020000000000c05a450000803f000000c04000000c43cdcc4c3f"
+            + "00000000000000000042da")
+
+    @Test func batteryReadsCountPrefixedPairs() {
+        #expect(updates(.getBattery, [0x01, 0x06, 0x2D]) == [.battery(Battery(percent: 45, isCharging: false))])
         #expect(
-            driver.model.settings.map(\.id) == [
-                CMFSetting.noiseMode, CMFSetting.eqPreset, CMFSetting.spatialSound, CMFSetting.lowLag,
-                CMFSetting.dualConnection,
-            ])
-        #expect(driver.model.link == .rfcomm(serviceUUID: CMFHeadphonesProDriver.serviceUUID))
-        #expect(CMFHeadphonesProDriver.serviceUUID.uuidString.lowercased() == "aeac4a03-dff5-498f-843a-34487cf133eb")
-    }
-
-    @Test func noiseModesDecodeFromTriplePayload() {
-        #expect(
-            updates(.getNoiseControl, payload: [1, 4, 0, 2, 4, 0]) == [
-                .setting(CMFSetting.noiseMode, .choice("4"))
-            ])
-        #expect(
-            updates(.noiseControlChanged, payload: [1, 254, 0]) == [
-                .setting(CMFSetting.noiseMode, .choice("7"))
-            ])
-    }
-
-    @Test func noiseControlEncodesOfficialPayload() {
-        let data = driver.requests(
-            for: SettingChange(id: CMFSetting.noiseMode, value: .choice("4")), current: .empty)?.first
-
-        #expect(frame(data)?.command == CMFCommand.setNoiseControl.rawValue)
-        #expect(frame(data)?.payload == Data([1, 4, 0]))
-    }
-
-    @Test func eqPresetRoundTrips() {
-        #expect(updates(.getEQPreset, payload: [9]) == [.setting(CMFSetting.eqPreset, .choice("9"))])
-        let data = driver.requests(
-            for: SettingChange(id: CMFSetting.eqPreset, value: .choice("6")), current: .empty)?.first
-
-        #expect(frame(data)?.command == CMFCommand.setEQPreset.rawValue)
-        #expect(frame(data)?.payload == Data([6]))
-    }
-
-    @Test func switchesEncodeAndDecode() {
-        #expect(updates(.getLowLag, payload: [1]) == [.setting(CMFSetting.lowLag, .bool(true))])
-        #expect(updates(.getLowLag, payload: [2]) == [.setting(CMFSetting.lowLag, .bool(false))])
-        #expect(updates(.getSpatialAudio, payload: [1]) == [.setting(CMFSetting.spatialSound, .bool(true))])
-        #expect(updates(.getDualConnection, payload: [0]) == [.setting(CMFSetting.dualConnection, .bool(false))])
-
-        #expect(
-            frame(
-                driver.requests(
-                    for: SettingChange(id: CMFSetting.lowLag, value: .bool(false)), current: .empty)?.first)?
-                .payload == Data([2]))
-    }
-
-    @Test func stereoBatteryUsesChargingBit() {
-        #expect(
-            updates(.getBattery, payload: [6, 0xD2]) == [
+            updates(.batteryChanged, [0x01, 0x06, 0xD2], response: false) == [
                 .battery(Battery(percent: 82, isCharging: true))
             ])
     }
 
-    @Test func unsupportedValuesAreIgnored() {
+    @Test func noiseControlSplitsModeAndLevel() {
         #expect(
-            driver.requests(
-                for: SettingChange(id: CMFSetting.eqPreset, value: .choice("12")), current: .empty) == nil)
-        #expect(updates(.getEQPreset, payload: [12]).isEmpty)
-        #expect(updates(.getNoiseControl, payload: [1, 99, 0]).isEmpty)
+            updates(.getNoiseControl, [1, 1, 0, 2, 1, 0]) == [
+                .setting(CMFSetting.noiseMode, .choice("anc")), .setting(CMFSetting.ancLevel, .choice("1")),
+                .setting(CMFSetting.ancLevel, .choice("1")),
+            ])
+        #expect(
+            updates(.noiseControlChanged, [1, 7, 0, 2, 2, 0], response: false) == [
+                .setting(CMFSetting.noiseMode, .choice("transparency")), .setting(CMFSetting.ancLevel, .choice("2")),
+            ])
+        #expect(updates(.getNoiseControl, [1, 5, 0]) == [.setting(CMFSetting.noiseMode, .choice("off"))])
     }
 
-    @Test func everyEditableSettingHasAConfirmingQuery() {
+    @Test func noiseCancellationRestoresLastLevel() {
+        let current = DeviceState.empty.applying([.setting(CMFSetting.ancLevel, .choice("3"))])
+
+        #expect(writePayload(CMFSetting.noiseMode, .choice("anc"), current: current) == [1, 3, 0])
+        #expect(writePayload(CMFSetting.noiseMode, .choice("transparency")) == [1, 7, 0])
+        #expect(writePayload(CMFSetting.ancLevel, .choice("4")) == [1, 4, 0])
+    }
+
+    @Test func spatialAudioIsAThreeWayMode() {
+        #expect(updates(.getSpatialAudio, [0x02, 0x00]) == [.setting(CMFSetting.spatialMode, .choice("2"))])
+        #expect(updates(.getSpatialAudio, [0x03, 0x00]) == [.setting(CMFSetting.spatialMode, .choice("3"))])
+        #expect(updates(.getSpatialAudio, [0x00, 0x00]) == [.setting(CMFSetting.spatialMode, .choice("0"))])
+        #expect(writePayload(CMFSetting.spatialMode, .choice("3")) == [3])
+        #expect(writePayload(CMFSetting.spatialMode, .choice("1")) == nil)
+    }
+
+    @Test func eqPresetUsesDiracCommands() {
+        #expect(updates(.getEQPreset, [0x06]) == [.setting(CMFSetting.eqPreset, .choice("6"))])
+        let requests = driver.requests(
+            for: SettingChange(id: CMFSetting.eqPreset, value: .choice("1")), current: .empty)
+
+        #expect(frame(requests?.first)?.command == CMFCommand.setEQPreset.rawValue)
+        #expect(frame(requests?.first)?.payload == Data([1]))
+        #expect(frame(requests?.last)?.command == CMFCommand.getEQPreset.rawValue)
+    }
+
+    @Test func customEQDecodesBands() {
+        #expect(
+            updates(.getCustomEQ, Self.customEQPayload) == [
+                .setting(CMFSetting.bass, .level(6)), .setting(CMFSetting.mid, .level(-6)),
+                .setting(CMFSetting.treble, .level(0)),
+            ])
+    }
+
+    @Test func customEQWriteEditsLastReadBlock() {
+        _ = updates(.getCustomEQ, Self.customEQPayload)
+
+        let payload = writePayload(CMFSetting.treble, .level(1))
+
+        #expect(payload == Array(Self.customEQPayload.prefix(44)).replacing(at: 19, with: [0, 0, 0x80, 0x3F]))
+    }
+
+    @Test func consecutiveBandEditsBuildOnEachOther() {
+        _ = updates(.getCustomEQ, Self.customEQPayload)
+        _ = writePayload(CMFSetting.bass, .level(0))
+
+        let payload = writePayload(CMFSetting.mid, .level(0)).map(CMFCustomEQ.decode)
+
+        #expect(payload??.gain(.bass) == 0)
+        #expect(payload??.gain(.mid) == 0)
+        #expect(payload??.totalGain == 0)
+    }
+
+    @Test func customEQGainIsClampedAndPreGainTracksBoost() {
+        let eq = CMFCustomEQ.factory.setting(.bass, to: 9)
+
+        #expect(eq.gain(.bass) == 6)
+        #expect(eq.totalGain == -6)
+        #expect(CMFCustomEQ.decode(eq.encoded()) == eq)
+    }
+
+    @Test func lowLagRoundTrips() {
+        #expect(updates(.getLowLag, [1]) == [.setting(CMFSetting.lowLag, .bool(true))])
+        #expect(updates(.getLowLag, [2]) == [.setting(CMFSetting.lowLag, .bool(false))])
+        #expect(writePayload(CMFSetting.lowLag, .bool(false)) == [2])
+    }
+
+    @Test func writesAreFollowedByTheirQuery() {
         for descriptor in driver.model.settings {
             #expect(driver.confirmingRequest(for: descriptor.id) != nil)
         }
+        let requests = driver.requests(
+            for: SettingChange(id: CMFSetting.spatialMode, value: .choice("2")), current: .empty)
+        #expect(requests?.count == 2)
+        #expect(frame(requests?.last)?.command == CMFCommand.getSpatialAudio.rawValue)
     }
 
-    @Test func dualConnectionReconnectionIsExplicit() {
-        #expect(
-            driver.model.settings.first { $0.id == CMFSetting.dualConnection }?.appliesWithReconnect == true)
+    @Test func dualConnectionAppliesWithReconnect() {
+        #expect(driver.model.settings.first { $0.id == CMFSetting.dualConnection }?.appliesWithReconnect == true)
+        #expect(writePayload(CMFSetting.dualConnection, .bool(false)) == [0])
     }
 
-    @Test func experimentalWritesAreDisabledByDefault() {
-        let readOnly = CMFHeadphonesProDriver()
+    @Test func malformedPayloadsAreIgnored() {
+        #expect(updates(.getBattery, []).isEmpty)
+        #expect(updates(.getBattery, [0x02, 0x06]).isEmpty)
+        #expect(updates(.getCustomEQ, [0x03, 0x00]).isEmpty)
+        #expect(updates(.getEQPreset, [0x0C]).isEmpty)
+        #expect(updates(.getNoiseControl, [1, 99, 0]).isEmpty)
+    }
 
-        #expect(
-            readOnly.requests(
-                for: SettingChange(id: CMFSetting.lowLag, value: .bool(true)), current: .empty) == nil)
-        #expect(readOnly.model.settings.allSatisfy { $0.requiresExperimentalWrites })
+    private func writePayload(_ id: SettingID, _ value: SettingValue, current: DeviceState = .empty) -> [UInt8]? {
+        frame(driver.requests(for: SettingChange(id: id, value: value), current: current)?.first)
+            .map { [UInt8]($0.payload) }
     }
 
     private func frame(_ data: Data?) -> CMFFrame? {
-        guard let data else { return nil }
-        return try? CMFFrame.decode(data)
+        data.flatMap { try? CMFFrame.decode($0) }
     }
 
-    private func updates(_ command: CMFCommand, payload: [UInt8]) -> [DeviceUpdate] {
-        let response = CMFFrame(
-            control: 0x0600,
-            command: command.responseCommand,
-            sequence: 1,
-            payload: Data(payload)
-        ).encoded()
-        return driver.updates(from: response)
+    private func updates(_ command: CMFCommand, _ payload: [UInt8], response: Bool = true) -> [DeviceUpdate] {
+        let code = response ? command.responseCommand : command.rawValue
+        return driver.updates(
+            from: CMFFrame(control: 0x0600, command: code, sequence: 1, payload: Data(payload)).encoded())
+    }
+
+    private static func hexBytes(_ text: String) -> [UInt8] {
+        stride(from: 0, to: text.count, by: 2).map {
+            UInt8(text.dropFirst($0).prefix(2), radix: 16)!
+        }
+    }
+}
+
+extension Array where Element == UInt8 {
+    fileprivate func replacing(at offset: Int, with bytes: [UInt8]) -> [UInt8] {
+        var copy = self
+        copy.replaceSubrange(offset..<(offset + bytes.count), with: bytes)
+        return copy
     }
 }

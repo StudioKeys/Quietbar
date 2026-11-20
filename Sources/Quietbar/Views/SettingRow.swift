@@ -4,7 +4,6 @@ import SwiftUI
 struct SettingRow: View {
     let descriptor: SettingDescriptor
     let viewModel: HeadphoneViewModel
-    @AppStorage(ExperimentalWritePreference.key) private var experimentalWritesEnabled = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -14,16 +13,10 @@ struct SettingRow: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            if descriptor.requiresExperimentalWrites && !experimentalWritesEnabled {
-                Text("Read-only. Enable experimental controls in Settings.")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
         }
         .disabled(
             !viewModel.canEdit || viewModel.pending.contains(descriptor.id)
-                || viewModel.value(for: descriptor.id) == nil
-                || descriptor.requiresExperimentalWrites && !experimentalWritesEnabled)
+                || viewModel.value(for: descriptor.id) == nil)
     }
 
     @ViewBuilder
@@ -37,6 +30,12 @@ struct SettingRow: View {
             ChoiceMenuRow(descriptor: descriptor, options: options, selection: selectedChoice) {
                 viewModel.set(descriptor.id, .choice($0))
             }
+        case .choice(let options, style: .levelBars):
+            LevelBars(options: options, selection: selectedChoice) { viewModel.set(descriptor.id, .choice($0)) }
+                .accessibilityLabel(descriptor.title)
+        case .choice(let options, style: .pills):
+            PresetPills(options: options, selection: selectedChoice) { viewModel.set(descriptor.id, .choice($0)) }
+                .accessibilityLabel(descriptor.title)
         case .choice(let options, style: .segmented):
             GlassSegmentedControl(options: options, selection: selectedChoice) {
                 viewModel.set(descriptor.id, .choice($0))

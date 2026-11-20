@@ -1,3 +1,4 @@
+import AppKit
 import HeadphoneKit
 import SwiftUI
 
@@ -6,6 +7,12 @@ struct MenuContentView: View {
 
     private var viewModel: HeadphoneViewModel { activeDevice.viewModel }
     @State private var isShowingSettings = false
+    @State private var contentHeight: CGFloat = 400
+
+    // Keep the panel inside the visible screen, leaving room for the menu bar, header padding and footer.
+    private static var maximumControlsHeight: CGFloat {
+        (NSScreen.main?.visibleFrame.height ?? 800) - 110
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -13,8 +20,18 @@ struct MenuContentView: View {
                 SettingsPanel { isShowingSettings = false }
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             } else {
-                controls
-                    .transition(.move(edge: .leading).combined(with: .opacity))
+                ScrollView(.vertical) {
+                    controls
+                        .onGeometryChange(for: CGFloat.self) {
+                            $0.size.height
+                        } action: {
+                            contentHeight = $0
+                        }
+                }
+                .scrollIndicators(.automatic)
+                .scrollBounceBehavior(.basedOnSize)
+                .frame(height: min(contentHeight, Self.maximumControlsHeight))
+                .transition(.move(edge: .leading).combined(with: .opacity))
             }
             ConnectionFooter(viewModel: viewModel, isShowingSettings: $isShowingSettings)
         }
@@ -31,8 +48,17 @@ struct MenuContentView: View {
             if viewModel.showsControls {
                 ForEach(viewModel.sections) { section in
                     SectionCard(title: section.title) {
-                        ForEach(section.settings, id: \.id) { descriptor in
+                        ForEach(section.settings.filter { $0.kind != .toggle && !$0.isDial }, id: \.id) {
+                            descriptor in
                             SettingRow(descriptor: descriptor, viewModel: viewModel)
+                        }
+                        let dials = section.settings.filter(\.isDial)
+                        if !dials.isEmpty {
+                            EQDial(descriptors: dials, viewModel: viewModel)
+                        }
+                        let toggles = section.settings.filter { $0.kind == .toggle }
+                        if !toggles.isEmpty {
+                            ToggleTileGrid(descriptors: toggles, viewModel: viewModel)
                         }
                     }
                 }
@@ -51,7 +77,7 @@ struct SectionCard<Content: View>: View {
     @ViewBuilder let content: Content
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .leading, spacing: 10) {
             Text(title.uppercased())
                 .font(.system(.caption2, design: .monospaced, weight: .medium))
                 .tracking(0.8)

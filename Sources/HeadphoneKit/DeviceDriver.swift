@@ -22,12 +22,17 @@ public struct DeviceModel: Hashable, Sendable {
     public let nameFragment: String
     public let link: LinkProfile
     public let settings: [SettingDescriptor]
+    /// Identifies product artwork the app can draw instead of a generic SF Symbol.
+    public let glyph: String?
 
-    public init(name: String, nameFragment: String, link: LinkProfile, settings: [SettingDescriptor]) {
+    public init(
+        name: String, nameFragment: String, link: LinkProfile, settings: [SettingDescriptor], glyph: String? = nil
+    ) {
         self.name = name
         self.nameFragment = nameFragment
         self.link = link
         self.settings = settings
+        self.glyph = glyph
     }
 }
 

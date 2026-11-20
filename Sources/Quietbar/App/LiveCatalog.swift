@@ -9,9 +9,7 @@ enum LiveCatalog {
     static func entries(preferences: any PreferenceStore) -> [DeviceEntry] {
         let jbl = JBLLive770NCDriver()
         let moto = MotoBudsPlusDriver()
-        let cmf = CMFHeadphonesProDriver {
-            preferences.bool(forKey: ExperimentalWritePreference.key) ?? false
-        }
+        let cmf = CMFHeadphonesProDriver()
         return [
             DeviceEntry(id: "cmf.headphonespro", model: cmf.model) { deviceID in
                 DeviceSession(

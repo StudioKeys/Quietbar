@@ -17,10 +17,15 @@ struct HeaderView: View {
 
     private var deviceRow: some View {
         HStack(spacing: 10) {
-            Image(systemName: viewModel.icon.symbolName)
-                .font(.system(size: 16, weight: .medium))
-                .frame(width: 34, height: 34)
+            ProductGlyph(glyph: viewModel.model.glyph, fallbackSymbol: "headphones")
+                .frame(width: 40, height: 40)
                 .background(.quaternary, in: .circle)
+                .overlay(alignment: .topTrailing) {
+                    Circle()
+                        .fill(viewModel.isConnected ? Color.green : Color.secondary.opacity(0.5))
+                        .frame(width: 8, height: 8)
+                        .accessibilityHidden(true)
+                }
             VStack(alignment: .leading, spacing: 1) {
                 DeviceTitle(activeDevice: activeDevice)
                 Text(viewModel.statusText)
@@ -39,27 +44,21 @@ private struct BatteryLabel: View {
     let battery: Battery
 
     var body: some View {
-        HStack(spacing: 4) {
-            Text("\(battery.percent)%")
-                .font(.system(.callout, design: .monospaced, weight: .semibold))
-                .monospacedDigit()
-            Image(systemName: symbol)
-                .symbolRenderingMode(.hierarchical)
-                .foregroundStyle(battery.percent <= 20 ? AnyShapeStyle(.red) : AnyShapeStyle(.primary))
+        VStack(alignment: .trailing, spacing: 4) {
+            HStack(spacing: 3) {
+                if battery.isCharging {
+                    Image(systemName: "bolt.fill")
+                        .font(.system(size: 9, weight: .semibold))
+                        .foregroundStyle(.green)
+                }
+                Text("\(battery.percent)%")
+                    .font(.system(.callout, design: .monospaced, weight: .semibold))
+                    .monospacedDigit()
+            }
+            SegmentedBatteryBar(percent: battery.percent, isCharging: battery.isCharging)
         }
-        .accessibilityElement(children: .combine)
+        .accessibilityElement(children: .ignore)
         .accessibilityLabel("Battery \(battery.percent) percent\(battery.isCharging ? ", charging" : "")")
-    }
-
-    private var symbol: String {
-        if battery.isCharging { return "battery.100percent.bolt" }
-        switch battery.percent {
-        case ..<13: return "battery.0percent"
-        case ..<38: return "battery.25percent"
-        case ..<63: return "battery.50percent"
-        case ..<88: return "battery.75percent"
-        default: return "battery.100percent"
-        }
     }
 }
 
@@ -69,7 +68,7 @@ struct DeviceTitle: View {
     var body: some View {
         if activeDevice.showsSwitcher {
             Menu {
-                ForEach(activeDevice.entries) { entry in
+                ForEach(activeDevice.switchableEntries) { entry in
                     Button {
                         Task { await activeDevice.select(entry.id) }
                     } label: {

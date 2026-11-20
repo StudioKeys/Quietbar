@@ -1,5 +1,6 @@
 public enum SettingSection: Hashable, Sendable, CaseIterable {
     case noise
+    case spatial
     case sound
     case smart
 }
@@ -20,11 +21,14 @@ public enum ChoiceStyle: Hashable, Sendable {
     case menu
     case segmented
     case modeButtons
+    case levelBars
+    case pills
 }
 
 public enum LevelStyle: Hashable, Sendable {
     case slider
     case balance
+    case dial
 }
 
 public enum SettingKind: Hashable, Sendable {
@@ -51,7 +55,6 @@ public struct SettingDescriptor: Hashable, Sendable {
     public let section: SettingSection
     public let visibleWhen: Condition?
     public let appliesWithReconnect: Bool
-    public let requiresExperimentalWrites: Bool
 
     public init(
         id: SettingID,
@@ -60,8 +63,7 @@ public struct SettingDescriptor: Hashable, Sendable {
         kind: SettingKind,
         section: SettingSection,
         visibleWhen: Condition? = nil,
-        appliesWithReconnect: Bool = false,
-        requiresExperimentalWrites: Bool = false
+        appliesWithReconnect: Bool = false
     ) {
         self.id = id
         self.title = title
@@ -70,7 +72,6 @@ public struct SettingDescriptor: Hashable, Sendable {
         self.section = section
         self.visibleWhen = visibleWhen
         self.appliesWithReconnect = appliesWithReconnect
-        self.requiresExperimentalWrites = requiresExperimentalWrites
     }
 
     public func isVisible(in state: DeviceState) -> Bool {

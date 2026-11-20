@@ -10,9 +10,10 @@ struct SectionModel: Identifiable, Equatable {
 
     var title: String {
         switch section {
-        case .noise: "Noise control"
+        case .noise: "Noise Control"
+        case .spatial: "Spatial Audio"
         case .sound: "Sound"
-        case .smart: "Smart features"
+        case .smart: "Features"
         }
     }
 }
@@ -54,6 +55,10 @@ final class HeadphoneViewModel {
         case ..<0: "L \(-offset)"
         default: "R \(offset)"
         }
+    }
+
+    static func gainText(_ decibels: Int) -> String {
+        decibels > 0 ? "+\(decibels) dB" : "\(decibels) dB"
     }
 
     func value(for id: SettingID) -> SettingValue? {

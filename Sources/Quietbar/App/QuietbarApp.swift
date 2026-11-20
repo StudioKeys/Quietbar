@@ -1,3 +1,4 @@
+import ClassicBluetooth
 import HeadphoneKit
 import SwiftUI
 
@@ -5,7 +6,8 @@ import SwiftUI
 struct QuietbarApp: App {
     @State private var activeDevice = ActiveDevice(
         entries: LiveCatalog.entries(preferences: UserDefaultsStore()),
-        preferences: UserDefaultsStore()
+        preferences: UserDefaultsStore(),
+        pairedDeviceNames: PairedDevices.names
     )
 
     var body: some Scene {

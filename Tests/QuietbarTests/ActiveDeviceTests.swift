@@ -25,10 +25,42 @@ struct ActiveDeviceTests {
         }
     }
 
-    private func device(_ ids: [String] = ["jbl.live770nc", "moto.budsplus"], store: InMemoryPreferenceStore)
-        -> ActiveDevice
-    {
-        ActiveDevice(entries: ids.map(entry), preferences: store)
+    private func device(
+        _ ids: [String] = ["jbl.live770nc", "moto.budsplus"], store: InMemoryPreferenceStore,
+        paired: [String] = []
+    ) -> ActiveDevice {
+        ActiveDevice(entries: ids.map(entry), preferences: store, pairedDeviceNames: { paired })
+    }
+
+    private func entry(_ id: String, fragment: String) -> DeviceEntry {
+        let base = Fixtures.model
+        let model = DeviceModel(name: id, nameFragment: fragment, link: base.link, settings: base.settings)
+        return DeviceEntry(id: id, model: model) { _ in FakeController() }
+    }
+
+    @Test func switcherListsOnlySelectedPairedOrPreviouslyConnectedHeadphones() {
+        let store = InMemoryPreferenceStore()
+        store.set(
+            DeviceIdentity(name: "moto buds+", linkID: "x", classicAddress: nil).encoded,
+            forKey: DeviceSession.identityKey(for: "moto"))
+        let active = ActiveDevice(
+            entries: [
+                entry("cmf", fragment: "CMF Headphone Pro"), entry("jbl", fragment: "Live 770NC"),
+                entry("moto", fragment: "moto buds"), entry("sony", fragment: "WH-1000XM5"),
+            ],
+            preferences: store, pairedDeviceNames: { ["Hariharan's CMF Headphone Pro"] })
+
+        #expect(active.switchableEntries.map(\.id) == ["cmf", "moto"])
+        #expect(active.showsSwitcher)
+    }
+
+    @Test func singleOwnedHeadphoneHidesSwitcher() {
+        let active = ActiveDevice(
+            entries: [entry("cmf", fragment: "CMF Headphone Pro"), entry("jbl", fragment: "Live 770NC")],
+            preferences: InMemoryPreferenceStore(), pairedDeviceNames: { ["JBL LIVE 770NC"] })
+
+        #expect(active.selected.id == "jbl")
+        #expect(!active.showsSwitcher)
     }
 
     @Test func firstLaunchSelectsFirstEntry() {
@@ -111,8 +143,8 @@ struct ActiveDeviceTests {
         #expect(await old?.stopCount == 1)
     }
 
-    @Test func showsSwitcherOnlyWithSeveralEntries() {
-        #expect(device(store: InMemoryPreferenceStore()).showsSwitcher)
+    @Test func switcherHiddenUntilASecondHeadphoneIsOwned() {
+        #expect(!device(store: InMemoryPreferenceStore()).showsSwitcher)
         #expect(!device(["jbl.live770nc"], store: InMemoryPreferenceStore()).showsSwitcher)
     }
 }

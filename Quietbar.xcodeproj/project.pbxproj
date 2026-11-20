@@ -14,6 +14,7 @@
 		063136A96723BA7C1095096F /* CMFCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3625DBBDCAA056874DD0C07C /* CMFCommand.swift */; };
 		0A6F8F10A426DF2DE632231D /* LiveCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 919C202E5CA7B7E6BB7EDC89 /* LiveCatalog.swift */; };
 		0BBA1382C08F0865376755E8 /* MotoProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; };
+		0FCFF820B88FA678E4627754 /* CMFCustomEQ.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA6557708727DE70AF7C1B0 /* CMFCustomEQ.swift */; };
 		14544689DFA9DD5AF6A396CF /* DeviceSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4808D6A3366340711503930D /* DeviceSession.swift */; };
 		15628AF05D6769E23AB52490 /* ReplyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D186643B7C26279D2D14E92 /* ReplyTests.swift */; };
 		160685AD32C35CB987A063EE /* SettingRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD279B8D246620BA90B43D97 /* SettingRow.swift */; };
@@ -56,6 +57,7 @@
 		44A7E9F913CF2F405F8AE1FF /* MotoProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		45EA2FDAEAE46B148C5354AE /* HeadphoneKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		484BFC18726F0D0B8FA35884 /* StatusText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 670AFD9B4688FB7AEB91FFE6 /* StatusText.swift */; };
+		493CC625936B826E10795294 /* NothingControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04B257C572B78D6BB40D2BEA /* NothingControls.swift */; };
 		4A58EBAF362A91DA5E7DC2CB /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
 		4ACD8CE801ED4C61F1B2D88E /* HeadphoneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0881BFD77C526BAE9C5D1F6E /* HeadphoneKit.framework */; };
 		4BA3E92067D1744A84A3572F /* LinkEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5BF98B01D26D03374186551 /* LinkEvent.swift */; };
@@ -92,6 +94,7 @@
 		755CC4F51AB3E1DB838F9AC1 /* JBLUpdateDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE68B4EA14822236128AEB14 /* JBLUpdateDecoder.swift */; };
 		75AF645CDF1D9CB3F6A808F1 /* Command.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF718E800CDBD21D9BCB6388 /* Command.swift */; };
 		75B469C751625D31C4AE4652 /* MotoBudsPlusDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58764307A395ACE7F8D31C48 /* MotoBudsPlusDriver.swift */; };
+		7680A630889FEC09D202D3A1 /* PairedDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7734840A1BB92FA142BC014 /* PairedDevices.swift */; };
 		79683157AD620708F3B854FA /* CoreBluetoothTransport+Delegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = A417138A1EF26A4ACE69E598 /* CoreBluetoothTransport+Delegates.swift */; };
 		799B062E8B472F0F49FF0394 /* CMFProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A01780BC56F6EF59C454D7C0 /* CMFProtocol.framework */; };
 		7A23A4AB6B1A901677F66E19 /* HeadphoneControlling.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3E9987A3668BBC0285FA17B /* HeadphoneControlling.swift */; };
@@ -100,6 +103,7 @@
 		80C3AB75CBD8E04EF7AC156B /* JBLProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; };
 		8242EA8188CF935D86E700D1 /* Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BCE97049BF4FEAFE7E3C026 /* Hex.swift */; };
 		8342EB35830D1DDF1BDD5538 /* BatteryRingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2DA7C722396CC2B545390DC /* BatteryRingTests.swift */; };
+		835C7C81C7D8E49A462B45A9 /* CMFHeadphoneShape.swift in Sources */ = {isa = PBXBuildFile; fileRef = 845395C0769B0BECDEA2DF21 /* CMFHeadphoneShape.swift */; };
 		8776A3C1CFBB7C8D62AD5194 /* JBLProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		88B64B63847EA0E060D9482C /* JBLProtocol.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D43C3FA3BD52041BF50D8944 /* JBLProtocol.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		897980085AB205648DFE06A9 /* Reply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529919147167488564C47BDC /* Reply.swift */; };
@@ -153,6 +157,7 @@
 		D60D5078EEC55B614D6BC30D /* ActiveDeviceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 771BC31E58D9DE4995701DC6 /* ActiveDeviceTests.swift */; };
 		D83EF4A352AE11C3873E520F /* FakeDriver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5453D6043C8C7D3B36647E56 /* FakeDriver.swift */; };
 		D96C300205C1DB3A58E92617 /* NoiseMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 173A2586A3677DD62B674B51 /* NoiseMode.swift */; };
+		DA9310DF68116AF9CCA8A9F1 /* EQDial.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B19C73B6565C3CA507F25E0 /* EQDial.swift */; };
 		DB874109232015478C81F6B0 /* MotoProtocol.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E53F6B689DF058776CDADD78 /* MotoProtocol.framework */; };
 		DCA18AE82BE670DF854332CD /* MotoOpcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE26CEA5E0E15716FDB93BBA /* MotoOpcode.swift */; };
 		DECBCC2A853A74BFC660F2EB /* MotoFramer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D284CA262CCCCDFB9D491CB /* MotoFramer.swift */; };
@@ -537,6 +542,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		04B257C572B78D6BB40D2BEA /* NothingControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NothingControls.swift; sourceTree = "<group>"; };
 		04C1E1C63F4E07E287A7B4F0 /* MenuBarLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLabel.swift; sourceTree = "<group>"; };
 		0698E80DE63172365B5377A3 /* JBLLive770NCDriver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JBLLive770NCDriver.swift; sourceTree = "<group>"; };
 		071B1BBD08FD9296AEA7186F /* ReplyWaitersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplyWaitersTests.swift; sourceTree = "<group>"; };
@@ -557,12 +563,14 @@
 		22619D0B7543DE9117D1733C /* DeviceStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceStateTests.swift; sourceTree = "<group>"; };
 		26721313237D1F6A2229AB4F /* CMFFramer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFFramer.swift; sourceTree = "<group>"; };
 		2896447514062F222ABEA565 /* CMFProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CMFProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2B19C73B6565C3CA507F25E0 /* EQDial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQDial.swift; sourceTree = "<group>"; };
 		2B8B4E1467491B96FCA55964 /* ConnectionWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionWatcher.swift; sourceTree = "<group>"; };
 		2CD7FDC7847BB689E22355F8 /* DeviceEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceEntry.swift; sourceTree = "<group>"; };
 		356D6C26F7231383B9BA0C02 /* MotoDriverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MotoDriverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		359011ECD17B69411315A1DC /* SettingDescriptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingDescriptorTests.swift; sourceTree = "<group>"; };
 		3625DBBDCAA056874DD0C07C /* CMFCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFCommand.swift; sourceTree = "<group>"; };
 		3C7BFC6EFCB7CD44F863F8A7 /* MotoBudsPlusDriverTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotoBudsPlusDriverTests.swift; sourceTree = "<group>"; };
+		3DA6557708727DE70AF7C1B0 /* CMFCustomEQ.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFCustomEQ.swift; sourceTree = "<group>"; };
 		3F1E3C187758F074B14EC9AB /* FrameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FrameTests.swift; sourceTree = "<group>"; };
 		444760096DF0C72999885FD0 /* GlassSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassSegmentedControl.swift; sourceTree = "<group>"; };
 		46F2E929F20D88014BC46AF1 /* Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hex.swift; sourceTree = "<group>"; };
@@ -604,6 +612,7 @@
 		7F6C9F2D9D27D97E8246DD80 /* HeadphoneViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphoneViewModelTests.swift; sourceTree = "<group>"; };
 		80265ED9657EDDA534C69D62 /* QuietbarApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuietbarApp.swift; sourceTree = "<group>"; };
 		823E651DFC0EBBBE8BBAEDFE /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		845395C0769B0BECDEA2DF21 /* CMFHeadphoneShape.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFHeadphoneShape.swift; sourceTree = "<group>"; };
 		85AC0CE30B7C2F361890F339 /* DeviceSessionReconnectTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceSessionReconnectTests.swift; sourceTree = "<group>"; };
 		875E78F59630C2237D2DAFE6 /* EqFrameBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqFrameBuilder.swift; sourceTree = "<group>"; };
 		8A06E22554A269D1B423E03D /* MenuBarIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarIcon.swift; sourceTree = "<group>"; };
@@ -622,6 +631,7 @@
 		A417138A1EF26A4ACE69E598 /* CoreBluetoothTransport+Delegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBluetoothTransport+Delegates.swift"; sourceTree = "<group>"; };
 		A4C18F442A05FA19E0AA5096 /* CMFSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMFSettings.swift; sourceTree = "<group>"; };
 		A54DA4E819B8FA97D31DAA1E /* ReconnectPolicyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectPolicyTests.swift; sourceTree = "<group>"; };
+		A7734840A1BB92FA142BC014 /* PairedDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PairedDevices.swift; sourceTree = "<group>"; };
 		AA43F17D1D5B19E86D63F5ED /* ConnectionStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatus.swift; sourceTree = "<group>"; };
 		AA88B8EF1B453D899EE9138E /* JBLProtocolTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JBLProtocolTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AB02318DDF5B807043E11A68 /* PreferenceStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferenceStore.swift; sourceTree = "<group>"; };
@@ -971,6 +981,7 @@
 			children = (
 				3625DBBDCAA056874DD0C07C /* CMFCommand.swift */,
 				1F27A868C8F7FA5A75FF48A5 /* CMFCRC16.swift */,
+				3DA6557708727DE70AF7C1B0 /* CMFCustomEQ.swift */,
 				F74E5D911D40E5CEED86FEF4 /* CMFFrame.swift */,
 				26721313237D1F6A2229AB4F /* CMFFramer.swift */,
 				7D70E71ED21CED5F86A41531 /* CMFSequence.swift */,
@@ -1062,6 +1073,7 @@
 			isa = PBXGroup;
 			children = (
 				1F83B0821DC9910776FAD008 /* IOBluetoothConnectionWatcher.swift */,
+				A7734840A1BB92FA142BC014 /* PairedDevices.swift */,
 				AFB410127B0338DB1020AC1C /* RFCOMMTransport.swift */,
 				D303E74D6D8884CE72AAB866 /* RFCOMMTransport+Connect.swift */,
 			);
@@ -1093,13 +1105,16 @@
 			isa = PBXGroup;
 			children = (
 				B81A3D4F0702A0B803938807 /* BudsBatteryView.swift */,
+				845395C0769B0BECDEA2DF21 /* CMFHeadphoneShape.swift */,
 				7968036499A060B856974E40 /* ConnectionFooter.swift */,
+				2B19C73B6565C3CA507F25E0 /* EQDial.swift */,
 				444760096DF0C72999885FD0 /* GlassSegmentedControl.swift */,
 				C5068735274C75C4B8DDD7D9 /* GlassStyle.swift */,
 				A383B99FC80CFAA914717C0D /* HeaderView.swift */,
 				DE41421138EB32FAF429775D /* LevelRow.swift */,
 				04C1E1C63F4E07E287A7B4F0 /* MenuBarLabel.swift */,
 				8BCAAA4337EC72FB201ADBEC /* MenuContentView.swift */,
+				04B257C572B78D6BB40D2BEA /* NothingControls.swift */,
 				79603F2B19F20977A1AE8391 /* SettingControls.swift */,
 				BD279B8D246620BA90B43D97 /* SettingRow.swift */,
 				4E7316F27C8B06A1A19711FB /* SettingsPanel.swift */,
@@ -1609,8 +1624,10 @@
 				237EEE15C35FCE2666BAC9A9 /* ActiveDevice.swift in Sources */,
 				287B40BB1061C8C038EF75A2 /* BatteryRingStyle.swift in Sources */,
 				6F9FEB9B13F8D0378B2DE2D0 /* BudsBatteryView.swift in Sources */,
+				835C7C81C7D8E49A462B45A9 /* CMFHeadphoneShape.swift in Sources */,
 				BDB929FDFCD0FBEB66248C17 /* ConnectionFooter.swift in Sources */,
 				BE18F69916F71A84113ADD06 /* DeviceEntry.swift in Sources */,
+				DA9310DF68116AF9CCA8A9F1 /* EQDial.swift in Sources */,
 				6D717286AA21E4FC76B6E708 /* GlassSegmentedControl.swift in Sources */,
 				AF202E0BF854DA57D207CD1A /* GlassStyle.swift in Sources */,
 				2D4AECAD3ED70286098B1C3B /* HeaderView.swift in Sources */,
@@ -1621,6 +1638,7 @@
 				AC99A8D19B22E4A0DC9182D4 /* MenuBarIcon.swift in Sources */,
 				C4E4828B3B9F213657AB674E /* MenuBarLabel.swift in Sources */,
 				621E02CDDBCB35AD89027764 /* MenuContentView.swift in Sources */,
+				493CC625936B826E10795294 /* NothingControls.swift in Sources */,
 				5FDE1296270F3AF5EDD4FEFD /* QuietbarApp.swift in Sources */,
 				56E313DA49DEBF4967B23116 /* SettingControls.swift in Sources */,
 				160685AD32C35CB987A063EE /* SettingRow.swift in Sources */,
@@ -1780,6 +1798,7 @@
 			files = (
 				503DC5B3B8FDC5497F92C44E /* CMFCRC16.swift in Sources */,
 				063136A96723BA7C1095096F /* CMFCommand.swift in Sources */,
+				0FCFF820B88FA678E4627754 /* CMFCustomEQ.swift in Sources */,
 				9081315ADFB7940A0482684E /* CMFFrame.swift in Sources */,
 				33F3894D49AA5B02D674202C /* CMFFramer.swift in Sources */,
 				6C32DD6552A5BFCBC6C196BE /* CMFSequence.swift in Sources */,
@@ -1804,6 +1823,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00CB8975F80A1622183079A9 /* IOBluetoothConnectionWatcher.swift in Sources */,
+				7680A630889FEC09D202D3A1 /* PairedDevices.swift in Sources */,
 				944561B75B46F147C25AE091 /* RFCOMMTransport+Connect.swift in Sources */,
 				E76C39E674C12A18A6A309EC /* RFCOMMTransport.swift in Sources */,
 			);

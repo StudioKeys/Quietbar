@@ -5,8 +5,14 @@ struct MenuBarLabel: View {
 
     var body: some View {
         HStack(spacing: 3) {
-            Image(systemName: icon.symbolName)
-                .opacity(icon.isDimmed ? 0.45 : 1)
+            Group {
+                if let artwork = ProductGlyph.menuBarImage(for: icon.glyph) {
+                    Image(nsImage: artwork)
+                } else {
+                    Image(systemName: icon.symbolName)
+                }
+            }
+            .opacity(icon.isDimmed ? 0.45 : 1)
             if let battery = icon.batteryText {
                 Text(battery)
             }

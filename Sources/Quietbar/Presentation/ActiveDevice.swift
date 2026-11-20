@@ -11,20 +11,45 @@ final class ActiveDevice {
     private(set) var selected: DeviceEntry
     private(set) var viewModel: HeadphoneViewModel
     private let preferences: any PreferenceStore
+    private let pairedDeviceNames: @MainActor () -> [String]
     private var observing: Task<Void, Never>?
 
-    init(entries: [DeviceEntry], preferences: any PreferenceStore) {
+    init(
+        entries: [DeviceEntry], preferences: any PreferenceStore,
+        pairedDeviceNames: @escaping @MainActor () -> [String] = { [] }
+    ) {
         precondition(!entries.isEmpty, "Quietbar needs at least one supported device")
         Self.migrateLegacyChoice(in: preferences)
         let persisted = preferences.string(forKey: Self.selectedKey)
-        let selected = entries.first { $0.id == persisted } ?? entries[0]
+        let paired = pairedDeviceNames()
+        let selected =
+            entries.first { $0.id == persisted }
+            ?? entries.first { Self.isPaired($0, among: paired) }
+            ?? entries[0]
         self.entries = entries
         self.preferences = preferences
+        self.pairedDeviceNames = pairedDeviceNames
         self.selected = selected
         self.viewModel = Self.makeViewModel(for: selected)
     }
 
-    var showsSwitcher: Bool { entries.count > 1 }
+    /// Headphones the user actually owns: ones Quietbar has connected to before or that are paired with this Mac.
+    var switchableEntries: [DeviceEntry] {
+        let paired = pairedDeviceNames()
+        return entries.filter { entry in
+            entry.id == selected.id || hasConnected(entry) || Self.isPaired(entry, among: paired)
+        }
+    }
+
+    var showsSwitcher: Bool { switchableEntries.count > 1 }
+
+    private func hasConnected(_ entry: DeviceEntry) -> Bool {
+        preferences.string(forKey: DeviceSession.identityKey(for: entry.id)).flatMap(DeviceIdentity.decode) != nil
+    }
+
+    private static func isPaired(_ entry: DeviceEntry, among names: [String]) -> Bool {
+        names.contains { $0.localizedCaseInsensitiveContains(entry.model.nameFragment) }
+    }
 
     func displayName(for entry: DeviceEntry) -> String {
         if entry.id == selected.id { return viewModel.deviceName }
