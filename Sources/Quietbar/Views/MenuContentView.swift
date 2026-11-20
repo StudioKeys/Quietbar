@@ -7,12 +7,6 @@ struct MenuContentView: View {
 
     private var viewModel: HeadphoneViewModel { activeDevice.viewModel }
     @State private var isShowingSettings = false
-    @State private var contentHeight: CGFloat = 400
-
-    // Keep the panel inside the visible screen, leaving room for the menu bar, header padding and footer.
-    private static var maximumControlsHeight: CGFloat {
-        (NSScreen.main?.visibleFrame.height ?? 800) - 110
-    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -20,18 +14,8 @@ struct MenuContentView: View {
                 SettingsPanel { isShowingSettings = false }
                     .transition(.move(edge: .trailing).combined(with: .opacity))
             } else {
-                ScrollView(.vertical) {
-                    controls
-                        .onGeometryChange(for: CGFloat.self) {
-                            $0.size.height
-                        } action: {
-                            contentHeight = $0
-                        }
-                }
-                .scrollIndicators(.automatic)
-                .scrollBounceBehavior(.basedOnSize)
-                .frame(height: min(contentHeight, Self.maximumControlsHeight))
-                .transition(.move(edge: .leading).combined(with: .opacity))
+                controls
+                    .transition(.move(edge: .leading).combined(with: .opacity))
             }
             ConnectionFooter(viewModel: viewModel, isShowingSettings: $isShowingSettings)
         }
@@ -54,7 +38,7 @@ struct MenuContentView: View {
                         }
                         let dials = section.settings.filter(\.isDial)
                         if !dials.isEmpty {
-                            EQDial(descriptors: dials, viewModel: viewModel)
+                            EQCurve(descriptors: dials, viewModel: viewModel)
                         }
                         let toggles = section.settings.filter { $0.kind == .toggle }
                         if !toggles.isEmpty {

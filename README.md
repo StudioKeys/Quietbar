@@ -46,7 +46,7 @@ connection and shows the name you gave it in Bluetooth settings.
 - Noise control: Noise Cancellation (Low, Mid, High, Adaptive), Transparency, Off
 - Spatial Audio: Concert, Cinema, Off
 - EQ presets: Pop, Rock, Electronic, Vocals, Classical and Custom
-- Custom EQ: drag the Bass, Mid and Treble lobes on the dial, ±6 dB
+- Custom EQ: drag Bass, Mid and Treble on the response curve, ±6 dB
 - Low Lag Mode and Dual Connection (the headphones reconnect briefly to apply Dual Connection)
 - Battery level, status read-back and automatic reconnection
 
