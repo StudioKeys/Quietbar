@@ -17,7 +17,7 @@ struct HeaderView: View {
 
     private var deviceRow: some View {
         HStack(spacing: 10) {
-            ProductGlyph(glyph: viewModel.model.glyph, fallbackSymbol: "headphones")
+            ProductGlyph(glyph: viewModel.model.glyph, fallbackSymbol: viewModel.model.symbol)
                 .frame(width: 40, height: 40)
                 .background(.quaternary, in: .circle)
                 .overlay(alignment: .topTrailing) {

@@ -11,7 +11,8 @@ public struct MotoBudsPlusDriver: DeviceDriver {
         name: "moto buds+",
         nameFragment: "moto buds",
         link: .rfcomm(serviceUUID: serviceUUID),
-        settings: MotoSetting.descriptors
+        settings: MotoSetting.descriptors,
+        symbol: "earbuds"
     )
 
     private static let queries: [SettingID: MotoOpcode] = [
