@@ -22,8 +22,6 @@ enum MenuBarIconStyle: String, CaseIterable, Identifiable {
 }
 
 struct MenuBarIcon: Equatable {
-    static let defaultSymbol = "headphones"
-
     let symbolName: String
     let isDimmed: Bool
     let batteryText: String?
@@ -38,10 +36,10 @@ struct MenuBarIcon: Equatable {
 
     static func make(for snapshot: DeviceSnapshot, model: DeviceModel) -> MenuBarIcon {
         guard snapshot.status == .connected else {
-            return MenuBarIcon(symbolName: defaultSymbol, isDimmed: true, batteryText: nil, glyph: model.glyph)
+            return MenuBarIcon(symbolName: model.symbol, isDimmed: true, batteryText: nil, glyph: model.glyph)
         }
         let battery = snapshot.state.battery
-        let symbol = modeSymbol(in: snapshot.state, model: model) ?? defaultSymbol
+        let symbol = modeSymbol(in: snapshot.state, model: model) ?? model.symbol
         guard let battery, battery.hasComponents else {
             return MenuBarIcon(
                 symbolName: symbol, isDimmed: false, batteryText: battery.map { "\($0.percent)%" }, glyph: model.glyph)

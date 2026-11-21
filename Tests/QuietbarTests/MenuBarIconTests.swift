@@ -61,6 +61,16 @@ struct MenuBarIconTests {
         )
     }
 
+    @Test(arguments: [ConnectionStatus.connected, .searching])
+    func iconFallsBackToModelSymbol(status: ConnectionStatus) {
+        let base = Fixtures.model
+        let model = DeviceModel(
+            name: base.name, nameFragment: base.nameFragment, link: base.link, settings: base.settings,
+            symbol: "earbuds")
+
+        #expect(MenuBarIcon.make(for: Fixtures.snapshot(status), model: model).symbolName == "earbuds")
+    }
+
     @Test func menuBarItemsListKnownBuds() {
         let buds = Battery.buds(
             left: BatteryLevel(percent: 77, isCharging: false), right: BatteryLevel(percent: 72, isCharging: false),

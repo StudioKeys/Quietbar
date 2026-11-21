@@ -137,6 +137,7 @@ struct MotoBudsPlusDriverTests {
         #expect(driver.model.link == .rfcomm(serviceUUID: MotoBudsPlusDriver.serviceUUID))
         #expect(MotoBudsPlusDriver.serviceUUID.uuidString.lowercased() == "fc9d9fe0-4899-11ee-be56-0242ac120002")
         #expect(driver.model.nameFragment == "moto buds")
+        #expect(driver.model.symbol == "earbuds")
     }
 
     @Test func everySettingHasAConfirmingQuery() {
