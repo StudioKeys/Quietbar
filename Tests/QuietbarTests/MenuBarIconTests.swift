@@ -71,6 +71,19 @@ struct MenuBarIconTests {
         #expect(MenuBarIcon.make(for: Fixtures.snapshot(status), model: model).symbolName == "earbuds")
     }
 
+    @Test func laterModeChoiceNeverStandsInForMissingNoiseMode() {
+        let base = Fixtures.model
+        let spatial = SettingDescriptor(
+            id: "spatialSound", title: "Spatial",
+            kind: .choice([ChoiceOption(id: "off", title: "Off", symbol: "speaker.slash")], style: .modeButtons),
+            section: .spatial)
+        let model = DeviceModel(
+            name: base.name, nameFragment: base.nameFragment, link: base.link, settings: base.settings + [spatial])
+        let snapshot = Fixtures.snapshot(.connected, [.setting("spatialSound", .choice("off"))])
+
+        #expect(MenuBarIcon.make(for: snapshot, model: model).symbolName == "headphones")
+    }
+
     @Test func menuBarItemsListKnownBuds() {
         let buds = Battery.buds(
             left: BatteryLevel(percent: 77, isCharging: false), right: BatteryLevel(percent: 72, isCharging: false),
