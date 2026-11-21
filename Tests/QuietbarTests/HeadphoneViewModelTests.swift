@@ -5,6 +5,16 @@ import Testing
 
 @MainActor
 struct HeadphoneViewModelTests {
+    @Test(arguments: [
+        (SettingKind.toggle, true), (.choice([], style: .labeledSegmented), true),
+        (.choice([], style: .modeButtons), false), (.level(0...1, style: .slider), false),
+    ])
+    func onlyTogglesAndInlineChoicesAreCompactRows(kind: SettingKind, isCompact: Bool) {
+        let descriptor = SettingDescriptor(id: "x", title: "X", kind: kind, section: .smart)
+
+        #expect(descriptor.isCompactRow == isCompact)
+    }
+
     private func viewModel(_ controller: FakeController) -> HeadphoneViewModel {
         HeadphoneViewModel(controller: controller, model: Fixtures.model)
     }

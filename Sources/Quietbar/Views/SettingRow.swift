@@ -8,8 +8,8 @@ struct SettingRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             content
-            if descriptor.appliesWithReconnect {
-                Text(ToggleTile.reconnectNote)
+            if descriptor.appliesWithReconnect, !isInlineChoice {
+                Text(CompactRow.reconnectNote)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -24,6 +24,8 @@ struct SettingRow: View {
         switch descriptor.kind {
         case .toggle:
             SettingSwitchRow(descriptor: descriptor, isOn: binding(bool: descriptor.id))
+        case .choice(_, style: .labeledSegmented):
+            CompactRow(descriptor: descriptor, viewModel: viewModel)
         case .choice(let options, style: .modeButtons):
             ModeButtons(options: options, selection: selectedChoice) { viewModel.set(descriptor.id, .choice($0)) }
         case .choice(let options, style: .menu):
@@ -46,6 +48,11 @@ struct SettingRow: View {
                 viewModel.set(descriptor.id, .level($0))
             }
         }
+    }
+
+    private var isInlineChoice: Bool {
+        if case .choice(_, style: .labeledSegmented) = descriptor.kind { return true }
+        return false
     }
 
     private var selectedChoice: String? {
