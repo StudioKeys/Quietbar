@@ -114,20 +114,30 @@ struct PresetPills: View {
 }
 
 struct ToggleTile: View {
+    static let reconnectNote = "Headphones reconnect briefly to apply."
+
     let descriptor: SettingDescriptor
     let viewModel: HeadphoneViewModel
     var body: some View {
-        HStack(spacing: 10) {
-            Image(systemName: descriptor.symbol ?? "circle")
-                .font(.system(size: 14))
-                .foregroundStyle(.secondary)
-                .frame(width: 22)
-            Text(descriptor.title)
-            Spacer()
-            Toggle(descriptor.title, isOn: binding)
-                .toggleStyle(.switch)
-                .controlSize(.small)
-                .labelsHidden()
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 10) {
+                Image(systemName: descriptor.symbol ?? "circle")
+                    .font(.system(size: 14))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 22)
+                Text(descriptor.title)
+                Spacer()
+                Toggle(descriptor.title, isOn: binding)
+                    .toggleStyle(.switch)
+                    .controlSize(.small)
+                    .labelsHidden()
+            }
+            if descriptor.appliesWithReconnect {
+                Text(Self.reconnectNote)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .padding(.leading, 32)
+            }
         }
         .padding(.vertical, 2)
         .disabled(
@@ -138,7 +148,7 @@ struct ToggleTile: View {
     }
 
     private var helpText: String {
-        if descriptor.appliesWithReconnect { return "Headphones reconnect briefly to apply." }
+        if descriptor.appliesWithReconnect { return Self.reconnectNote }
         return descriptor.title
     }
 
