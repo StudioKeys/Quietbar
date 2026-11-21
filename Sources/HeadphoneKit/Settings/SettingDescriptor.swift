@@ -23,6 +23,7 @@ public enum ChoiceStyle: Hashable, Sendable {
     case modeButtons
     case levelBars
     case pills
+    case labeledSegmented
 }
 
 public enum LevelStyle: Hashable, Sendable {

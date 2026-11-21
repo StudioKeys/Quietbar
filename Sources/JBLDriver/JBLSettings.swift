@@ -53,8 +53,8 @@ enum JBLSetting {
             kind: .level(Balance.range, style: .balance), section: .sound
         ),
         SettingDescriptor(
-            id: smartAudioVideo, title: "Smart Audio & Video",
-            kind: .choice(SmartMode.allCases.map(\.option), style: .modeButtons), section: .smart,
+            id: smartAudioVideo, title: "Smart Audio & Video", symbol: "play.tv",
+            kind: .choice(SmartMode.allCases.map(\.option), style: .labeledSegmented), section: .smart,
             appliesWithReconnect: true
         ),
         SettingDescriptor(

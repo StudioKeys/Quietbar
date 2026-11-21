@@ -113,13 +113,23 @@ struct PresetPills: View {
     }
 }
 
-struct ToggleTile: View {
+extension SettingDescriptor {
+    var isCompactRow: Bool {
+        switch kind {
+        case .toggle, .choice(_, style: .labeledSegmented): true
+        default: false
+        }
+    }
+}
+
+struct CompactRow: View {
     static let reconnectNote = "Headphones reconnect briefly to apply."
 
     let descriptor: SettingDescriptor
     let viewModel: HeadphoneViewModel
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 2) {
+        VStack(alignment: .leading, spacing: 6) {
             HStack(spacing: 10) {
                 Image(systemName: descriptor.symbol ?? "circle")
                     .font(.system(size: 14))
@@ -127,10 +137,16 @@ struct ToggleTile: View {
                     .frame(width: 22)
                 Text(descriptor.title)
                 Spacer()
-                Toggle(descriptor.title, isOn: binding)
-                    .toggleStyle(.switch)
-                    .controlSize(.small)
-                    .labelsHidden()
+                if case .toggle = descriptor.kind {
+                    toggle
+                }
+            }
+            if case .choice(let options, style: .labeledSegmented) = descriptor.kind {
+                GlassSegmentedControl(options: options, selection: selection) {
+                    viewModel.set(descriptor.id, .choice($0))
+                }
+                .accessibilityLabel(descriptor.title)
+                .padding(.leading, 32)
             }
             if descriptor.appliesWithReconnect {
                 Text(Self.reconnectNote)
@@ -144,20 +160,27 @@ struct ToggleTile: View {
             !viewModel.canEdit || viewModel.pending.contains(descriptor.id)
                 || viewModel.value(for: descriptor.id) == nil
         )
-        .help(helpText)
+        .help(descriptor.appliesWithReconnect ? Self.reconnectNote : descriptor.title)
     }
 
-    private var helpText: String {
-        if descriptor.appliesWithReconnect { return Self.reconnectNote }
-        return descriptor.title
+    private var toggle: some View {
+        Toggle(descriptor.title, isOn: isOn)
+            .toggleStyle(.switch)
+            .controlSize(.small)
+            .labelsHidden()
     }
 
-    private var binding: Binding<Bool> {
+    private var isOn: Binding<Bool> {
         Binding(get: { viewModel.isOn(descriptor.id) }, set: { viewModel.set(descriptor.id, .bool($0)) })
+    }
+
+    private var selection: String? {
+        guard case .choice(let id) = viewModel.value(for: descriptor.id) else { return nil }
+        return id
     }
 }
 
-struct ToggleTileGrid: View {
+struct CompactRowGroup: View {
     let descriptors: [SettingDescriptor]
     let viewModel: HeadphoneViewModel
 
@@ -165,7 +188,7 @@ struct ToggleTileGrid: View {
         VStack(spacing: 6) {
             ForEach(Array(descriptors.enumerated()), id: \.element.id) { index, descriptor in
                 if index > 0 { Divider() }
-                ToggleTile(descriptor: descriptor, viewModel: viewModel)
+                CompactRow(descriptor: descriptor, viewModel: viewModel)
             }
         }
     }

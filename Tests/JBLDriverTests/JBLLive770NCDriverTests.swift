@@ -166,18 +166,26 @@ struct JBLLive770NCDriverTests {
         #expect(driver.model.symbol == "headphones.over.ear")
     }
 
-    @Test(arguments: [
-        ("spatialSound", ["off", "music", "movie", "game"]), ("smartAudioVideo", ["off", "audio", "video"]),
-    ])
-    func modesAreSingleIconChoice(id: String, modes: [String]) throws {
-        let descriptor = try #require(driver.model.settings.first { $0.id.rawValue == id })
+    @Test func spatialIsSingleIconChoice() throws {
+        let descriptor = try #require(driver.model.settings.first { $0.id == "spatialSound" })
         guard case .choice(let options, style: .modeButtons) = descriptor.kind else {
-            Issue.record("\(id) should use mode buttons")
+            Issue.record("Spatial Sound should use mode buttons")
             return
         }
 
-        #expect(options.map(\.id) == modes)
+        #expect(options.map(\.id) == ["off", "music", "movie", "game"])
         #expect(options.allSatisfy { $0.symbol != nil })
+    }
+
+    @Test func smartAudioVideoIsCompactInlineChoice() throws {
+        let descriptor = try #require(driver.model.settings.first { $0.id == "smartAudioVideo" })
+        guard case .choice(let options, style: .labeledSegmented) = descriptor.kind else {
+            Issue.record("Smart Audio & Video should be an inline segmented row")
+            return
+        }
+
+        #expect(options.map(\.id) == ["off", "audio", "video"])
+        #expect(descriptor.symbol != nil)
     }
 
     @Test func everyToggleHasASymbol() {

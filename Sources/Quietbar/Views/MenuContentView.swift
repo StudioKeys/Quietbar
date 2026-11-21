@@ -37,7 +37,7 @@ struct MenuContentView: View {
                     SectionCard(title: section.title) {
                         let groupsToggles = viewModel.model.groupsToggles
                         ForEach(
-                            section.settings.filter { !$0.isDial && !(groupsToggles && $0.kind == .toggle) }, id: \.id
+                            section.settings.filter { !$0.isDial && !(groupsToggles && $0.isCompactRow) }, id: \.id
                         ) { descriptor in
                             SettingRow(descriptor: descriptor, viewModel: viewModel)
                         }
@@ -45,9 +45,9 @@ struct MenuContentView: View {
                         if !dials.isEmpty {
                             EQCurve(descriptors: dials, viewModel: viewModel)
                         }
-                        let toggles = section.settings.filter { $0.kind == .toggle }
-                        if groupsToggles, !toggles.isEmpty {
-                            ToggleTileGrid(descriptors: toggles, viewModel: viewModel)
+                        let compactRows = section.settings.filter(\.isCompactRow)
+                        if groupsToggles, !compactRows.isEmpty {
+                            CompactRowGroup(descriptors: compactRows, viewModel: viewModel)
                         }
                     }
                 }
