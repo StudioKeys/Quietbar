@@ -11,6 +11,7 @@ public struct JBLLive770NCDriver: DeviceDriver {
         nameFragment: "770NC",
         link: .gatt(Self.gatt),
         settings: JBLSetting.descriptors,
+        symbol: "headphones.over.ear",
         groupsToggles: true
     )
 

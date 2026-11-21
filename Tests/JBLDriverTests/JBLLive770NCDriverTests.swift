@@ -163,6 +163,7 @@ struct JBLLive770NCDriverTests {
         #expect(driver.model.name == "JBL Live 770NC")
         #expect(driver.model.nameFragment == "770NC")
         #expect(driver.model.groupsToggles)
+        #expect(driver.model.symbol == "headphones.over.ear")
     }
 
     @Test(arguments: [
