@@ -12,6 +12,8 @@ final class ActiveDevice {
     private(set) var viewModel: HeadphoneViewModel
     private let preferences: any PreferenceStore
     private let pairedDeviceNames: @MainActor () -> [String]
+    // Querying IOBluetooth on every render is wasteful; the list is refreshed when the menu opens.
+    private var pairedNames: [String]
     private var observing: Task<Void, Never>?
 
     init(
@@ -29,19 +31,24 @@ final class ActiveDevice {
         self.entries = entries
         self.preferences = preferences
         self.pairedDeviceNames = pairedDeviceNames
+        self.pairedNames = paired
         self.selected = selected
         self.viewModel = Self.makeViewModel(for: selected)
     }
 
     /// Headphones the user actually owns: ones Quietbar has connected to before or that are paired with this Mac.
     var switchableEntries: [DeviceEntry] {
-        let paired = pairedDeviceNames()
-        return entries.filter { entry in
-            entry.id == selected.id || hasConnected(entry) || Self.isPaired(entry, among: paired)
+        entries.filter { entry in
+            entry.id == selected.id || hasConnected(entry) || Self.isPaired(entry, among: pairedNames)
         }
     }
 
     var showsSwitcher: Bool { switchableEntries.count > 1 }
+
+    func refreshPairedDevices() {
+        let names = pairedDeviceNames()
+        if names != pairedNames { pairedNames = names }
+    }
 
     private func hasConnected(_ entry: DeviceEntry) -> Bool {
         preferences.string(forKey: DeviceSession.identityKey(for: entry.id)).flatMap(DeviceIdentity.decode) != nil

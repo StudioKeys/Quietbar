@@ -23,6 +23,8 @@ struct EQCurve: View {
     @State private var scrollMonitor: Any?
     @State private var scrollAccumulator: CGFloat = 0
     @State private var pendingWrites: [SettingID: Task<Void, Never>] = [:]
+    // Latest value per band that arrived while that band's previous write was still in flight.
+    @State private var queued: [SettingID: Int] = [:]
     @Environment(\.colorScheme) private var colorScheme
 
     private static let graphHeight: CGFloat = 132
@@ -90,8 +92,10 @@ struct EQCurve: View {
         }
         .disabled(!isEditable)
         .opacity(isEditable ? 1 : 0.5)
-        .onChange(of: viewModel.snapshot.state) { _, _ in
-            if dragging == nil, pendingWrites.isEmpty { committed = [:] }
+        .onChange(of: viewModel.snapshot.state) { _, _ in settleCommitted() }
+        .onChange(of: viewModel.pending) { _, _ in
+            sendQueued()
+            settleCommitted()
         }
         .onAppear(perform: installScrollMonitor)
         .onDisappear(perform: removeScrollMonitor)
@@ -197,6 +201,7 @@ struct EQCurve: View {
         scrollMonitor = nil
         for task in pendingWrites.values { task.cancel() }
         pendingWrites = [:]
+        queued = [:]
     }
 
     private func handleScroll(_ event: NSEvent, descriptor: SettingDescriptor) {
@@ -227,7 +232,27 @@ struct EQCurve: View {
 
     private func commit(_ descriptor: SettingDescriptor, _ level: Int) {
         committed[descriptor.id] = level
-        viewModel.set(descriptor.id, .level(level))
+        // The view model ignores a change while the same setting is pending, so hold it until that write finishes.
+        if viewModel.pending.contains(descriptor.id) {
+            queued[descriptor.id] = level
+        } else {
+            viewModel.set(descriptor.id, .level(level))
+        }
+    }
+
+    private func sendQueued() {
+        for (id, level) in queued where !viewModel.pending.contains(id) {
+            queued[id] = nil
+            viewModel.set(id, .level(level))
+        }
+    }
+
+    // Show the device's value again only once nothing for that band is still on its way.
+    private func settleCommitted() {
+        for id in committed.keys
+        where dragging != id && pendingWrites[id] == nil && queued[id] == nil && !viewModel.pending.contains(id) {
+            committed[id] = nil
+        }
     }
 
     // MARK: Geometry

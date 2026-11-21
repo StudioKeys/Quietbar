@@ -24,15 +24,19 @@ public struct DeviceModel: Hashable, Sendable {
     public let settings: [SettingDescriptor]
     /// Identifies product artwork the app can draw instead of a generic SF Symbol.
     public let glyph: String?
+    /// Renders a section's toggles together as compact rows after its other controls, instead of in place.
+    public let groupsToggles: Bool
 
     public init(
-        name: String, nameFragment: String, link: LinkProfile, settings: [SettingDescriptor], glyph: String? = nil
+        name: String, nameFragment: String, link: LinkProfile, settings: [SettingDescriptor], glyph: String? = nil,
+        groupsToggles: Bool = false
     ) {
         self.name = name
         self.nameFragment = nameFragment
         self.link = link
         self.settings = settings
         self.glyph = glyph
+        self.groupsToggles = groupsToggles
     }
 }
 

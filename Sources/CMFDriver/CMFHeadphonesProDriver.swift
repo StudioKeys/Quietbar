@@ -10,14 +10,18 @@ public struct CMFHeadphonesProDriver: DeviceDriver {
         nameFragment: "CMF Headphone Pro",
         link: .rfcomm(serviceUUID: serviceUUID),
         settings: CMFSetting.descriptors,
-        glyph: glyph
+        glyph: glyph,
+        groupsToggles: true
     )
 
     public static let glyph = "cmf.headphonePro"
 
     private let sequence = CMFSequence()
-    private let customEQ = CMFCustomEQCache()
-    public init() {}
+    private let customEQ: CMFCustomEQCache
+
+    public init(customEQ: CMFCustomEQCache = CMFCustomEQCache()) {
+        self.customEQ = customEQ
+    }
 
     public var handshakeRequests: [Data] {
         [
@@ -100,9 +104,7 @@ public struct CMFHeadphonesProDriver: DeviceDriver {
         case (let id, .level(let gain)):
             guard let band = CMFSetting.band(for: id) else { return nil }
             // Cache the edit now so rapid changes to other bands build on it instead of the last read.
-            let edited = customEQ.value.setting(band, to: gain)
-            customEQ.value = edited
-            return (.setCustomEQ, edited.encoded())
+            return (.setCustomEQ, customEQ.edit(band, to: gain).encoded())
         case (CMFSetting.lowLag, .bool(let enabled)):
             return (.setLowLag, [enabled ? 1 : 2])
         case (CMFSetting.dualConnection, .bool(let enabled)):
@@ -134,8 +136,8 @@ public struct CMFHeadphonesProDriver: DeviceDriver {
     }
 
     private func customEQUpdates(_ payload: [UInt8]) -> [DeviceUpdate] {
-        guard let eq = CMFCustomEQ.decode(payload) else { return [] }
-        customEQ.value = eq
+        guard let reported = CMFCustomEQ.decode(payload) else { return [] }
+        let eq = customEQ.reconcile(reported)
         return [
             .setting(CMFSetting.bass, .level(eq.gain(.bass))),
             .setting(CMFSetting.mid, .level(eq.gain(.mid))),

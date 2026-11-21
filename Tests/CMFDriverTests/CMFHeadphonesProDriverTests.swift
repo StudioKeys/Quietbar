@@ -95,6 +95,50 @@ struct CMFHeadphonesProDriverTests {
         #expect(CMFCustomEQ.decode(eq.encoded()) == eq)
     }
 
+    @Test func nonFiniteOrOutOfRangeGainsAreSafe() {
+        var nan = Self.customEQPayload
+        nan.replaceSubrange(6..<10, with: Float.nan.bitPattern.littleEndianBytes)
+        var infinite = Self.customEQPayload
+        infinite.replaceSubrange(6..<10, with: Float.infinity.bitPattern.littleEndianBytes)
+        var huge = Self.customEQPayload
+        huge.replaceSubrange(6..<10, with: Float(1e12).bitPattern.littleEndianBytes)
+
+        #expect(CMFCustomEQ.decode(nan) == nil)
+        #expect(CMFCustomEQ.decode(infinite) == nil)
+        #expect(updates(.getCustomEQ, nan).isEmpty)
+        #expect(CMFCustomEQ.decode(huge)?.gain(.mid) == 6)
+        #expect(CMFCustomEQ(filters: [.bass: .init(gain: .nan, frequency: 140, q: 0.8)]).gain(.bass) == 0)
+    }
+
+    @Test func staleReadBackDoesNotRevertNewerEdit() {
+        _ = updates(.getCustomEQ, Self.customEQPayload)
+        let first = writePayload(CMFSetting.bass, .level(0)).flatMap(CMFCustomEQ.decode)
+        _ = writePayload(CMFSetting.treble, .level(3))
+
+        // The bass write's confirmation arrives after the treble edit was sent.
+        let confirmation = updates(.getCustomEQ, first.map { $0.encoded() } ?? [])
+        let next = writePayload(CMFSetting.mid, .level(1)).flatMap(CMFCustomEQ.decode)
+
+        #expect(confirmation.contains(.setting(CMFSetting.treble, .level(3))))
+        #expect(next?.gain(.treble) == 3)
+        #expect(next?.gain(.bass) == 0)
+    }
+
+    @Test func unconfirmedEditExpires() {
+        let clock = TestClock()
+        let driver = CMFHeadphonesProDriver(customEQ: CMFCustomEQCache(now: { clock.now }))
+        _ = driver.requests(for: SettingChange(id: CMFSetting.bass, value: .level(4)), current: .empty)
+        clock.advance(CMFCustomEQCache.editLifetime + 1)
+
+        let reported = CMFCustomEQ.factory.setting(.treble, to: -2)
+        let response = CMFFrame(
+            control: 0x0600, command: CMFCommand.getCustomEQ.responseCommand, sequence: 1,
+            payload: Data(reported.encoded())
+        ).encoded()
+
+        #expect(driver.updates(from: response).contains(.setting(CMFSetting.bass, .level(0))))
+    }
+
     @Test func lowLagRoundTrips() {
         #expect(updates(.getLowLag, [1]) == [.setting(CMFSetting.lowLag, .bool(true))])
         #expect(updates(.getLowLag, [2]) == [.setting(CMFSetting.lowLag, .bool(false))])
@@ -143,6 +187,23 @@ struct CMFHeadphonesProDriverTests {
         stride(from: 0, to: text.count, by: 2).map {
             UInt8(text.dropFirst($0).prefix(2), radix: 16)!
         }
+    }
+}
+
+private final class TestClock: @unchecked Sendable {
+    private let lock = NSLock()
+    private var current = Date(timeIntervalSince1970: 0)
+
+    var now: Date { lock.withLock { current } }
+
+    func advance(_ interval: TimeInterval) {
+        lock.withLock { current.addTimeInterval(interval) }
+    }
+}
+
+extension UInt32 {
+    fileprivate var littleEndianBytes: [UInt8] {
+        withUnsafeBytes(of: littleEndian, Array.init)
     }
 }
 

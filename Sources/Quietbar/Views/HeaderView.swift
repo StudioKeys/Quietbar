@@ -54,6 +54,7 @@ private struct BatteryLabel: View {
                 Text("\(battery.percent)%")
                     .font(.system(.callout, design: .monospaced, weight: .semibold))
                     .monospacedDigit()
+                    .foregroundStyle(battery.percent <= 20 ? AnyShapeStyle(.red) : AnyShapeStyle(.primary))
             }
             SegmentedBatteryBar(percent: battery.percent, isCharging: battery.isCharging)
         }

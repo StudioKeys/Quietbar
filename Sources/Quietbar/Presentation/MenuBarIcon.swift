@@ -5,6 +5,22 @@ struct BudLevel: Equatable {
     let percent: Int
 }
 
+enum MenuBarIconStyle: String, CaseIterable, Identifiable {
+    static let key = "menuBarIconStyle"
+
+    case product
+    case noiseMode
+
+    var id: String { rawValue }
+
+    var title: String {
+        switch self {
+        case .product: "Headphones"
+        case .noiseMode: "Noise mode"
+        }
+    }
+}
+
 struct MenuBarIcon: Equatable {
     static let defaultSymbol = "headphones"
 
@@ -13,6 +29,12 @@ struct MenuBarIcon: Equatable {
     let batteryText: String?
     var budLevels: [BudLevel] = []
     var glyph: String?
+
+    /// Product artwork to draw instead of the SF Symbol. With the noise-mode style the artwork stands in only
+    /// while disconnected, so the active mode stays visible.
+    func artworkGlyph(style: MenuBarIconStyle) -> String? {
+        style == .noiseMode && !isDimmed ? nil : glyph
+    }
 
     static func make(for snapshot: DeviceSnapshot, model: DeviceModel) -> MenuBarIcon {
         guard snapshot.status == .connected else {

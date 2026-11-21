@@ -3,6 +3,7 @@ import SwiftUI
 struct SettingsPanel: View {
     let onClose: () -> Void
     @AppStorage(GlassPreference.key) private var isGlassEnabled = true
+    @AppStorage(MenuBarIconStyle.key) private var menuBarIconStyle = MenuBarIconStyle.product
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -30,6 +31,29 @@ struct SettingsPanel: View {
                         .toggleStyle(.switch)
                         .controlSize(.small)
                         .labelsHidden()
+                }
+                Divider()
+                VStack(alignment: .leading, spacing: 6) {
+                    HStack {
+                        Text("Menu bar icon")
+                        Spacer()
+                        Picker("Menu bar icon", selection: $menuBarIconStyle) {
+                            ForEach(MenuBarIconStyle.allCases) { style in
+                                Text(style.title).tag(style)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                        .controlSize(.small)
+                        .labelsHidden()
+                        .fixedSize()
+                    }
+                    Text(
+                        "For headphones with product artwork, such as CMF Headphone Pro. "
+                            + "Noise mode shows the active mode while connected."
+                    )
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }

@@ -11,16 +11,6 @@ enum LiveCatalog {
         let moto = MotoBudsPlusDriver()
         let cmf = CMFHeadphonesProDriver()
         return [
-            DeviceEntry(id: "cmf.headphonespro", model: cmf.model) { deviceID in
-                DeviceSession(
-                    driver: cmf,
-                    transport: RFCOMMTransport(
-                        serviceUUID: CMFHeadphonesProDriver.serviceUUID, nameFragment: cmf.model.nameFragment),
-                    preferences: preferences,
-                    watcher: IOBluetoothConnectionWatcher(),
-                    deviceID: deviceID
-                )
-            },
             DeviceEntry(id: "jbl.live770nc", model: jbl.model) { deviceID in
                 DeviceSession(
                     driver: jbl,
@@ -36,6 +26,16 @@ enum LiveCatalog {
                     driver: moto,
                     transport: RFCOMMTransport(
                         serviceUUID: MotoBudsPlusDriver.serviceUUID, nameFragment: moto.model.nameFragment),
+                    preferences: preferences,
+                    watcher: IOBluetoothConnectionWatcher(),
+                    deviceID: deviceID
+                )
+            },
+            DeviceEntry(id: "cmf.headphonespro", model: cmf.model) { deviceID in
+                DeviceSession(
+                    driver: cmf,
+                    transport: RFCOMMTransport(
+                        serviceUUID: CMFHeadphonesProDriver.serviceUUID, nameFragment: cmf.model.nameFragment),
                     preferences: preferences,
                     watcher: IOBluetoothConnectionWatcher(),
                     deviceID: deviceID

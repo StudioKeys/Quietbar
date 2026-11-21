@@ -54,6 +54,28 @@ struct ActiveDeviceTests {
         #expect(active.showsSwitcher)
     }
 
+    @Test func pairedDevicesAreReadOnceAndRefreshedOnDemand() {
+        var queries = 0
+        var paired = ["JBL LIVE 770NC"]
+        let active = ActiveDevice(
+            entries: [entry("jbl", fragment: "Live 770NC"), entry("cmf", fragment: "CMF Headphone Pro")],
+            preferences: InMemoryPreferenceStore(),
+            pairedDeviceNames: {
+                queries += 1
+                return paired
+            })
+
+        _ = active.switchableEntries
+        _ = active.showsSwitcher
+        #expect(queries == 1)
+
+        paired.append("CMF Headphone Pro")
+        active.refreshPairedDevices()
+
+        #expect(queries == 2)
+        #expect(active.switchableEntries.map(\.id) == ["jbl", "cmf"])
+    }
+
     @Test func singleOwnedHeadphoneHidesSwitcher() {
         let active = ActiveDevice(
             entries: [entry("cmf", fragment: "CMF Headphone Pro"), entry("jbl", fragment: "Live 770NC")],

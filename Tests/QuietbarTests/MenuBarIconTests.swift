@@ -41,6 +41,19 @@ struct MenuBarIconTests {
         #expect(MenuBarIcon.make(for: Fixtures.snapshot(status), model: model).glyph == "cmf.headphonePro")
     }
 
+    @Test func noiseModeStyleKeepsArtworkOnlyWhileDisconnected() {
+        let base = Fixtures.model
+        let model = DeviceModel(
+            name: base.name, nameFragment: base.nameFragment, link: base.link, settings: base.settings,
+            glyph: "cmf.headphonePro")
+        let connected = MenuBarIcon.make(for: Fixtures.snapshot(.connected), model: model)
+        let searching = MenuBarIcon.make(for: Fixtures.snapshot(.searching), model: model)
+
+        #expect(connected.artworkGlyph(style: .product) == "cmf.headphonePro")
+        #expect(connected.artworkGlyph(style: .noiseMode) == nil)
+        #expect(searching.artworkGlyph(style: .noiseMode) == "cmf.headphonePro")
+    }
+
     @Test func connectedWithUnknownModeShowsDefaultIcon() {
         #expect(
             MenuBarIcon.make(for: Fixtures.snapshot(), model: Fixtures.model)

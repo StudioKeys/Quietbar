@@ -2,11 +2,12 @@ import SwiftUI
 
 struct MenuBarLabel: View {
     let icon: MenuBarIcon
+    @AppStorage(MenuBarIconStyle.key) private var style = MenuBarIconStyle.product
 
     var body: some View {
         HStack(spacing: 3) {
             Group {
-                if let artwork = ProductGlyph.menuBarImage(for: icon.glyph) {
+                if let artwork = ProductGlyph.menuBarImage(for: icon.artworkGlyph(style: style)) {
                     Image(nsImage: artwork)
                 } else {
                     Image(systemName: icon.symbolName)

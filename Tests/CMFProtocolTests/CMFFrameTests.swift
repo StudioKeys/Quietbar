@@ -60,4 +60,20 @@ struct CMFFramerTests {
 
         #expect(framer.push(corrupt + valid) == [valid])
     }
+
+    @Test func strayStartByteWithBadChecksumKeepsFollowingFrame() {
+        var framer = CMFFramer()
+        // Claims a 1-byte payload with a checksum, so its candidate overlaps the real frame's first bytes.
+        let stray = Data([0x55, 0x20, 0x00, 0x00, 0x00, 0x01, 0x00])
+        let valid = CMFFrame.request(.getEQPreset, sequence: 2).encoded()
+
+        #expect(framer.push(stray + valid) == [valid])
+    }
+
+    @Test func strayStartByteClaimingLongPayloadDoesNotStall() {
+        var framer = CMFFramer()
+        let valid = CMFFrame.request(.getBattery, sequence: 3).encoded()
+
+        #expect(framer.push(Data([0x55]) + valid) == [valid])
+    }
 }

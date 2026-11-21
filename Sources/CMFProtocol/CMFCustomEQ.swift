@@ -35,7 +35,12 @@ public struct CMFCustomEQ: Hashable, Sendable {
     }
 
     public func gain(_ band: Band) -> Int {
-        Int((filters[band]?.gain ?? 0).rounded())
+        guard let gain = filters[band]?.gain, gain.isFinite else { return 0 }
+        return Int(min(max(gain, Float(Self.gainRange.lowerBound)), Float(Self.gainRange.upperBound)).rounded())
+    }
+
+    public var gains: [Band: Int] {
+        Dictionary(uniqueKeysWithValues: Band.allCases.map { ($0, gain($0)) })
     }
 
     public func setting(_ band: Band, to gain: Int) -> CMFCustomEQ {
@@ -68,11 +73,13 @@ public struct CMFCustomEQ: Hashable, Sendable {
         for index in 0..<Int(count) {
             let offset = 5 + index * recordLength
             guard let band = Band(rawValue: payload[offset]) else { continue }
-            filters[band] = Filter(
-                gain: Float(littleEndian: payload, at: offset + 1),
-                frequency: Float(littleEndian: payload, at: offset + 5),
-                q: Float(littleEndian: payload, at: offset + 9)
-            )
+            let gain = Float(littleEndian: payload, at: offset + 1)
+            let frequency = Float(littleEndian: payload, at: offset + 5)
+            let q = Float(littleEndian: payload, at: offset + 9)
+            // Values come straight off the wire; a corrupt or unexpected reply must not reach Int conversion.
+            guard gain.isFinite, frequency.isFinite, q.isFinite else { return nil }
+            let limit = Float(gainRange.upperBound)
+            filters[band] = Filter(gain: min(max(gain, -limit), limit), frequency: frequency, q: q)
         }
         return filters.count == Band.allCases.count ? CMFCustomEQ(filters: filters) : nil
     }
@@ -89,14 +96,51 @@ extension Float {
     }
 }
 
+/// Holds the latest Custom EQ so an edit to one band keeps the others, even while earlier writes are in flight.
 public final class CMFCustomEQCache: @unchecked Sendable {
+    private struct Edit {
+        let gains: [CMFCustomEQ.Band: Int]
+        let date: Date
+    }
+
+    /// A write the headphones never confirm stops blocking read-backs after this long.
+    public static let editLifetime: TimeInterval = 3
+
     private let lock = NSLock()
     private var stored = CMFCustomEQ.factory
+    private var unconfirmed: [Edit] = []
+    private let now: @Sendable () -> Date
 
-    public init() {}
+    public init(now: @escaping @Sendable () -> Date = Date.init) {
+        self.now = now
+    }
 
     public var value: CMFCustomEQ {
-        get { lock.withLock { stored } }
-        set { lock.withLock { stored = newValue } }
+        lock.withLock { stored }
+    }
+
+    /// Applies a local edit and returns the full curve to write.
+    public func edit(_ band: CMFCustomEQ.Band, to gain: Int) -> CMFCustomEQ {
+        lock.withLock {
+            stored = stored.setting(band, to: gain)
+            unconfirmed.append(Edit(gains: stored.gains, date: now()))
+            return stored
+        }
+    }
+
+    /// Reconciles a read-back from the headphones and returns the curve the UI should show.
+    ///
+    /// A read-back that matches a pending edit confirms it and every edit before it. The cache only adopts the
+    /// headphones' values once no newer edit is waiting, so an older confirmation cannot revert a newer edit.
+    public func reconcile(_ reported: CMFCustomEQ) -> CMFCustomEQ {
+        lock.withLock {
+            let cutoff = now().addingTimeInterval(-Self.editLifetime)
+            unconfirmed.removeAll { $0.date < cutoff }
+            if let matched = unconfirmed.lastIndex(where: { $0.gains == reported.gains }) {
+                unconfirmed.removeFirst(matched + 1)
+            }
+            if unconfirmed.isEmpty { stored = reported }
+            return stored
+        }
     }
 }

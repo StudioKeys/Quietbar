@@ -23,7 +23,10 @@ struct MenuContentView: View {
         .frame(width: 340)
         .animation(.easeOut(duration: 0.18), value: viewModel.snapshot)
         .animation(.easeOut(duration: 0.18), value: isShowingSettings)
-        .onAppear { viewModel.menuOpened() }
+        .onAppear {
+            activeDevice.refreshPairedDevices()
+            viewModel.menuOpened()
+        }
     }
 
     private var controls: some View {
@@ -32,8 +35,10 @@ struct MenuContentView: View {
             if viewModel.showsControls {
                 ForEach(viewModel.sections) { section in
                     SectionCard(title: section.title) {
-                        ForEach(section.settings.filter { $0.kind != .toggle && !$0.isDial }, id: \.id) {
-                            descriptor in
+                        let groupsToggles = viewModel.model.groupsToggles
+                        ForEach(
+                            section.settings.filter { !$0.isDial && !(groupsToggles && $0.kind == .toggle) }, id: \.id
+                        ) { descriptor in
                             SettingRow(descriptor: descriptor, viewModel: viewModel)
                         }
                         let dials = section.settings.filter(\.isDial)
@@ -41,7 +46,7 @@ struct MenuContentView: View {
                             EQCurve(descriptors: dials, viewModel: viewModel)
                         }
                         let toggles = section.settings.filter { $0.kind == .toggle }
-                        if !toggles.isEmpty {
+                        if groupsToggles, !toggles.isEmpty {
                             ToggleTileGrid(descriptors: toggles, viewModel: viewModel)
                         }
                     }
