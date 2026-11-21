@@ -180,6 +180,12 @@ struct JBLLive770NCDriverTests {
         #expect(options.allSatisfy { $0.symbol != nil })
     }
 
+    @Test func everyToggleHasASymbol() {
+        let toggles = driver.model.settings.filter { $0.kind == .toggle }
+
+        #expect(toggles.allSatisfy { $0.symbol != nil })
+    }
+
     @Test func eqPresetsAreIconTiles() throws {
         let eq = try #require(driver.model.settings.first { $0.id == "eqPreset" })
         guard case .choice(let options, style: .pills) = eq.kind else {

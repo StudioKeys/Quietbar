@@ -25,11 +25,12 @@ enum JBLSetting {
             section: .noise
         ),
         SettingDescriptor(
-            id: adaptiveAnc, title: "Adaptive ANC", kind: .toggle, section: .noise,
+            id: adaptiveAnc, title: "Adaptive ANC", symbol: "waveform.circle", kind: .toggle, section: .noise,
             visibleWhen: .equals(noiseMode, .choice(NoiseMode.anc.id))
         ),
         SettingDescriptor(
-            id: leakageCompensation, title: "Leakage compensation", kind: .toggle, section: .noise,
+            id: leakageCompensation, title: "Leakage compensation", symbol: "ear.badge.checkmark", kind: .toggle,
+            section: .noise,
             visibleWhen: .equals(noiseMode, .choice(NoiseMode.anc.id))
         ),
         SettingDescriptor(
