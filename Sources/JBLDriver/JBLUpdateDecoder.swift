@@ -26,7 +26,7 @@ enum JBLUpdateDecoder {
             [
                 .setting(
                     JBLSetting.spatialSound, .choice(spatial.isOn ? spatial.mode.settingID : JBLSetting.spatialOff.id)),
-                .setting(JBLSetting.spatialMode, .choice(spatial.mode.settingID)),
+                .setting(JBLSetting.lastSpatialMode, .choice(spatial.mode.settingID)),
             ]
         case .lowVolumeEq(let isOn): [.setting(JBLSetting.lowVolumeEq, .bool(isOn))]
         case .eq(.preset(let preset)): [.setting(JBLSetting.eqPreset, .choice(preset.settingID))]

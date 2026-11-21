@@ -20,7 +20,7 @@ enum JBLChangeEncoder {
     }
 
     private static func currentSpatialMode(in state: DeviceState) -> SpatialMode {
-        guard case .choice(let id) = state[JBLSetting.spatialMode], let mode = SpatialMode(settingID: id) else {
+        guard case .choice(let id) = state[JBLSetting.lastSpatialMode], let mode = SpatialMode(settingID: id) else {
             return .music
         }
         return mode

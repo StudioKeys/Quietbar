@@ -8,7 +8,7 @@ enum JBLSetting {
     static let ambientLevel: SettingID = "ambientLevel"
     static let eqPreset: SettingID = "eqPreset"
     static let spatialSound: SettingID = "spatialSound"
-    static let spatialMode: SettingID = "spatialMode"
+    static let lastSpatialMode: SettingID = "lastSpatialMode"
     static let lowVolumeEq: SettingID = "lowVolumeEq"
     static let balance: SettingID = "balance"
     static let smartAudioVideo: SettingID = "smartAudioVideo"
