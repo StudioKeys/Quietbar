@@ -100,7 +100,7 @@ enum EqPreset: UInt8, CaseIterable {
 
     private var title: String {
         switch self {
-        case .brilliantTreble: "Brilliant Treble"
+        case .brilliantTreble: "Treble Boost"
         case .bassBoost: "Bass Boost"
         case .vocalBoost: "Vocal Boost"
         case .flat: "Flat"

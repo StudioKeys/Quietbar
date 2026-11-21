@@ -86,7 +86,7 @@ read-back and rollback behavior is verified.
 </p>
 
 - Noise control: Noise Cancellation, Adaptive, Transparency, Off
-- EQ presets: Brilliant Treble, Bass Boost, Vocal Boost, Flat, Custom
+- EQ presets: Treble Boost, Bass Boost, Vocal Boost, Flat, Custom
 - Spatial Sound, Hi-Res Audio (the buds reconnect briefly to apply it), Volume Boost
 - Game Mode, In-ear detection, Dual connection
 - Left, right and case battery rings in the menu, and "L 65 R 61" in the menu bar (the buds report the case only

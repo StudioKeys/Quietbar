@@ -137,7 +137,7 @@ struct MotoBudsPlusDriverTests {
         #expect(driver.model.link == .rfcomm(serviceUUID: MotoBudsPlusDriver.serviceUUID))
         #expect(MotoBudsPlusDriver.serviceUUID.uuidString.lowercased() == "fc9d9fe0-4899-11ee-be56-0242ac120002")
         #expect(driver.model.nameFragment == "moto buds")
-        #expect(driver.model.symbol == "earbuds.case.fill")
+        #expect(driver.model.symbol == "earbuds")
         #expect(driver.model.groupsToggles)
     }
 
@@ -149,6 +149,7 @@ struct MotoBudsPlusDriverTests {
         }
 
         #expect(options.allSatisfy { $0.symbol != nil })
+        #expect(options.map(\.title) == ["Treble Boost", "Bass Boost", "Vocal Boost", "Flat", "Custom"])
     }
 
     @Test func everySettingHasAConfirmingQuery() {
