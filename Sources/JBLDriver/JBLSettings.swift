@@ -12,10 +12,10 @@ enum JBLSetting {
     static let lowVolumeEq: SettingID = "lowVolumeEq"
     static let balance: SettingID = "balance"
     static let smartAudioVideo: SettingID = "smartAudioVideo"
-    static let smartAudioVideoMode: SettingID = "smartAudioVideoMode"
     static let autoPlayPause: SettingID = "autoPlayPause"
 
     static let customEq = "custom"
+    static let spatialOff = ChoiceOption(id: "off", title: "Off", symbol: "speaker.slash")
 
     static let descriptors: [SettingDescriptor] = [
         SettingDescriptor(
@@ -41,13 +41,8 @@ enum JBLSetting {
             kind: .choice(EqPreset.allCases.map(\.option), style: .pills), section: .sound
         ),
         SettingDescriptor(
-            id: spatialSound, title: "Spatial Sound", symbol: "dot.radiowaves.left.and.right", kind: .toggle,
-            section: .sound
-        ),
-        SettingDescriptor(
-            id: spatialMode, title: "Spatial mode",
-            kind: .choice(SpatialMode.allCases.map(\.option), style: .segmented),
-            section: .sound, visibleWhen: .equals(spatialSound, .bool(true))
+            id: spatialSound, title: "Spatial Sound",
+            kind: .choice([spatialOff] + SpatialMode.allCases.map(\.option), style: .modeButtons), section: .spatial
         ),
         SettingDescriptor(
             id: lowVolumeEq, title: "Low Volume EQ", symbol: "speaker.wave.1", kind: .toggle, section: .sound
@@ -57,13 +52,9 @@ enum JBLSetting {
             kind: .level(Balance.range, style: .balance), section: .sound
         ),
         SettingDescriptor(
-            id: smartAudioVideo, title: "Smart Audio & Video", symbol: "play.tv", kind: .toggle, section: .smart,
+            id: smartAudioVideo, title: "Smart Audio & Video",
+            kind: .choice(SmartMode.allCases.map(\.option), style: .modeButtons), section: .smart,
             appliesWithReconnect: true
-        ),
-        SettingDescriptor(
-            id: smartAudioVideoMode, title: "Smart Audio & Video mode",
-            kind: .choice(SmartMode.allCases.map(\.option), style: .segmented), section: .smart,
-            visibleWhen: .equals(smartAudioVideo, .bool(true)), appliesWithReconnect: true
         ),
         SettingDescriptor(
             id: autoPlayPause, title: "Auto play & pause", symbol: "playpause", kind: .toggle, section: .smart
@@ -72,13 +63,32 @@ enum JBLSetting {
 }
 
 enum SmartMode: String, CaseIterable {
+    case off
     case audio
     case video
 
-    var preset: SmartAudioVideoPreset { self == .audio ? .audio : .video }
+    init(preset: SmartAudioVideoPreset) {
+        switch preset {
+        case .normal: self = .off
+        case .audio: self = .audio
+        case .video: self = .video
+        }
+    }
+
+    var preset: SmartAudioVideoPreset {
+        switch self {
+        case .off: .normal
+        case .audio: .audio
+        case .video: .video
+        }
+    }
 
     var option: ChoiceOption {
-        ChoiceOption(id: rawValue, title: self == .audio ? "Audio Mode" : "Video Mode")
+        switch self {
+        case .off: ChoiceOption(id: rawValue, title: "Off", symbol: "play.slash")
+        case .audio: ChoiceOption(id: rawValue, title: "Audio", symbol: "music.note")
+        case .video: ChoiceOption(id: rawValue, title: "Video", symbol: "play.tv")
+        }
     }
 }
 
@@ -148,7 +158,11 @@ extension SpatialMode {
     }
 
     var option: ChoiceOption {
-        ChoiceOption(id: settingID, title: settingID.prefix(1).uppercased() + settingID.dropFirst())
+        switch self {
+        case .music: ChoiceOption(id: settingID, title: "Music", symbol: "music.note")
+        case .movie: ChoiceOption(id: settingID, title: "Movie", symbol: "film")
+        case .game: ChoiceOption(id: settingID, title: "Game", symbol: "gamecontroller")
+        }
     }
 
     init?(settingID: String) {

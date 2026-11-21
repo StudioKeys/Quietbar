@@ -23,9 +23,10 @@ struct JBLLive770NCDriverTests {
             ("balance", .level(-4), "aa a8 05 00 01 01 02 60"),
             ("autoPlayPause", .bool(true), "aa 35 01 01"),
             ("autoPlayPause", .bool(false), "aa 35 01 00"),
-            ("smartAudioVideo", .bool(false), "aa 81 08 00 01 2e 00 b4 00 ff ff"),
-            ("smartAudioVideoMode", .choice("audio"), "aa 81 08 00 01 35 00 96 00 ff ff"),
-            ("smartAudioVideoMode", .choice("video"), "aa 81 08 c5 00 2e 00 64 00 ff ff"),
+            ("smartAudioVideo", .choice("off"), "aa 81 08 00 01 2e 00 b4 00 ff ff"),
+            ("smartAudioVideo", .choice("audio"), "aa 81 08 00 01 35 00 96 00 ff ff"),
+            ("smartAudioVideo", .choice("video"), "aa 81 08 c5 00 2e 00 64 00 ff ff"),
+            ("spatialSound", .choice("movie"), "aa 9d 03 00 01 02"),
         ] as [(SettingID, SettingValue, String)]
     )
     func encodesChange(id: SettingID, value: SettingValue, hex: String) {
@@ -39,24 +40,14 @@ struct JBLLive770NCDriverTests {
         #expect(frames[0].hasPrefix("aa a2 74 00 03 03"))
     }
 
-    @Test func smartAudioVideoOnUsesCurrentMode() {
-        let state = DeviceState.empty.applying([.setting("smartAudioVideoMode", .choice("video"))])
-
-        #expect(requests("smartAudioVideo", .bool(true), state: state) == ["aa 81 08 c5 00 2e 00 64 00 ff ff"])
-    }
-
-    @Test func smartAudioVideoOnDefaultsToAudioMode() {
-        #expect(requests("smartAudioVideo", .bool(true)) == ["aa 81 08 00 01 35 00 96 00 ff ff"])
-    }
-
-    @Test func spatialToggleKeepsSelectedMode() {
+    @Test func spatialOffKeepsLastMode() {
         let state = DeviceState.empty.applying([.setting("spatialMode", .choice("game"))])
 
-        #expect(requests("spatialSound", .bool(false), state: state) == ["aa 9d 03 00 00 03"])
+        #expect(requests("spatialSound", .choice("off"), state: state) == ["aa 9d 03 00 00 03"])
     }
 
-    @Test func spatialModeTurnsSpatialOn() {
-        #expect(requests("spatialMode", .choice("movie")) == ["aa 9d 03 00 01 02"])
+    @Test func spatialOffDefaultsToMusicMode() {
+        #expect(requests("spatialSound", .choice("off")) == ["aa 9d 03 00 00 01"])
     }
 
     @Test(
@@ -88,18 +79,25 @@ struct JBLLive770NCDriverTests {
                 [.setting("adaptiveAnc", .bool(false)), .setting("leakageCompensation", .bool(false))]
             ),
             ("aa 25 0d 01 00 00 5a 5a 00 00 00 00 00 00 00 00", [.battery(Battery(percent: 90, isCharging: false))]),
-            ("aa 9d 03 02 01 03", [.setting("spatialSound", .bool(true)), .setting("spatialMode", .choice("game"))]),
+            (
+                "aa 9d 03 02 01 03",
+                [.setting("spatialSound", .choice("game")), .setting("spatialMode", .choice("game"))]
+            ),
+            (
+                "aa 9d 03 02 00 02",
+                [.setting("spatialSound", .choice("off")), .setting("spatialMode", .choice("movie"))]
+            ),
             ("aa 9e 02 02 00", [.setting("lowVolumeEq", .bool(false))]),
             ("aa a8 05 02 01 01 02 6a", [.setting("balance", .level(6))]),
             (
                 "aa 83 08 00 01 35 00 96 00 ff ff",
-                [.setting("smartAudioVideo", .bool(true)), .setting("smartAudioVideoMode", .choice("audio"))]
+                [.setting("smartAudioVideo", .choice("audio"))]
             ),
             (
                 "aa 83 08 c5 00 2e 00 64 00 ff ff",
-                [.setting("smartAudioVideo", .bool(true)), .setting("smartAudioVideoMode", .choice("video"))]
+                [.setting("smartAudioVideo", .choice("video"))]
             ),
-            ("aa 83 08 00 01 2e 00 b4 00 ff ff", [.setting("smartAudioVideo", .bool(false))]),
+            ("aa 83 08 00 01 2e 00 b4 00 ff ff", [.setting("smartAudioVideo", .choice("off"))]),
             ("aa 83 08 11 11 11 11 11 11 ff ff", []),
             ("aa 22 0d 30 00 02 ff 07 df 01 00 01 00 01 1e 00", [.setting("autoPlayPause", .bool(true))]),
             ("aa 22 0d 30 00 02 ff 07 df 01 00 00 00 01 1e 00", [.setting("autoPlayPause", .bool(false))]),
@@ -136,8 +134,8 @@ struct JBLLive770NCDriverTests {
         arguments: [
             ("noiseMode", "aa 91 01 11"), ("adaptiveAnc", "aa 91 01 21"), ("leakageCompensation", "aa 91 01 21"),
             ("ambientLevel", "aa 91 01 21"), ("eqPreset", "aa a2 02 01 ff"), ("spatialSound", "aa 9d 01 01"),
-            ("spatialMode", "aa 9d 01 01"), ("lowVolumeEq", "aa 9e 01 01"), ("balance", "aa a8 01 01"),
-            ("smartAudioVideo", "aa 82 00"), ("smartAudioVideoMode", "aa 82 00"), ("autoPlayPause", "aa 21 01 30"),
+            ("lowVolumeEq", "aa 9e 01 01"), ("balance", "aa a8 01 01"), ("smartAudioVideo", "aa 82 00"),
+            ("autoPlayPause", "aa 21 01 30"),
             ("battery", "aa 25 01 00"),
         ] as [(SettingID, String)]
     )
@@ -155,16 +153,29 @@ struct JBLLive770NCDriverTests {
         #expect(
             settings.map(\.id.rawValue) == [
                 "noiseMode", "adaptiveAnc", "leakageCompensation", "ambientLevel", "eqPreset", "spatialSound",
-                "spatialMode", "lowVolumeEq", "balance", "smartAudioVideo", "smartAudioVideoMode", "autoPlayPause",
+                "lowVolumeEq", "balance", "smartAudioVideo", "autoPlayPause",
             ]
         )
         #expect(settings[1].visibleWhen == .equals("noiseMode", .choice("anc")))
         #expect(settings[3].visibleWhen == .equals("noiseMode", .choice("ambientAware")))
-        #expect(settings[6].visibleWhen == .equals("spatialSound", .bool(true)))
-        #expect(settings[10].visibleWhen == .equals("smartAudioVideo", .bool(true)))
-        #expect(settings[8].kind == .level(-16...16, style: .balance))
+        #expect(settings[5].section == .spatial)
+        #expect(settings[7].kind == .level(-16...16, style: .balance))
         #expect(driver.model.name == "JBL Live 770NC")
         #expect(driver.model.nameFragment == "770NC")
+    }
+
+    @Test(arguments: [
+        ("spatialSound", ["off", "music", "movie", "game"]), ("smartAudioVideo", ["off", "audio", "video"]),
+    ])
+    func modesAreSingleIconChoice(id: String, modes: [String]) throws {
+        let descriptor = try #require(driver.model.settings.first { $0.id.rawValue == id })
+        guard case .choice(let options, style: .modeButtons) = descriptor.kind else {
+            Issue.record("\(id) should use mode buttons")
+            return
+        }
+
+        #expect(options.map(\.id) == modes)
+        #expect(options.allSatisfy { $0.symbol != nil })
     }
 
     @Test func eqPresetsAreIconTiles() throws {
@@ -180,7 +191,7 @@ struct JBLLive770NCDriverTests {
     @Test func onlySmartAudioVideoSettingsReconnect() {
         let reconnecting = driver.model.settings.filter(\.appliesWithReconnect).map(\.id.rawValue)
 
-        #expect(reconnecting == ["smartAudioVideo", "smartAudioVideoMode"])
+        #expect(reconnecting == ["smartAudioVideo"])
     }
 
     @Test func noRequestUsesOtaCommand() {
