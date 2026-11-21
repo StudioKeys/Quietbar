@@ -47,13 +47,10 @@ struct SettingsPanel: View {
                         .labelsHidden()
                         .fixedSize()
                     }
-                    Text(
-                        "For headphones with product artwork, such as CMF Headphone Pro. "
-                            + "Noise mode shows the active mode while connected."
-                    )
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-                    .fixedSize(horizontal: false, vertical: true)
+                    Text("Headphones shows your device. Noise mode shows the active mode while connected.")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
         }

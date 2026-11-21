@@ -18,6 +18,8 @@ public enum LinkProfile: Hashable, Sendable {
 }
 
 public struct DeviceModel: Hashable, Sendable {
+    public static let defaultSymbol = "headphones"
+
     public let name: String
     public let nameFragment: String
     public let link: LinkProfile
@@ -30,7 +32,7 @@ public struct DeviceModel: Hashable, Sendable {
 
     public init(
         name: String, nameFragment: String, link: LinkProfile, settings: [SettingDescriptor],
-        symbol: String = "headphones", glyph: String? = nil, groupsToggles: Bool = false
+        symbol: String = defaultSymbol, glyph: String? = nil, groupsToggles: Bool = false
     ) {
         self.name = name
         self.nameFragment = nameFragment
