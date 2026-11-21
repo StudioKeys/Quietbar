@@ -49,10 +49,10 @@ public struct JBLLive770NCDriver: DeviceDriver {
         case JBLSetting.noiseMode: .queryNoiseMode
         case JBLSetting.adaptiveAnc, JBLSetting.leakageCompensation, JBLSetting.ambientLevel: .queryAdvancedAnc
         case JBLSetting.eqPreset: .queryEq
-        case JBLSetting.spatialSound, JBLSetting.spatialMode: .querySpatial
+        case JBLSetting.spatialSound: .querySpatial
         case JBLSetting.lowVolumeEq: .queryLowVolumeEq
         case JBLSetting.balance: .queryBalance
-        case JBLSetting.smartAudioVideo, JBLSetting.smartAudioVideoMode: .querySmartAudioVideo
+        case JBLSetting.smartAudioVideo: .querySmartAudioVideo
         case JBLSetting.autoPlayPause: .queryDeviceStatus
         case .battery: .queryBattery
         default: nil

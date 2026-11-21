@@ -24,7 +24,8 @@ enum JBLUpdateDecoder {
         case .battery(let battery): [.battery(Battery(percent: battery.percent, isCharging: battery.isCharging))]
         case .spatial(let spatial):
             [
-                .setting(JBLSetting.spatialSound, .bool(spatial.isOn)),
+                .setting(
+                    JBLSetting.spatialSound, .choice(spatial.isOn ? spatial.mode.settingID : JBLSetting.spatialOff.id)),
                 .setting(JBLSetting.spatialMode, .choice(spatial.mode.settingID)),
             ]
         case .lowVolumeEq(let isOn): [.setting(JBLSetting.lowVolumeEq, .bool(isOn))]
@@ -48,19 +49,8 @@ enum JBLUpdateDecoder {
     }
 
     private static func smartAudioVideo(_ payload: [UInt8]) -> [DeviceUpdate] {
-        switch SmartAudioVideoPreset(payload: payload) {
-        case .normal: [.setting(JBLSetting.smartAudioVideo, .bool(false))]
-        case .audio: smartOn(.audio)
-        case .video: smartOn(.video)
-        case nil: []
-        }
-    }
-
-    private static func smartOn(_ mode: SmartMode) -> [DeviceUpdate] {
-        [
-            .setting(JBLSetting.smartAudioVideo, .bool(true)),
-            .setting(JBLSetting.smartAudioVideoMode, .choice(mode.rawValue)),
-        ]
+        guard let preset = SmartAudioVideoPreset(payload: payload) else { return [] }
+        return [.setting(JBLSetting.smartAudioVideo, .choice(SmartMode(preset: preset).rawValue))]
     }
 
     private static func autoPlayPause(_ payload: [UInt8]) -> [DeviceUpdate] {
