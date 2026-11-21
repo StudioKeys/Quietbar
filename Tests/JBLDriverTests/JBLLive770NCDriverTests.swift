@@ -41,7 +41,7 @@ struct JBLLive770NCDriverTests {
     }
 
     @Test func spatialOffKeepsLastMode() {
-        let state = DeviceState.empty.applying([.setting("spatialMode", .choice("game"))])
+        let state = DeviceState.empty.applying([.setting("lastSpatialMode", .choice("game"))])
 
         #expect(requests("spatialSound", .choice("off"), state: state) == ["aa 9d 03 00 00 03"])
     }
@@ -81,11 +81,11 @@ struct JBLLive770NCDriverTests {
             ("aa 25 0d 01 00 00 5a 5a 00 00 00 00 00 00 00 00", [.battery(Battery(percent: 90, isCharging: false))]),
             (
                 "aa 9d 03 02 01 03",
-                [.setting("spatialSound", .choice("game")), .setting("spatialMode", .choice("game"))]
+                [.setting("spatialSound", .choice("game")), .setting("lastSpatialMode", .choice("game"))]
             ),
             (
                 "aa 9d 03 02 00 02",
-                [.setting("spatialSound", .choice("off")), .setting("spatialMode", .choice("movie"))]
+                [.setting("spatialSound", .choice("off")), .setting("lastSpatialMode", .choice("movie"))]
             ),
             ("aa 9e 02 02 00", [.setting("lowVolumeEq", .bool(false))]),
             ("aa a8 05 02 01 01 02 6a", [.setting("balance", .level(6))]),
