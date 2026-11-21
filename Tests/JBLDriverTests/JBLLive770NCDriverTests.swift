@@ -185,6 +185,7 @@ struct JBLLive770NCDriverTests {
         }
 
         #expect(options.map(\.id) == ["off", "audio", "video"])
+        #expect(options.allSatisfy { $0.symbol == nil })
         #expect(descriptor.symbol != nil)
     }
 

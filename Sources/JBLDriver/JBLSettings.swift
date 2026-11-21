@@ -86,9 +86,9 @@ enum SmartMode: String, CaseIterable {
 
     var option: ChoiceOption {
         switch self {
-        case .off: ChoiceOption(id: rawValue, title: "Off", symbol: "play.slash")
-        case .audio: ChoiceOption(id: rawValue, title: "Audio", symbol: "music.note")
-        case .video: ChoiceOption(id: rawValue, title: "Video", symbol: "play.tv")
+        case .off: ChoiceOption(id: rawValue, title: "Off")
+        case .audio: ChoiceOption(id: rawValue, title: "Audio")
+        case .video: ChoiceOption(id: rawValue, title: "Video")
         }
     }
 }
