@@ -56,12 +56,11 @@ struct MenuBarIcon: Equatable {
     }
 
     private static func modeSymbol(in state: DeviceState, model: DeviceModel) -> String? {
-        for descriptor in model.settings {
-            guard case .choice(let options, style: .modeButtons) = descriptor.kind,
-                case .choice(let selected) = state[descriptor.id]
-            else { continue }
-            return options.first { $0.id == selected }?.symbol
-        }
-        return nil
+        let primary = model.settings.lazy.compactMap { descriptor -> (SettingID, [ChoiceOption])? in
+            guard case .choice(let options, style: .modeButtons) = descriptor.kind else { return nil }
+            return (descriptor.id, options)
+        }.first
+        guard let (id, options) = primary, case .choice(let selected) = state[id] else { return nil }
+        return options.first { $0.id == selected }?.symbol
     }
 }
