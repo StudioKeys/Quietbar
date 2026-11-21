@@ -10,7 +10,8 @@ public struct JBLLive770NCDriver: DeviceDriver {
         name: "JBL Live 770NC",
         nameFragment: "770NC",
         link: .gatt(Self.gatt),
-        settings: JBLSetting.descriptors
+        settings: JBLSetting.descriptors,
+        groupsToggles: true
     )
 
     private static let refreshCommands: [Command] = Command.refreshAll + [.querySmartAudioVideo, .queryDeviceStatus]

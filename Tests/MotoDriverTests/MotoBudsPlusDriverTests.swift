@@ -138,6 +138,7 @@ struct MotoBudsPlusDriverTests {
         #expect(MotoBudsPlusDriver.serviceUUID.uuidString.lowercased() == "fc9d9fe0-4899-11ee-be56-0242ac120002")
         #expect(driver.model.nameFragment == "moto buds")
         #expect(driver.model.symbol == "earbuds")
+        #expect(driver.model.groupsToggles)
     }
 
     @Test func eqPresetsAreIconTiles() throws {

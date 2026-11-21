@@ -162,6 +162,7 @@ struct JBLLive770NCDriverTests {
         #expect(settings[7].kind == .level(-16...16, style: .balance))
         #expect(driver.model.name == "JBL Live 770NC")
         #expect(driver.model.nameFragment == "770NC")
+        #expect(driver.model.groupsToggles)
     }
 
     @Test(arguments: [
