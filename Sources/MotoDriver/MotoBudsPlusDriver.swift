@@ -12,7 +12,7 @@ public struct MotoBudsPlusDriver: DeviceDriver {
         nameFragment: "moto buds",
         link: .rfcomm(serviceUUID: serviceUUID),
         settings: MotoSetting.descriptors,
-        symbol: "earbuds",
+        symbol: "earbuds.case.fill",
         groupsToggles: true
     )
 
