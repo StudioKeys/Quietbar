@@ -84,6 +84,19 @@ struct MenuBarIconTests {
         #expect(MenuBarIcon.make(for: snapshot, model: model).symbolName == "headphones")
     }
 
+    @Test func productStyleShowsDeviceSymbolWhileConnected() {
+        let base = Fixtures.model
+        let model = DeviceModel(
+            name: base.name, nameFragment: base.nameFragment, link: base.link, settings: base.settings,
+            symbol: "earbuds.case.fill")
+        let snapshot = Fixtures.snapshot(.connected, [.setting("noiseMode", .choice("talkThru"))])
+
+        let icon = MenuBarIcon.make(for: snapshot, model: model)
+
+        #expect(icon.symbol(style: .product) == "earbuds.case.fill")
+        #expect(icon.symbol(style: .noiseMode) == "person.wave.2")
+    }
+
     @Test func menuBarItemsListKnownBuds() {
         let buds = Battery.buds(
             left: BatteryLevel(percent: 77, isCharging: false), right: BatteryLevel(percent: 72, isCharging: false),

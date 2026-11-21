@@ -10,7 +10,7 @@ struct MenuBarLabel: View {
                 if let artwork = ProductGlyph.menuBarImage(for: icon.artworkGlyph(style: style)) {
                     Image(nsImage: artwork)
                 } else {
-                    Image(systemName: icon.symbolName)
+                    Image(systemName: icon.symbol(style: style))
                 }
             }
             .opacity(icon.isDimmed ? 0.45 : 1)
