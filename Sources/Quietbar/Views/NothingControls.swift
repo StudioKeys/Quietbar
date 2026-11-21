@@ -145,6 +145,7 @@ struct CompactRow: View {
                 GlassSegmentedControl(options: options, selection: selection) {
                     viewModel.set(descriptor.id, .choice($0))
                 }
+                .accessibilityElement(children: .contain)
                 .accessibilityLabel(descriptor.title)
                 .padding(.leading, 32)
             }
