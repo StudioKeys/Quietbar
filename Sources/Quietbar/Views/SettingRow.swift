@@ -8,8 +8,8 @@ struct SettingRow: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             content
-            if descriptor.appliesWithReconnect, case .toggle = descriptor.kind {
-                Text("Headphones reconnect briefly to apply.")
+            if descriptor.appliesWithReconnect {
+                Text(ToggleTile.reconnectNote)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
