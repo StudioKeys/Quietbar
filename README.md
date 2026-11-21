@@ -68,12 +68,12 @@ read-back and rollback behavior is verified.
   - Adaptive ANC and leakage compensation while noise cancellation is on
   - Ambient level while Ambient Aware is on
 - EQ presets: Jazz, Vocal, Bass, Club, Studio, Extreme Bass
-- Spatial Sound with Music, Movie and Game modes
+- Spatial Sound: Off, Music, Movie, Game
 - Low Volume EQ
 - Left/right balance
-- Smart Audio & Video (Audio Mode / Video Mode) — the headphones reconnect briefly to apply it
+- Smart Audio & Video: Off, Audio, Video — the headphones reconnect briefly to apply it
 - Auto play & pause
-- Battery level, a menu bar icon that follows the noise mode, and automatic reconnection
+- Battery level, a menu bar icon showing the headphones or the noise mode, and automatic reconnection
 - Battery-friendly reconnects: after five failed attempts Quietbar waits, and tries again when the headphones
   connect to the Mac, when you click **Connect** or when Bluetooth turns back on
 - Liquid Glass styling that can be turned off in Settings
