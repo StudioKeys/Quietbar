@@ -135,6 +135,7 @@ struct CompactRow: View {
                     .font(.system(size: 14))
                     .foregroundStyle(.secondary)
                     .frame(width: 22)
+                    .accessibilityHidden(true)
                 Text(descriptor.title)
                 Spacer()
                 if case .toggle = descriptor.kind {
