@@ -38,7 +38,7 @@ enum JBLSetting {
         ),
         SettingDescriptor(
             id: eqPreset, title: "EQ preset", symbol: "slider.vertical.3",
-            kind: .choice(EqPreset.allCases.map(\.option), style: .menu), section: .sound
+            kind: .choice(EqPreset.allCases.map(\.option), style: .pills), section: .sound
         ),
         SettingDescriptor(
             id: spatialSound, title: "Spatial Sound", symbol: "dot.radiowaves.left.and.right", kind: .toggle,
@@ -119,7 +119,18 @@ extension EqPreset {
         }
     }
 
-    var option: ChoiceOption { ChoiceOption(id: settingID, title: displayName) }
+    var option: ChoiceOption { ChoiceOption(id: settingID, title: displayName, symbol: symbol) }
+
+    private var symbol: String {
+        switch self {
+        case .jazz: "music.quarternote.3"
+        case .vocal: "music.mic"
+        case .bass: "speaker.wave.2"
+        case .club: "figure.dance"
+        case .studio: "waveform"
+        case .extremeBass: "speaker.wave.3"
+        }
+    }
 
     init?(settingID: String) {
         guard let preset = Self.allCases.first(where: { $0.settingID == settingID }) else { return nil }

@@ -167,6 +167,16 @@ struct JBLLive770NCDriverTests {
         #expect(driver.model.nameFragment == "770NC")
     }
 
+    @Test func eqPresetsAreIconTiles() throws {
+        let eq = try #require(driver.model.settings.first { $0.id == "eqPreset" })
+        guard case .choice(let options, style: .pills) = eq.kind else {
+            Issue.record("EQ preset should use pill tiles")
+            return
+        }
+
+        #expect(options.allSatisfy { $0.symbol != nil })
+    }
+
     @Test func onlySmartAudioVideoSettingsReconnect() {
         let reconnecting = driver.model.settings.filter(\.appliesWithReconnect).map(\.id.rawValue)
 
