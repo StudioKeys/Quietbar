@@ -17,7 +17,7 @@ enum MotoSetting {
         ),
         SettingDescriptor(
             id: eqPreset, title: "EQ preset", symbol: "slider.vertical.3",
-            kind: .choice(EqPreset.allCases.map(\.option), style: .menu), section: .sound
+            kind: .choice(EqPreset.allCases.map(\.option), style: .pills), section: .sound
         ),
         SettingDescriptor(
             id: spatialSound, title: "Spatial Sound", symbol: "dot.radiowaves.left.and.right", kind: .toggle,
@@ -85,7 +85,17 @@ enum EqPreset: UInt8, CaseIterable {
     case custom = 63
 
     var option: ChoiceOption {
-        ChoiceOption(id: String(rawValue), title: title)
+        ChoiceOption(id: String(rawValue), title: title, symbol: symbol)
+    }
+
+    private var symbol: String {
+        switch self {
+        case .brilliantTreble: "sparkles"
+        case .bassBoost: "speaker.wave.3"
+        case .vocalBoost: "music.mic"
+        case .flat: "equal"
+        case .custom: "slider.horizontal.3"
+        }
     }
 
     private var title: String {
